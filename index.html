@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>最新２</title>
+    <title>ARABAKI ROCK FEST.26</title>
     
 
   </head>
@@ -14,10 +14,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARABAKI ROCK FEST.26 タイムテーブル & エリアマップ</title>
+    <title>ARABAKI ROCK FEST.26 非公式タイムテーブル</title>
     <style>
-        /* --- CSS: 変数・基本設定 --- */
+        /* ==========================================
+           CSS: 変数・基本設定
+           レイアウトや各ステージのテーマカラーを定義します。
+           ========================================== */
         :root {
+            /* ステージカラー */
             --color-michinoku: #D4AF37;
             --color-arahabaki: #9932CC;
             --color-hatahata: #B0003A;
@@ -25,13 +29,15 @@
             --color-hanagasa: #E83929;
             --color-banetsu: #0077B6;
             --color-food: #E67E22;
+            
+            /* システムカラー・サイズ */
             --color-mytt: #444444;
             --bg-color: #ffffff;
             --grid-border: #e0e0e0;
             --text-color: #333;
-            --time-width: 60px;
-            --col-width: 160px;
-            --px-per-min: 2; 
+            --time-width: 60px;   /* 時間軸の幅 */
+            --col-width: 160px;   /* 各ステージ列の幅 */
+            --px-per-min: 2;      /* 1分あたりの高さ(px) */
         }
 
         body {
@@ -40,10 +46,13 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            overflow: hidden;
+            overflow: hidden; /* スクロールは内部コンテナで行うためbodyは固定 */
         }
 
-        /* --- レイアウト構造 --- */
+        /* ==========================================
+           CSS: レイアウト構造
+           アプリ全体の外枠とヘッダー、タブ切り替え部分のスタイル
+           ========================================== */
         .app-container {
             display: flex;
             flex-direction: column;
@@ -78,7 +87,10 @@
         .content-section { display: none; flex-grow: 1; overflow: hidden; }
         .content-section.active { display: flex; flex-direction: column; }
 
-        /* --- タイムテーブル表示エリア --- */
+        /* ==========================================
+           CSS: タイムテーブル表示エリア
+           スクロール領域やステージヘッダー、時間軸、グリッドのスタイル
+           ========================================== */
         .scroll-container { display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
         
         .stage-headers-wrapper {
@@ -89,6 +101,7 @@
             background: #f9f9f9;
         }
 
+        /* ヘッダー左端の空白（時間軸の上部） */
         .stage-header-empty {
             width: var(--time-width);
             flex-shrink: 0;
@@ -100,6 +113,7 @@
         }
 
         .stage-header-list { display: flex; }
+        
         .stage-header {
             width: var(--col-width);
             flex-shrink: 0;
@@ -109,6 +123,7 @@
             box-sizing: border-box;
         }
         
+        /* マイタイムテーブル列用のヘッダー（列が複数になっても1つのタイトルに結合） */
         .stage-header.mytt { width: auto; min-width: var(--col-width); background: #eee; }
 
         .stage-name {
@@ -121,7 +136,7 @@
 
         .timetable-wrapper { display: flex; flex-grow: 1; overflow: auto; position: relative; }
 
-        /* --- 時間軸 (左列) --- */
+        /* 時間軸 (左列) */
         .time-col {
             width: var(--time-width);
             flex-shrink: 0;
@@ -143,10 +158,11 @@
         }
         .time-slot span { position: absolute; top: -8px; left: 5px; background: #fff; padding: 0 2px; }
 
-        /* --- グリッドとアーティストブロック --- */
+        /* グリッド列 */
         .grid-col { width: var(--col-width); flex-shrink: 0; border-right: 1px dashed var(--grid-border); position: relative; }
         .grid-col.mytt { background-color: rgba(238, 238, 238, 0.3); }
 
+        /* 10分刻みなどの背景ライン */
         .grid-bg-lines {
             position: absolute;
             inset: 0; pointer-events: none;
@@ -155,6 +171,10 @@
             z-index: 0;
         }
 
+        /* ==========================================
+           CSS: アーティスト＆フードブロック
+           各予定を表示する四角いブロックのスタイル
+           ========================================== */
         .artist-block {
             position: absolute;
             left: 2px; right: 2px; border-radius: 4px; padding: 4px;
@@ -174,6 +194,7 @@
             cursor: pointer;
         }
 
+        /* フードリストのアコーディオン用 */
         .food-menu-list {
             display: none;
             margin: 5px 0 0 0;
@@ -183,18 +204,13 @@
         .food-block.open .food-menu-list { display: block; }
         .food-block.open { z-index: 50; height: auto !important; }
 
-        /* フード店舗アコーディオン用スタイル */
         .food-shop {
             background: rgba(0,0,0,0.15);
             margin-bottom: 4px;
             padding: 4px;
             border-radius: 4px;
         }
-        .shop-name {
-            font-weight: bold;
-            font-size: 11px;
-            cursor: pointer;
-        }
+        .shop-name { font-weight: bold; font-size: 11px; cursor: pointer; }
         .shop-details { display: none; margin-top: 8px; }
         .food-shop.open .shop-details { display: block; }
         .shop-message {
@@ -206,6 +222,7 @@
             line-height: 1.3;
         }
 
+        /* 再放送用の斜線背景 */
         .artist-block.is-replay {
             opacity: 0.85;
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
@@ -219,37 +236,66 @@
         .artist-name { font-weight: 800; font-size: 13px; line-height: 1.1; margin-bottom: 2px; word-break: break-all; overflow-wrap: break-word; display: block; }
         .artist-meta { font-size: 9px; opacity: 0.9; flex-shrink: 0; }
 
+        /* お気に入り登録ボタン（スター型） */
         .fav-btn { background: none; border: none; color: white; font-size: 16px; cursor: pointer; padding: 0; line-height: 1; text-shadow: 0 0 2px rgba(0,0,0,0.5); }
-        /* スター選択時の色変更 */
         .fav-btn.active { color: #FFD700; text-shadow: 0 0 3px rgba(0,0,0,0.8); }
 
-        /* --- 現在時刻ライン --- */
+        /* 現在時刻ライン */
         .current-time-line { position: absolute; left: 0; right: 0; height: 2px; background-color: red; z-index: 10; pointer-events: none; display: none; box-shadow: 0 0 5px red; }
         .current-time-line::before { content: ''; position: absolute; left: -4px; top: -4px; width: 10px; height: 10px; background-color: red; border-radius: 50%; }
 
+        /* 演奏中アニメーション */
         @keyframes pulse-border {
             0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); border-color: red; }
             70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); border-color: #ff6b6b; }
         }
         .artist-block.playing { border: 3px solid red; animation: pulse-border 1.5s infinite; z-index: 3; }
 
-        /* --- マップセクション --- */
+        /* ==========================================
+           CSS: マップセクション＆時計・更新日時
+           ========================================== */
         #mapSection { background-color: #333; position: relative; overflow: auto; display: none; }
         #mapSection.active { display: block; }
         .map-wrapper { display: inline-block; min-width: 100%; min-height: 100%; text-align: center; padding: 20px; box-sizing: border-box; transform-origin: 0 0; }
-        .area-map-img { 
-            max-width: 100%; height: auto; display: block; margin: 0 auto 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
+        .area-map-img { max-width: 100%; height: auto; display: block; margin: 0 auto 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        
         .map-controls { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 110; }
         .zoom-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: 2px solid white; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      
+        /* デジタル時計 */
+        #digitalClock {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #FFB100;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 1000;
+            pointer-events: none;
+            border: 1px solid #FFB100;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        /* 更新日時 */
+        #lastUpdated {
+            color: #ccc;
+            font-size: 11px;
+            margin-bottom: 10px;
+            display: block;
+        }
     </style>
 </head>
 <body>
-
+<div id="digitalClock">00:00:00</div>
 <div class="app-container">
     <header>
-        <h1>ARABAKI ROCK FEST.26<br>タイムテーブル & エリアマップ</h1>
-        <div class="disclaimer">※ジャンルはAIによる判断です。</div>
+        <h1>ARABAKI ROCK FEST.26<br>非公式タイムテーブル</h1>
+        <div class="disclaimer">※各アーティストのジャンルはAIによる判定です。</div>
+        <div id="lastUpdated">Last Update: --/--/-- --:--</div> 
         <div class="tabs">
             <button class="tab-btn active" id="btnDay1" onclick="switchTab('day1')">4/25 (土)</button>
             <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')">4/26 (日)</button>
@@ -287,9 +333,17 @@
 </div>
 
 <script>
-// --- JS: 定数設定 ---
-const START_HOUR = 9;
-const END_HOUR = 25;
+// ==========================================
+// 【設定・データエリア】
+// ★来年以降の更新は、このエリアのデータを書き換えるだけで完了します★
+// ==========================================
+
+// --- 1. タイムテーブル基本時間 ---
+const START_HOUR = 9; // 開始時間（9時）
+const END_HOUR = 25;  // 終了時間（25=深夜1時）
+
+// --- 2. ステージ情報 ---
+// ステージの増減、名称変更、カラー変更はここで行います。
 const stagesInfo = [
     { id: 'food', name: 'フード（公式HP）', color: '#E67E22', url: 'https://arabaki.com/shop/#tabfood' },
     { id: 'michinoku', name: '陸奥', color: '#D4AF37' },
@@ -299,9 +353,14 @@ const stagesInfo = [
     { id: 'hanagasa', name: '花笠スクエア', color: '#E83929' },
     { id: 'banetsu', name: '磐越', color: '#0077B6' }
 ];
+
+// --- 3. データ作成用ヘルパー関数 ---
+// アーティストデータを簡単に記述するための関数です。（変更不要）
+// 引数: 名前, 開始時間, 終了時間, ジャンル, 再放送か(デフォルトfalse), フードメニュー配列
 const e = (name, start, end, genre, isReplay=false, menu=[]) => ({ name, start, end, genre, isReplay, menu });
 
-// フードデータ
+// --- 4. フードデータ ---
+// 各エリアのフード出店情報を定義します。
 const foodList = [
     e("風の草原／BAN-ETSU", "09:00", "25:00", "", false, [
         { name: "①チーム南三陸", menus: ["タコの唐揚げ", "紅ショウガ揚げ", "海鮮つみれ汁"], message: "ARABAKIと言ったらタコの唐揚げ！アツアツ、プリップリを提供します！！" },
@@ -371,19 +430,21 @@ const foodList = [
     ])
 ];
 
+// --- 5. タイムテーブル・出演アーティストデータ ---
+// 各日程のデータ（日付、各ステージのアーティスト）を定義します。
 const timetableData = {
     day1: {
-        date: "2026-04-25",
+        date: "2026-04-25", // ★来年の日付(Day1)に変更
         food: foodList,
         michinoku: [
             e("町長挨拶", "11:55", "12:05"),
-            e("川崎中学校吹奏楽部", "10:55", "11:25", "Brass Band"),
-            e("ストレイテナー<br><span style='font-size:9px;font-weight:normal'>GUEST: サイトウタクヤ(w.o.d.) / 清水英介(Age Factory)</span>", "12:05", "12:55", "Rock"),
-            e("マキシマム ザ ホルモン", "13:45", "14:35", "Nu Metal/Hardcore"),
-            e("ELLEGARDEN", "15:15", "16:05", "Punk Rock"),
-            e("東京スカパラダイスオーケストラ", "16:45", "17:35", "Ska"),
-            e("[Alexandros]", "18:15", "19:05", "Rock"),
-            e("ASIAN KUNG-FU GENERATION NANO-MUGEN<br><span style='font-size:9px;font-weight:normal'>GUEST: 岸田繁/岸谷香/塩塚モエカ/スカパラHorn Section/TOSHI-LOW/のん/細美武士/ホリエアツシ/Achico</span>", "19:50", "21:00", "Rock")
+            e("川崎中学校吹奏楽部", "10:55", "11:15", ""),
+            e("ストレイテナー<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●サイトウタクヤ (w.o.d.)<br>●清水英介 (Age Factory)</span>", "12:05", "12:55", "Rock"),
+            e("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
+            e("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
+            e("東京スカパラダイスオーケストラ", "16:45", "17:30", "Ska"),
+            e("[Alexandros]", "18:15", "19:00", "Rock"),
+            e("ASIAN KUNG-FU GENERATION<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●岸田繁●岸谷香●塩塚モエカ<br>●スカパラHorn Section<br>●TOSHI-LOW●のん●細美武士<br>●ホリエアツシ●Achico</span>", "19:50", "21:20", "Rock")
         ],
         arahabaki: [
             e("Ayllton", "10:30", "11:00", "Acoustic"),
@@ -395,11 +456,11 @@ const timetableData = {
             e("関取花", "16:00", "16:30", "Acoustic"),
             e("鈴木実貴子ズ", "16:55", "17:25", "Acoustic"),
             e("奇妙礼太郎", "17:50", "18:20", "Acoustic"),
-            e("GLIM SPANKY (Acoustic Set)", "18:50", "19:30", "Rock")
+            e("GLIM SPANKY (Acoustic Set)", "18:50", "19:20", "Rock")
         ],
         hatahata: [
             e("藤原美幸(秋田民謡)", "10:30", "10:45", "Folk"),
-            e("リアクション ザ ブッタ", "10:45", "11:25", "Rock"),
+            e("リアクション ザ ブッタ", "10:45", "11:20", "Rock"),
             e("TENDOUJI", "11:50", "12:25", "Indie Rock"),
             e("みちのくプロレス1", "12:25", "12:45"),
             e("ドミコ", "12:55", "13:30", "Garage Rock"),
@@ -412,57 +473,57 @@ const timetableData = {
             e("西馬音内盆踊り2", "16:50", "17:10"),
             e("KOTORI", "17:20", "17:55", "Rock"),
             e("西馬音内盆踊り3", "17:55", "18:15"),
-            e("打首獄門同好会", "18:25", "19:05", "Loud Rock"),
-            e("coldrain", "19:30", "20:10", "Post-Hardcore")
+            e("打首獄門同好会", "18:25", "19:00", "Loud Rock"),
+            e("coldrain", "19:30", "20:05", "Post-Hardcore")
         ],
         tsugaru: [
-            e("Cha'R", "10:35", "11:05", "Pop"),
-            e("超能力戦士ドリアン", "11:30", "12:10", "Rock"),
-            e("おいしくるメロンパン", "12:40", "13:20", "Rock"),
-            e("NELKE", "13:50", "14:30", "Indie"),
-            e("kurayamisaka", "14:55", "15:35", "Indie"),
-            e("のん & the tears of knight", "16:00", "16:40", "Rock"),
-            e("岸谷香", "17:05", "17:45", "Pop"),
+            e("Cha'R", "10:35", "10:55", ""),
+            e("超能力戦士ドリアン", "11:30", "12:05", "Rock"),
+            e("おいしくるメロンパン", "12:40", "13:15", "Rock"),
+            e("NELKE", "13:50", "14:25", "Indie"),
+            e("kurayamisaka", "14:55", "15:30", "Indie"),
+            e("のん & the tears of knight", "16:00", "16:35", "Rock"),
+            e("岸谷香", "17:05", "17:40", "Pop"),
             e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional"),
-            e("リーガルリリー", "18:20", "19:00", "Rock"),
+            e("リーガルリリー", "18:20", "18:55", "Rock"),
             e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional"),
-            e("柴田聡子 (BAND SET)", "19:35", "20:15", "Pop"),
+            e("柴田聡子 (BAND SET)", "19:35", "20:10", "Pop"),
             e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional"),
-            e("コレサワ", "20:50", "21:30", "Pop")
+            e("コレサワ", "20:50", "21:25", "Pop")
         ],
         hanagasa: [
-            e("Rol3ert", "11:50", "12:30", "Electronic"),
-            e("猪居亜美(クラシックギター)", "13:20", "14:00", "Classical"),
-            e("奈良美智 (DJ)", "14:40", "15:20", "DJ"),
-            e("Date fm SOUND GENIC トークセッション", "16:15", "16:55", "Talk"),
-            e("Date fm SOUND GENIC トークセッション", "17:35", "18:15", "Talk"),
-            e("yosugala", "19:00", "19:40", "Idol"),
-            e("もっさ(ネクライトーキー)", "20:30", "21:10", "Acoustic"),
+            e("Rol3ert", "11:50", "12:10", ""),
+            e("猪居亜美(クラシックギター)", "13:20", "13:40", ""),
+            e("奈良美智 (DJ)", "14:40", "15:10", "DJ"),
+            e("Date fm SOUND GENIC トークセッション", "16:15", "16:35", ""),
+            e("Date fm SOUND GENIC トークセッション", "17:35", "17:55", ""),
+            e("yosugala", "19:00", "19:20", ""),
+            e("もっさ(ネクライトーキー)", "20:30", "21:00", "Acoustic"),
             e("ヒグチアイ (for CAMPERS)", "22:00", "22:30", "Pop"),
-            e("いいちこ presents ENKAI<br><span style='font-size:9px;font-weight:normal'>関取花/Ｔ字路s/ヒグチアイ/オズワルド/ダンビラムーチョ/ナユタ</span>", "22:30", "24:00", "Variety"),
+            e("いいちこ presents ENKAI<br><span style='font-size:9px;font-weight:normal'>アーティスト<br>●関取花<br>●Ｔ字路s<br>●ヒグチアイ<br>芸人<br>●オズワルド<br>●ダンビラムーチョ<br>●ナユタ<br>MC<br>●遠山大輔（グランジ）</span>", "22:30", "24:10", "Variety"),
             e("杉本ラララ", "24:10", "24:40", "Acoustic")
         ],
         banetsu: [
             e("MONKEY MAJIK", "11:00", "11:45", "Pop Rock"),
-            e("礼賛", "12:30", "13:10", "Hip Hop/Rock"),
-            e("ハンブレッダーズ", "13:50", "14:30", "Rock"),
+            e("礼賛", "12:30", "13:15", "Hip Hop/Rock"),
+            e("ハンブレッダーズ", "13:50", "14:35", "Rock"),
             e("くるり", "15:30", "16:15", "Alternative Rock"),
-            e("OAU<br><span style='font-size:9px;font-weight:normal'>GUEST: 大木伸夫(ACIDMAN) / 細美武士</span>", "16:50", "17:35", "Acoustic Rock"),
+            e("OAU<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●大木伸夫 (ACIDMAN)<br>●細美武士</span>", "16:50", "17:35", "Acoustic Rock"),
             e("優里", "18:10", "18:55", "Pop"),
             e("STUTS", "19:40", "20:25", "Hip Hop")
         ]
     },
     day2: {
-        date: "2026-04-26",
+        date: "2026-04-26", // ★来年の日付(Day2)に変更
         food: foodList,
         michinoku: [
-            e("Lexulty", "10:20", "10:50", "Rock"),
-            e("怒髪天", "11:30", "12:15", "Punk"),
+            e("Lexulty", "10:20", "10:40", ""),
+            e("怒髪天", "11:30", "12:20", "Punk"),
             e("MONGOL800", "13:00", "13:45", "Punk"),
             e("10-FEET", "14:35", "15:20", "Punk"),
             e("布袋寅泰", "16:05", "16:50", "Rock"),
             e("あいみょん", "17:35", "18:20", "Pop"),
-            e("MICHINOKU PEACE SESSION GTR祭'26<br><span style='font-size:9px;font-weight:normal'>GUEST: うつみようこ/菅原卓郎/曽我部恵一/竹安堅一/TAKUMA/DURAN/TOSHI-LOW/ホリエアツシ/松尾レミ/宮崎朝子/山田将司&菅波栄純</span>", "19:30", "21:00", "Rock")
+            e("MICHINOKU PEACE SESSION GTR祭'26<br><span style='font-size:9px;font-weight:normal'>SPECIAL BAND<br>●The Birthday<br>●Paledusk<br>●Keyboards：高野勲<br>GUEST<br>●うつみようこ●菅原卓郎<br>●曽我部恵一●竹安堅一●TAKUMA<br>●DURAN●TOSHI-LOW<br>●ホリエアツシ●松尾レミ<br>●宮崎朝子●山田将司&菅波栄純</span>", "19:30", "21:15", "Rock")
         ],
         arahabaki: [
             e("中村旭", "10:30", "11:00", "Acoustic"),
@@ -474,16 +535,16 @@ const timetableData = {
             e("中田裕二(弾り語り)", "16:00", "16:30", "Pop/Rock"),
             e("堂島孝平", "16:55", "17:25", "Pop"),
             e("曽我部恵一(弾き語り)", "17:50", "18:20", "Acoustic"),
-            e("向井秀徳アコースティック＆エレクトリック", "18:45", "19:25", "Alternative")
+            e("向井秀徳アコースティック＆エレクトリック", "18:45", "19:15", "Alternative")
         ],
         hanagasa: [
-            e("Luiz Murá (for CAMPERS)", "09:00", "09:40", "Acoustic"),
-            e("おとどけチーたくん高速バンド", "10:30", "11:10", "Rock"),
-            e("Date fm トークセッション", "11:50", "12:30", "Talk"),
-            e("トークセッション 松田晋二の夜更けの囁き", "13:10", "13:50", "Talk"),
-            e("曽我部恵一 (DJ)", "14:35", "15:20", "DJ"),
-            e("EMNW", "16:10", "16:50", "Rock"),
-            e("忘れらんねえよ柴田", "17:45", "18:25", "Acoustic")
+            e("Luiz Murá (for CAMPERS)", "09:00", "09:35", "Acoustic"),
+            e("おとどけチーたくん高速バンド", "10:30", "10:50", ""),
+            e("Date fm トークセッション", "11:50", "12:10", ""),
+            e("トークセッション 松田晋二の夜更けの囁き", "13:10", "13:30", ""),
+            e("曽我部恵一 (DJ)", "14:35", "15:05", "DJ"),
+            e("EMNW", "16:10", "16:40", "Rock"),
+            e("忘れらんねえよ柴田", "17:45", "18:15", "Acoustic")
         ],
         hatahata: [
             e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk"),
@@ -497,30 +558,30 @@ const timetableData = {
             e("PEDRO", "15:05", "15:40", "Rock"),
             e("西馬音内盆踊り1", "15:40", "16:00"),
             e("THE BACK HORN", "16:15", "16:50", "Rock"),
-            e("西馬音内盆踊り2", "16:50", "17:05"),
-            e("eastern youth", "17:25", "18:05", "Punk/Emo"),
-            e("LOSTAGE", "18:30", "19:10", "Rock"),
-            e("黒夢", "19:35", "20:20", "Rock")
+            e("西馬音内盆踊り2", "16:50", "17:10"),
+            e("eastern youth", "17:25", "18:00", "Punk/Emo"),
+            e("LOSTAGE", "18:30", "19:05", "Rock"),
+            e("黒夢", "19:35", "20:10", "Rock")
         ],
         tsugaru: [
             e("坂本サトル ARABAKI special", "10:30", "11:15", "Acoustic"),
-            e("luv", "11:45", "12:25", "Rock"),
+            e("luv", "11:45", "12:20", "Rock"),
             e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional"),
-            e("the shes gone", "13:00", "13:40", "Rock"),
+            e("the shes gone", "13:00", "13:35", "Rock"),
             e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional"),
-            e("秋山黄色", "14:15", "14:55", "Rock"),
+            e("秋山黄色", "14:15", "14:50", "Rock"),
             e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional"),
-            e("Ｔ字路s", "15:35", "16:15", "Blues/Folk"),
-            e("Kvi Baba", "16:40", "17:20", "Hip Hop"),
-            e("TOOBOE", "17:45", "18:25", "Pop/Rock"),
-            e("浅井健一", "18:50", "19:30", "Rock"),
-            e("レトロリロン", "19:55", "20:35", "Pop")
+            e("Ｔ字路s", "15:35", "16:10", "Blues/Folk"),
+            e("Kvi Baba", "16:40", "17:15", "Hip Hop"),
+            e("TOOBOE", "17:45", "18:20", "Pop/Rock"),
+            e("浅井健一", "18:50", "19:25", "Rock"),
+            e("レトロリロン", "19:55", "20:30", "Pop")
         ],
         banetsu: [
-            e("川内太鼓", "10:00", "10:30", "Traditional"),
+            e("川内太鼓", "10:00", "10:20", "Traditional"),
             e("GEZAN", "11:00", "11:45", "Alternative"),
-            e("ハンバート ハンバート", "12:25", "13:05", "Folk"),
-            e("KEIJU", "13:45", "14:25", "Hip Hop"),
+            e("ハンバート ハンバート", "12:25", "13:10", "Folk"),
+            e("KEIJU", "13:45", "14:30", "Hip Hop"),
             e("T.M.Revolution", "15:20", "16:05", "Pop"),
             e("ゴスペラーズ", "16:55", "17:40", "R&B/Pop"),
             e("SHISHAMO", "18:30", "19:15", "Rock")
@@ -528,40 +589,56 @@ const timetableData = {
     }
 };
 
-// --- JS: 状態管理 ---
+
+// ==========================================
+// 【システム・ロジックエリア】
+// 基本的にここのコードは変更不要です。UIや動作の処理を行います。
+// ==========================================
+
+// --- 状態管理・データ保存 ---
 let currentDay = 1;
-let favorites = JSON.parse(localStorage.getItem('arabaki_favs')) || {};
+let favorites = JSON.parse(localStorage.getItem('arabaki_favs')) || {}; // ブラウザに保存されたお気に入りを読み込み
 let mapScale = 1.0;
+
+// お気に入りをローカルストレージに保存する関数
 const saveFavorites = () => localStorage.setItem('arabaki_favs', JSON.stringify(favorites));
 
+// お気に入り（スター）のON/OFFを切り替える関数
 function toggleFav(id) {
     const decodedId = decodeURIComponent(id);
     favorites[decodedId] ? delete favorites[decodedId] : favorites[decodedId] = true;
     saveFavorites();
-    renderTimetable();
+    renderTimetable(); // 状態が変わったら画面を再描画
 }
 
+// フード店のアコーディオン（開閉）を切り替える関数
 function toggleFood(element) {
     element.classList.toggle('open');
 }
 
+// --- 時間・計算 ---
+// 「HH:MM」の文字列を、START_HOURを起点とした「分」に変換する関数
 function timeToMins(timeStr) {
     const [h, m] = timeStr.split(':').map(Number);
-    const adjustedH = h < START_HOUR ? h + 24 : h;
+    const adjustedH = h < START_HOUR ? h + 24 : h; // 深夜帯(0時〜)は24時間加算して処理
     return (adjustedH - START_HOUR) * 60 + m;
 }
 
+// 25:00等を「1:00」のように画面表示用にフォーマットする関数
 function formatTimeDisplay(timeStr) {
     let [h, m] = timeStr.split(':').map(Number);
     if(h >= 24) h -= 24;
     return `${h}:${m.toString().padStart(2,'0')}`;
 }
 
+// --- UI操作 ---
+// スクロール時にステージ名ヘッダーの位置を追従させる関数
 function syncScroll() {
     const wrapper = document.getElementById('ttWrapper');
     document.getElementById('headerWrapper').scrollLeft = wrapper.scrollLeft;
 }
 
+// 日程やマップのタブを切り替える関数
 function switchTab(target) {
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
     if (target === 'map') {
@@ -575,7 +652,8 @@ function switchTab(target) {
     }
 }
 
-// ステージヘッダーの生成
+// --- 画面描画 ---
+// タイムテーブル上部のステージ名を生成・表示する関数
 function renderHeaders(myttCols) {
     let html = '';
     // マイタイムテーブルが複数列になっても結合された1つのタイトルとして表示
@@ -585,23 +663,24 @@ function renderHeaders(myttCols) {
                  </div>`;
     }
 
+    // 各ステージのヘッダー生成
     stagesInfo.forEach(stage => {
         const style = `style="background-color: ${stage.color}"`;
         html += `<div class="stage-header">
                     ${stage.url ? `<a href="${stage.url}" target="_blank" class="stage-name" ${style}>${stage.name}</a>` 
                                 : `<div class="stage-name" ${style}>${stage.name}</div>`}
-                </div>`;
+                 </div>`;
     });
     document.getElementById('stageHeaders').innerHTML = html;
 }
 
-// アーティストブロックのHTML生成
+// 1つの予定（アーティスト・フード等）の四角いブロックHTMLを生成する関数
 function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const startMin = timeToMins(artist.start);
     const endMin = timeToMins(artist.end);
     const duration = endMin - startMin;
     
-    // フードセクションの場合の特別処理
+    // 1. フードセクションの場合の専用HTML生成
     if(stage.id === 'food') {
         const shopsHtml = artist.menu.map(shop => {
             const menuItems = shop.menus.map(m => `<li style="margin-left:10px;">● ${m}</li>`).join('');
@@ -623,17 +702,22 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
             </div>`;
     }
 
+    // 2. 通常のアーティストブロックの処理
     const cleanName = artist.name.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
     const favId = `${dayKey}_${stage.id}_${cleanName}`;
     const isFav = favorites[favId];
+    
+    // 背景色を少し薄くする特定のイベント群
     const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
     const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
 
+    // 現在演奏中かどうかの判定
     let isPlaying = false;
     const now = new Date();
     const dataDate = new Date(timetableData[dayKey].date);
     const isToday = now.toDateString() === dataDate.toDateString();
     const isNextDayEarly = now.getHours() < START_HOUR && now.getDate() === dataDate.getDate() + 1;
+    
     if (isToday || isNextDayEarly) {
         const currentMins = (now.getHours() + (isNextDayEarly ? 24 : 0) - START_HOUR) * 60 + now.getMinutes();
         if(currentMins >= startMin && currentMins < endMin) isPlaying = true;
@@ -644,8 +728,9 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
 
     const isMayorGreeting = artist.name === "町長挨拶";
     const isSpecialArtist = artist.name.includes("藤原美幸") || artist.name.includes("夢弦会");
-    const isEventNoGenre = artist.name.includes("みちのくプロレス") || artist.name.includes("西馬音内盆踊り");
+    const isEventNoGenre = artist.name.includes("みちのくプロレス") || artist.name.includes("西馬音内盆踊り") || artist.name.includes("トークセッション") || artist.name.includes("おとどけチーたくん高速バンド");
 
+    // 特殊な短いイベント用の簡易表示フォーマット
     if (isMayorGreeting || isSpecialArtist) {
         const displayTime = isMayorGreeting ? "12:00-" : `${formatTimeDisplay(artist.start)}-`;
         return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor}; flex-direction:row; align-items:center; gap:4px;">
@@ -655,6 +740,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
                 </div>`;
     }
 
+    // 通常のアーティスト表示フォーマット
     const displayGenre = (isEventNoGenre) ? "" : (artist.genre || "");
     const timeText = isEventNoGenre ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
 
@@ -668,7 +754,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
             </div>`;
 }
 
-// 文字サイズ自動調整
+// ブロックの大きさに合わせてアーティスト名の文字サイズを自動調整する関数
 function adjustFontSize() {
     document.querySelectorAll('.artist-block:not(.food-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
@@ -680,6 +766,7 @@ function adjustFontSize() {
         const targetEl = (isRow || nameEl.innerText !== "") ? nameEl : timeEl;
 
         targetEl.style.fontSize = fontSize + 'px';
+        // 枠からはみ出ている場合は文字を少しずつ小さくする
         while ((block.scrollHeight > block.offsetHeight || (isRow && nameEl.scrollWidth > nameEl.offsetWidth)) && fontSize > 7) {
             fontSize -= 0.5;
             targetEl.style.fontSize = fontSize + 'px';
@@ -687,19 +774,19 @@ function adjustFontSize() {
     });
 }
 
-// タイムテーブル全体のレンダリング
+// タイムテーブル全体（時間枠・グリッド・アーティスト）を描画するメイン関数
 function renderTimetable() {
     const dayKey = `day${currentDay}`;
     const data = timetableData[dayKey];
-
-    // 時間軸生成
+    
+    // 1. 時間軸の生成
     let timeHtml = '';
     for(let h = START_HOUR; h <= END_HOUR; h++) {
         timeHtml += `<div class="time-slot"><span>${h >= 24 ? h-24 : h}:00</span></div>`;
     }
     document.getElementById('timeCol').innerHTML = timeHtml;
 
-    // マイタイムテーブル（お気に入り）
+    // 2. マイタイムテーブル（お気に入り）の抽出と列計算
     let myTtItems = [];
     stagesInfo.forEach(stage => {
         if(stage.id === 'food') return; // フードはお気に入り対象外
@@ -713,6 +800,7 @@ function renderTimetable() {
     let myTtColumns = [[]]; 
     myTtItems.forEach(item => {
         let placed = false;
+        // 時間が被らないように列を分ける処理
         for(let col of myTtColumns) {
             const overlap = col.some(ex => {
                 return Math.max(timeToMins(item.artist.start), timeToMins(ex.artist.start)) < 
@@ -726,18 +814,23 @@ function renderTimetable() {
     const myTtColCount = myTtItems.length ? myTtColumns.length : 0;
     renderHeaders(myTtColCount);
 
-    // グリッド生成
+    // 3. グリッドとアーティストブロックの配置
     let gridHtml = '';
+    
+    // マイタイムテーブル部分の描画
     if(myTtColCount > 0) {
         myTtColumns.forEach(col => {
             gridHtml += `<div class="grid-col mytt"><div class="grid-bg-lines"></div>${col.map(i => getArtistHtml(i.artist, i.stage, dayKey, true)).join('')}</div>`;
         });
     }
 
+    // 全ステージ部分の描画
     stagesInfo.forEach(stage => {
         const content = (data[stage.id] || []).map(a => getArtistHtml(a, stage, dayKey)).join('');
         gridHtml += `<div class="grid-col"><div class="grid-bg-lines"></div>${content}</div>`;
     });
+    
+    // 現在時刻ライン用の要素追加
     gridHtml += `<div class="current-time-line" id="currentTimeLine"></div>`;
     document.getElementById('gridContainer').innerHTML = gridHtml;
     
@@ -745,7 +838,7 @@ function renderTimetable() {
     adjustFontSize();
 }
 
-// 現在時刻ラインの更新
+// 現在時刻を示す赤いラインの位置を更新する関数
 function updateCurrentTimeLine() {
     const line = document.getElementById('currentTimeLine');
     if(!line) return;
@@ -755,6 +848,7 @@ function updateCurrentTimeLine() {
     const dataDate = new Date(timetableData[dayKey].date);
     const isNextDayEarly = now.getHours() < START_HOUR && now.getDate() === dataDate.getDate() + 1;
     
+    // 表示している日付と今日が一致している場合のみラインを表示
     if (now.toDateString() === dataDate.toDateString() || isNextDayEarly) {
         const currentMins = (now.getHours() + (isNextDayEarly ? 24 : 0) - START_HOUR) * 60 + now.getMinutes();
         const maxMins = (END_HOUR - START_HOUR) * 60;
@@ -768,24 +862,26 @@ function updateCurrentTimeLine() {
     line.style.display = 'none';
 }
 
-// --- JS: マップ操作 ---
+// --- マップ操作 ---
+// マップの拡大・縮小処理
 function zoomMap(delta) {
     mapScale = Math.min(Math.max(0.5, mapScale + delta), 3.0);
     document.getElementById('mapWrapper').style.transform = `scale(${mapScale})`;
 }
 
+// マップのズームリセット
 function resetZoom() {
     mapScale = 1.0;
     document.getElementById('mapWrapper').style.transform = `scale(1)`;
 }
 
-// 初期化
-renderTimetable();
-setInterval(updateCurrentTimeLine, 60000);
 
-// --- JS: Service Worker (オフラインキャッシュ機能) ---
-// ※CodePen等のiframe環境ではスコープ制限により登録エラーになる場合がありますが、
-// 単一のHTMLファイルとしてローカルやサーバーに配置した場合は正常にキャッシュが機能します。
+// --- アプリ初期起動処理 ---
+renderTimetable(); // 初回描画
+setInterval(updateCurrentTimeLine, 60000); // 1分ごとに現在時刻ラインを更新
+
+// --- Service Worker (オフラインキャッシュ機能) ---
+// 電波の悪い会場でも動作するようにキャッシュを保存する機能
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         const swCode = `
@@ -816,14 +912,13 @@ if ('serviceWorker' in navigator) {
                             });
                             return fetchRes;
                         }).catch(() => {
-                            // オフラインかつキャッシュがない場合の処理をここに記述可能
+                            // オフラインかつキャッシュがない場合の処理
                         });
                     })
                 );
             });
         `;
-        
-        // BlobURLを用いて単一ファイル内でServiceWorkerを完結
+        // BlobURLを用いて単一ファイル内でServiceWorkerを完結させる手法
         const blob = new Blob([swCode], { type: 'application/javascript' });
         const swUrl = URL.createObjectURL(blob);
 
@@ -832,6 +927,38 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('ServiceWorker registration failed or restricted by iframe: ', err));
     });
 }
+
+// --- デジタル時計の表示処理 ---
+function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    
+    const clockElement = document.getElementById('digitalClock');
+    if (clockElement) {
+        clockElement.textContent = `${h}:${m}:${s}`;
+    }
+}
+setInterval(updateClock, 1000); // 1秒ごとに更新
+updateClock(); // 初回実行
+
+// --- 最終更新日時の表示処理 ---
+function displayLastModified() {
+    const lastMod = new Date(document.lastModified);
+    const y = lastMod.getFullYear();
+    const m = String(lastMod.getMonth() + 1).padStart(2, '0');
+    const d = String(lastMod.getDate()).padStart(2, '0');
+    const hh = String(lastMod.getHours()).padStart(2, '0');
+    const mm = String(lastMod.getMinutes()).padStart(2, '0');
+
+    const lastUpdatedElement = document.getElementById('lastUpdated');
+    if (lastUpdatedElement) {
+        lastUpdatedElement.textContent = `更新日時：${y}/${m}/${d} ${hh}:${mm}`;
+    }
+}
+window.addEventListener('load', displayLastModified); // ページ読み込み時に実行
+
 </script>
 </body>
 </html>
