@@ -1,0 +1,354 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   🎨 1. CSS変数（デザインの基本設定）
+   全体のレイアウトの基準サイズや色を一箇所で管理し、変更を容易にします。
+   ========================================================================= */
+:root {
+    --bg-color: #ffffff;          /* アプリ全体の背景色 */
+    --grid-border: #e0e0e0;       /* グリッド（枠線）の色 */
+    --text-color: #333333;        /* 基本のテキストカラー */
+
+    /* レイアウトの基準サイズ（JavaScriptの定数と連携します） */
+    --time-width: 60px;           /* 左側の時間軸の横幅 */
+    --col-width: 120px;           /* 各ステージ1列あたりの横幅 */
+    --px-per-min: 2;              /* 1分あたりの高さ（ピクセル数）。JS側の設定と必ず一致させる */
+}
+
+/* =========================================================================
+   🎨 2. 全体レイアウト・ヘッダー
+   ========================================================================= */
+/* 画面全体の基本設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden; /* ページ全体のスクロールを禁止し、内部のコンテナのみスクロールさせる */
+}
+
+/* アプリ全体のコンテナ（画面の高さいっぱいに広げる） */
+.app-container {
+    display: flex;
+    flex-direction: column; /* 縦方向に要素を並べる */
+    height: 100vh;          /* 画面の高さを100%使用 */
+}
+
+/* 上部固定ヘッダー（黒背景） */
+header {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 10px 5px;
+    text-align: center;
+    flex-shrink: 0; /* スクロール領域が縮んでもヘッダーの高さは固定する */
+}
+
+/* イベントタイトル・注記の装飾 */
+h1 {
+    font-size: 25px;
+    margin: 0 0 5px 0;
+}
+.event-subtitle {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.disclaimer {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #cccccc;
+}
+.update-time {
+    font-size: 12px;
+    color: #aaaaaa;
+    margin-bottom: 10px;
+}
+
+/* 日付切り替えタブの装飾 */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.tab-btn {
+    background-color: #333333;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.2s; /* ホバー時の色変化を滑らかに */
+}
+.tab-btn:hover {
+    background-color: #555555;
+}
+.tab-btn.active {
+    background-color: #e65100; /* 選択中のタブは目立つオレンジ色に */
+    font-weight: bold;
+}
+
+/* =========================================================================
+   🎨 3. タイムテーブルエリア（スクロール領域）
+   ========================================================================= */
+/* ヘッダーとグリッドを含むスクロールコンテナ */
+.scroll-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;    /* ヘッダー以外の残り高さをすべて埋める */
+    overflow: hidden; /* 領域外にはみ出た要素を隠す */
+}
+
+/* ステージ名ヘッダーのラッパー（横スクロール同期用） */
+.stage-headers-wrapper {
+    display: flex;
+    overflow-x: hidden; /* スクロールバーは隠し、JSで本体側と同期して動かす */
+    flex-shrink: 0;
+    border-bottom: 2px solid #333333;
+    background: #f9f9f9;
+}
+
+/* 左上の空白部分（時間軸の真上に配置） */
+.stage-header-empty {
+    width: var(--time-width);
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid var(--grid-border);
+    position: sticky; /* 横スクロール時に左端に固定表示 */
+    left: 0;
+    z-index: 10;
+}
+
+/* ステージヘッダーのリストコンテナ */
+.stage-header-list {
+    display: flex;
+}
+
+/* 各ステージのヘッダーカラム */
+.stage-header {
+    width: var(--col-width);
+    flex-shrink: 0;
+    text-align: center;
+    padding: 10px 5px;
+    border-right: 1px solid var(--grid-border);
+    box-sizing: border-box; /* paddingやborderを幅に含める */
+}
+
+/* マイタイムテーブル用のヘッダー（列数に応じて幅が自動で広がる） */
+.stage-header.mytt { 
+    width: auto;
+    min-width: var(--col-width); 
+    background: #eeeeee; 
+}
+
+/* ステージ名のラベル装飾 */
+.stage-name {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #ffffff;
+    padding: 4px;
+    border-radius: 4px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* 文字を見やすくするための影 */
+}
+.stage-name.mytt { 
+    color: #333333;
+    text-shadow: none; 
+    background: #cccccc;
+}
+
+/* YouTube視聴等のリンク装飾 */
+.watch-link {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    background: #ffffff;
+    transition: background 0.2s;
+}
+.watch-link:hover {
+    background: #f0f0f0;
+}
+
+/* =========================================================================
+   🎨 4. グリッドとアーティストブロック
+   ========================================================================= */
+/* スクロール可能なタイムテーブル本体 */
+.timetable-wrapper {
+    display: flex;
+    flex-grow: 1;
+    overflow: auto; /* ここで上下左右のスクロールを許可 */
+    position: relative;
+}
+
+/* グリッド全体を包むコンテナ（赤い線を配置する基準になる） */
+.grid-container {
+    display: flex;
+    position: relative;
+}
+
+/* 時間軸カラム（左側に固定） */
+.time-col {
+    width: var(--time-width);
+    flex-shrink: 0;
+    background: #ffffff;
+    border-right: 1px solid var(--grid-border);
+    position: sticky; /* スクロール時も左端に固定 */
+    left: 0;
+    z-index: 5;       /* グリッド線より手前、ヘッダーより奥に配置 */
+}
+
+/* 1時間ごとの区切り線と時刻表示 */
+.time-slot {
+    height: calc(60 * var(--px-per-min) * 1px);
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--grid-border);
+    text-align: center;
+    font-size: 12px;
+    color: #666666;
+    position: relative;
+}
+/* 時刻のテキストを線の真上に配置する */
+.time-slot span {
+    position: absolute;
+    top: -8px;
+    left: 5px;
+    background: #ffffff;
+    padding: 0 2px;
+}
+
+/* ステージごとの縦カラム */
+.grid-col {
+    width: var(--col-width);
+    flex-shrink: 0;
+    border-right: 1px dashed var(--grid-border);
+    position: relative;
+}
+.grid-col.mytt {
+    background-color: rgba(238, 238, 238, 0.3);
+}
+
+/* 背景のグリッド線（1時間ごとの破線をグラデーションで描画） */
+.grid-bg-lines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none; /* マウス操作を透過させる */
+    background-size: 100% calc(60 * var(--px-per-min) * 1px);
+    background-image: linear-gradient(to bottom, var(--grid-border) 1px, transparent 1px);
+    z-index: 0;
+}
+
+/* アーティスト情報の枠（ブロック） */
+.artist-block {
+    position: absolute; /* 親(grid-col)のtopからの位置で開始時間を表現する */
+    left: 2px; right: 2px;
+    border-radius: 4px;
+    padding: 4px;
+    box-sizing: border-box;
+    font-size: 11px;
+    overflow: hidden;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid transparent; /* 点滅アニメーション用の予備ボーダー */
+    transition: border-color 0.2s;
+}
+
+/* リプレイ配信（再放送）の装飾（斜めストライプ＆半透明） */
+.artist-block.is-replay {
+    opacity: 0.85;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
+}
+
+/* お気に入り登録済みアーティストの枠装飾 */
+.artist-block.favorited {
+    border: 2px solid #ff0000 !important;
+    box-shadow: 0 0 8px #ff0000;
+    z-index: 2; /* 通常のブロックより手前に表示 */
+}
+
+/* アーティストブロック内部のレイアウト */
+.artist-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2px;
+}
+.artist-time { 
+    font-weight: bold;
+    font-size: 10px; 
+}
+.artist-name { 
+    font-weight: 800; 
+    font-size: 13px; 
+    line-height: 1.2; 
+    margin-bottom: 2px; 
+    word-break: break-word; /* 長い単語は折り返す */
+}
+.artist-meta { 
+    font-size: 9px; 
+    opacity: 0.9;
+}
+
+/* お気に入りボタン（★）の装飾 */
+.fav-btn {
+    background: none;
+    border: none; 
+    color: #ffffff;
+    font-size: 16px; 
+    cursor: pointer; 
+    padding: 0; 
+    line-height: 1;
+    text-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+.fav-btn.active { 
+    color: #ff0000;
+    text-shadow: 0 0 2px #ffffff;
+}
+
+/* =========================================================================
+   🎨 5. 現在時刻の赤いライン・アニメーション
+   ========================================================================= */
+/* ライブ進行中を示す赤い水平線 */
+.current-time-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background-color: #ff0000;
+    z-index: 10; /* 最前面に表示 */
+    pointer-events: none;
+    display: none; /* デフォルトは非表示、JSで制御する */
+    box-shadow: 0 0 5px #ff0000;
+}
+
+/* 赤い線の左端の丸いポインター */
+.current-time-line::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    width: 10px; height: 10px;
+    background-color: #ff0000;
+    border-radius: 50%;
+}
+
+/* ライブ中のアーティスト枠を点滅させるアニメーション定義 */
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); border-color: #ff0000; }
+    70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); border-color: #ff6b6b; }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); border-color: #ff0000; }
+}
+
+/* ライブ中のアーティストブロックに適用するクラス */
+.artist-block.playing {
+    border: 3px solid #ff0000;
+    animation: pulse-border 1.5s infinite; /* 点滅アニメーションを無限ループ */
+    z-index: 3;
+}
