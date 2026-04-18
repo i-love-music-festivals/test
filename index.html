@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>ARABAKI ROCK FEST.26</title>
+    <title>Untitled</title>
     <link rel="stylesheet" href="./style.css">
 
   </head>
@@ -14,7 +14,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>フェスタイムテーブル</title>
+    <title>ARABAKI ROCK FEST.26</title>
+    
     <link rel="manifest" href="./manifest.json">
   
     <meta property="og:title" content="フェスタイムテーブル 非公式ガイド">
@@ -29,6 +30,7 @@
 
     <link rel="apple-touch-icon" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
     <link rel="icon" type="image/png" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
+    
     <link rel="stylesheet" href="./style.css">
 </head>
     
@@ -47,6 +49,7 @@
                 <button class="tab-btn" id="btnFood" onclick="switchTab('food')">フード</button>
                 <button class="tab-btn" id="btnMap" onclick="switchTab('map')">マップ</button>
                 <button class="tab-btn" id="btnWeather" onclick="switchTab('weather')">天気</button>
+                <button class="tab-btn" id="btnMemo" onclick="switchTab('memo')">メモ</button>
             </div>
         </header>
 
@@ -98,7 +101,16 @@
                 <p>現在オフラインです。<br>天気情報を取得するにはインターネット接続が必要です。</p>
             </div>
         </div>
-
+        
+        <div id="memoSection" class="content-section">
+            <h2 class="memo-section-header">メモ</h2>
+            <div class="memo-notice">
+                ※注意点※<br>
+                ・ブラウザのキャッシュ（履歴データ等）を削除すると消えてしまいます。<br>
+                ・他のデバイス（スマホからPCなど）への共有はできません。
+            </div>
+            <textarea id="memoTextArea" placeholder="ライブの感想やメモを自由に書き込めます...（入力すると自動保存されます）"></textarea>
+        </div>
     </div>
 
     <script src="./script.js"></script>
