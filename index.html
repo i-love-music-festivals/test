@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Coachella 2026 weekend2</title>
+    <title>ARABAKI ROCK FEST.26</title>
     <link rel="stylesheet" href="./style.css">
 
   </head>
@@ -13,63 +13,95 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Coachella 2026 weekend2</title>
-    
-    <meta property="og:title" content="Coachella 2026 weekend2">
-    <meta property="og:description" content="Coachella 2026 Weekend 2の配信用タイムテーブルです。">
-    <meta property="og:image" content="https://i-love-music-festivals.github.io/coachella-2026-weekend2/coachella-2026-weekend2.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>フェスタイムテーブル</title>
+    <link rel="manifest" href="./manifest.json">
+  
+    <meta property="og:title" content="フェスタイムテーブル 非公式ガイド">
+    <meta property="og:description" content="タイムテーブル、フード、エリアマップを確認できる非公式ガイドです。">
+    <meta property="og:url" content="https://i-love-music-festivals.github.io/arabaki2026/">
+    <meta property="og:image" content="https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://i-love-music-festivals.github.io/coachella-2026-weekend2/">
+    <meta property="og:site_name" content="フェスタイムテーブル 非公式ガイド">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Coachella 2026 weekend2">
-    <meta name="twitter:description" content="Coachella 2026 Weekend 2の配信用タイムテーブルです。">
-    <meta name="twitter:image" content="https://i-love-music-festivals.github.io/coachella-2026-weekend2/coachella-2026-weekend2.png">
+    <meta name="twitter:image" content="https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png">
 
+    <link rel="apple-touch-icon" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
+    <link rel="icon" type="image/png" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-
-<div class="app-container">
     
-    <header>
-        <h1 id="event-title"></h1>
-        
-        <div class="event-subtitle" id="event-subtitle"></div>
-        
-        <div class="disclaimer" id="event-disclaimer"></div>
-        
-        <div class="update-time" id="update-time"></div>
-        
-        <div class="tabs" id="dayTabs"></div>
-    </header>
+<body>
+    <div id="digitalClock">00:00:00</div>
+    <a href="https://arabaki.com/" target="_blank" rel="noopener noreferrer" id="officialLink"><span class="small-text">公式</span>HP</a>
+    <div class="app-container">
+        <header>
+            <h1 id="appTitle">ARABAKI ROCK FEST.26<br>タイムテーブル</h1>
+            <div class="disclaimer">※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。</div>
+            <div id="lastUpdated">Last Update: --/--/-- --:--</div> 
+            
+            <div class="tabs">
+                <button class="tab-btn" id="btnDay1" onclick="switchTab('day1')">Day 1</button>
+                <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')">Day 2</button>
+                <button class="tab-btn" id="btnFood" onclick="switchTab('food')">フード</button>
+                <button class="tab-btn" id="btnMap" onclick="switchTab('map')">マップ</button>
+                <button class="tab-btn" id="btnWeather" onclick="switchTab('weather')">天気</button>
+            </div>
+        </header>
 
-    <div class="scroll-container">
-        
-        <div class="stage-headers-wrapper" id="headerWrapper">
-            <div class="stage-header-empty"></div>
-            
-            <div class="stage-header-list" id="stageHeaders"></div>
-        </div>
-        
-        <div class="timetable-wrapper" id="ttWrapper">
-            
-            <div class="time-col" id="timeCol"></div>
-            
-            <div class="grid-container" id="gridContainer">
-                
-                <div class="current-time-line" id="currentTimeLine"></div>
-                
+        <div id="timetableSection" class="content-section">
+            <div class="scroll-container">
+                <div class="stage-headers-wrapper" id="headerWrapper">
+                    <div class="stage-header-empty"></div>
+                    <div class="stage-header-list" id="stageHeaders"></div>
                 </div>
+                <div class="timetable-wrapper" id="ttWrapper" onscroll="syncScroll()">
+                    <div class="time-col" id="timeCol"></div>
+                    <div style="display: flex; position: relative;" id="gridContainer">
+                        <div class="current-time-line" id="currentTimeLine"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div id="foodSection" class="content-section">
+            <h2 class="food-section-header">フードエリア一覧</h2>
+            <div id="foodContainer"></div>
+        </div>
+
+        <div id="mapSection" class="content-section">
+            <div class="map-wrapper" id="mapWrapper">
+                <img class="area-map-img" src="https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg" alt="Area Map 1">
+                <img class="area-map-img" src="https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg" alt="Area Map 2">
+            </div>
+            <div class="map-controls">
+                <button class="zoom-btn" onclick="zoomMap(0.2)">＋</button>
+                <button class="zoom-btn" onclick="zoomMap(-0.2)">－</button>
+                <button class="zoom-btn" onclick="resetZoom()" style="font-size: 12px;">Reset</button>
+            </div>
+        </div>
+
+        <div id="weatherSection" class="content-section">
+            <div id="weatherOnlineContent" class="weather-content">
+                <h2 class="weather-section-header">エコキャンプみちのく周辺の天気</h2>
+                <div class="iframe-container">
+                    <iframe src="https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/" title="1時間毎の天気"></iframe>
+                </div>
+
+                <div class="weather-link-notice">
+                    ※サイト側のセキュリティ制限等でうまく表示されない場合は、<br>
+                    <a href="https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/" target="_blank" rel="noopener noreferrer">こちらからウェザーニュース（公式サイト）を開いて</a>ご確認ください。
+                </div>
+            </div>
+            <div id="weatherOfflineContent" class="weather-offline-msg" style="display: none;">
+                <p>現在オフラインです。<br>天気情報を取得するにはインターネット接続が必要です。</p>
+            </div>
+        </div>
+
     </div>
-</div>
 
-<script src="./script.js"></script>
-
+    <script src="./script.js"></script>
 </body>
 </html>
     <script  src="./script.js"></script>
