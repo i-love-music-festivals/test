@@ -9,7 +9,7 @@
 // --- 1. アプリケーション全体の設定 ---
 const APP_CONFIG = {
     // ヘッダーに表示されるタイトル
-    festivalName: "ARABAKI ROCK FEST.26<br>タイムテーブル",
+    festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
     // 端末保存用キーの接頭辞（フェスごとに変更すると前回のデータと混ざりません）
     storagePrefix: "arabaki_2026_",
     // タイムテーブルの表示時間（開始〜終了）
@@ -205,7 +205,7 @@ const timetableData = {
         date: "2026-04-26", // Day2の日付
         michinoku: [
             e("Lexulty", "10:20", "10:40", ""),
-            e("怒髪天", "11:30", "12:20", "Punk"),
+            e("怒髪天<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●当日朝発表！</span>", "11:30", "12:20", "Punk"),
             e("MONGOL800", "13:00", "13:45", "Punk"),
             e("10-FEET", "14:35", "15:20", "Punk"),
             e("布袋寅泰", "16:05", "16:50", "Rock"),
@@ -275,24 +275,6 @@ const timetableData = {
         ]
     }
 };
-
-/**
- * ==========================================
- * 【システム・ロジックエリア】
- * データの処理、画面の描画、操作イベントの管理を行います。
- * ==========================================
- */
-
-/**
- * ==========================================
- * 【設定・データエリア】
- * 今後、別のフェスや別年度に流用する場合は、
- * この APP_CONFIG や各種データを書き換えるだけで対応可能です。
- * ==========================================
- */
-
-// ※ APP_CONFIG, stagesInfo, e関数, foodList, timetableData は一切変更なしのため省略します。
-// 元のデータをそのまま残してください。
 
 /**
  * ==========================================
@@ -409,9 +391,18 @@ function switchTab(target) {
     } else if (target === 'weather') {
         document.getElementById('btnWeather').classList.add('active');
         document.getElementById('weatherSection').classList.add('active');
-        checkWeatherOnlineStatus(); // ★ 天気タブ表示時にオンライン状態をチェック
-        document.getElementById('weatherSection').scrollTop = 0;
-} else if (target === 'memo') {
+        checkWeatherOnlineStatus(); 
+        
+        // 描画の完了を待ってから一番上にスクロール
+        requestAnimationFrame(() => {
+            document.getElementById('weatherSection').scrollTop = 0;
+            // iframe内の遅延スクロール対策として、少し遅らせて再度位置をリセット
+            setTimeout(() => {
+                const weatherSection = document.getElementById('weatherSection');
+                if(weatherSection) weatherSection.scrollTop = 0;
+            }, 300);
+        });
+    } else if (target === 'memo') {
         document.getElementById('btnMemo').classList.add('active');
         document.getElementById('memoSection').classList.add('active');
     } else {
@@ -422,9 +413,6 @@ function switchTab(target) {
     }
     
     localStorage.setItem(LAST_TAB_KEY, target);
-  
-
-   
 }
 
 /**
@@ -540,7 +528,8 @@ function adjustFontSize() {
 
         targetEl.style.fontSize = fontSize + 'px';
         
-        while ((block.scrollHeight > block.offsetHeight || (isRow && nameEl.scrollWidth > nameEl.offsetWidth)) && fontSize > 7) {
+        // ブロック全体が縦方向または横方向にはみ出しているか判定し、下限を6pxに変更
+        while ((block.scrollHeight > block.offsetHeight || block.scrollWidth > block.clientWidth) && fontSize > 6) {
             fontSize -= 0.5;
             targetEl.style.fontSize = fontSize + 'px';
         }
