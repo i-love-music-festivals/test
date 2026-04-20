@@ -378,57 +378,39 @@ function syncScroll() {
  * タブ（画面）の切り替え処理
  */
 function switchTab(target) {
-    // 全てのタブとコンテンツから active クラスを外す
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
 
-    // 対象のタブを表示する
-    if (target === 'map') {
-        document.getElementById('btnMap').classList.add('active');
-        document.getElementById('mapSection').classList.add('active');
-    } else if (target === 'food') {
-        document.getElementById('btnFood').classList.add('active');
-        document.getElementById('foodSection').classList.add('active');
-    } else if (target === 'weather') {
-        document.getElementById('btnWeather').classList.add('active');
-        document.getElementById('weatherSection').classList.add('active');
+    // タイムテーブル（Day1, Day2）は特殊なので分ける
+    if (target === 'day1' || target === 'day2') {
+        currentDay = (target === 'day1') ? 1 : 2;
+        document.getElementById(target === 'day1' ? 'btnDay1' : 'btnDay2').classList.add('active');
+        document.getElementById('timetableSection').classList.add('active');
+        renderTimetable();
+    } else {
+        // 先頭文字を大文字にしてボタンIDを生成 (例: 'food' -> 'btnFood')
+        const btnId = 'btn' + target.charAt(0).toUpperCase() + target.slice(1);
+        document.getElementById(btnId).classList.add('active');
+        document.getElementById(target + 'Section').classList.add('active');
+    }
+    
+    // 天気タブ特有の処理
+    if (target === 'weather') {
         checkWeatherOnlineStatus(); 
-        
-        // iframe(ウェザーニュース)内の遅延スクリプトによるスクロールジャンプ対策
         const weatherSection = document.getElementById('weatherSection');
         if (weatherSection) {
             weatherSection.scrollTop = 0;
             window.scrollTo(0, 0); 
-            
-            // 強制スクロールロック（勝手なジャンプを完全に防ぐ）
-            const forceTop = () => {
-                weatherSection.scrollTop = 0;
-                window.scrollTo(0, 0);
-            };
-            
-            // スクロールイベントを監視して強制的に0に戻す
+            const forceTop = () => { weatherSection.scrollTop = 0; window.scrollTo(0, 0); };
             weatherSection.addEventListener('scroll', forceTop);
-            
-            // ユーザーが自分で画面を触った（操作しようとした）場合はロックを解除する
             const unlockScroll = () => {
                 weatherSection.removeEventListener('scroll', forceTop);
                 weatherSection.removeEventListener('touchstart', unlockScroll);
                 weatherSection.removeEventListener('wheel', unlockScroll);
             };
-            
             weatherSection.addEventListener('touchstart', unlockScroll, { passive: true });
             weatherSection.addEventListener('wheel', unlockScroll, { passive: true });
-            
-            // ユーザーが何も操作しなくても、5秒後には自動でロック解除
             setTimeout(unlockScroll, 5000);
         }
-    } else if (target === 'memo') {
-        document.getElementById('btnMemo').classList.add('active');
-        document.getElementById('memoSection').classList.add('active');
-    } else {
-        currentDay = (target === 'day1') ? 1 : 2;
-        document.getElementById(target === 'day1' ? 'btnDay1' : 'btnDay2').classList.add('active');
-        document.getElementById('timetableSection').classList.add('active');
-        renderTimetable(); 
     }
     
     localStorage.setItem(LAST_TAB_KEY, target);
@@ -875,76 +857,18 @@ if ('serviceWorker' in navigator) {
                         }
                     });
                     
-                    const essentialUrls = [
-                        './',
-                        './index.html',
-                        './style.css',
-                        './script.js',
-                        './manifest.json',
-'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
-                        'https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png',
-                        'https://i-love-music-festivals.github.io/arabaki2026/icon.png',
-                        'https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg',
-                        'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor1-iichiko.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor2-kirin-ichibanshibori.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor3-lawson.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor4-red-bull.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor5-aji-no-gyutan-kisuke.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor6-sendai-karamiso-ajiyoshi-ramen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor7-rifu-cho.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor8-kesennuma-shi-to-hoya-boya-to-ogatore.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor9-shiogama-shi.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor10-watari-cho.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu1-team-minamisanriku.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu2-bistro-encore.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu3-primal.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu4-hakata-hakuten.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu5-nine-gate-burger.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu6-sumibiyaki-torimabushidon-organ.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu7-taiwan-shokudo-paozuya.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu8-fuunji-hinomoto.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu9-sendai-izakaya-shuhei.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu10-istanbul-ginza.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru1-1-pound-steak-senmonten.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru2-Thai-Ryori-Aroi-Aroi.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru3-koenji-avocado-shokudo.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru4-wan-fu-chin.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru5-kingu-emon.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru6-rikyu.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru7-thanx.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru8-zao-onsen-otochaya.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru9-farmers-table-mano.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru10-chinami.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru11-pizza-bakka.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata1-hatahata-bar-daigaku.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata2-rocky-stance.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata3-ny-hot-dog.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata4-curry-to-butadon-ishinomaki-yoshida-rock-shokudo.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata5-baran.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata6-mochimochi-potato-323-goshitsu.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square1-sunny-site-coffee.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square2-divertente.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square3-yarn.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square4-noodle-stand-kurihara-shoten.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square5-tabisuru-paella.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field1-okinawa-ryori-marine.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field2-bifuteki-dynamite.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field3-fujisan-shokudo.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field4-mugitorojin.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field5-owada-ramen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field6-hishimeki-do.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field7-ks-pit.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field8-maguro-donya-ito-suisan.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field9-rotisserie-chicken-senmonten-encinitas.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field10-gyoza-no-higuchi.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field11-nishikiya-kitchen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field12-hakata-kojiya.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field13-confetti.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png'
-                    ];
+const essentialUrls = [
+    './',
+    './index.html',
+    './style.css',
+    './script.js',
+    './manifest.json',
+    'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
+    'https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png',
+    'https://i-love-music-festivals.github.io/arabaki2026/icon.png',
+    'https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg',
+    'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg'
+]; // フード画像群は dynamicImages と統合されるため、ここには書かない
                     
                     const allUrlsToCache = [...new Set([...essentialUrls, ...dynamicImages])];
                     cache.addAll(allUrlsToCache).catch(err => console.log('一部のキャッシュに失敗しました', err));
@@ -968,7 +892,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000); 
     setInterval(updateCurrentTimeLine, 60000); 
 
-    // ★追加: メモデータの復元と自動保存の設定
+    // メモデータの復元と自動保存の設定
     const memoTextArea = document.getElementById('memoTextArea');
     if (memoTextArea) {
         // 保存されているメモがあれば読み込んで表示する
@@ -981,7 +905,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ★追加: iframe(ウェザーニュース)のロード完了時にも一番上へ強制スクロール
+    // iframe(ウェザーニュース)のロード完了時にも一番上へ強制スクロール
     const weatherIframe = document.querySelector('#weatherOnlineContent iframe');
     if (weatherIframe) {
         weatherIframe.addEventListener('load', () => {

@@ -174,11 +174,6 @@ h1 {
     position: relative;
 }
 
-#gridContainer {
-    display: flex;
-    position: relative;
-}
-
 /* 時間軸（縦方向）固定 */
 .time-col {
     width: var(--time-width);
@@ -393,7 +388,6 @@ h1 {
     flex-wrap: nowrap; 
     overflow-x: auto;  
     padding-bottom: 10px; 
-    -webkit-overflow-scrolling: touch;
 }
 
 .food-area-content.open { 
