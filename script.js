@@ -86,7 +86,7 @@ const foodList = [
     ]),
     e("エコキャンプ／FOOD TRUCK SQUARE", "", "", "", [
         { name: "①SUNNY SITE COFFEE", menus: ["コーヒー", "ラテ", "ココア"], message: "仙台を中心に活動している移動コーヒー店で海外の雑誌にも紹介されてます。七北田公園内にカフェも展開中。", img: "https://i-love-music-festivals.github.io/arabaki2026/food-truck-square1-sunny-site-coffee.png" },
-        { name: "②DIVERTENTE", menus: ["ナポリピッツァドッグ マルゲリータ", "イタリアンフライドポテト ボロネーゼ", "湘南ゆずビール"], message: "こだわりの生地がサックリ＆モッチリ！ピッツェリア発ドッグ型ナポリピッツァ。石窯から焼き立てをどうぞ！", img: "https://i-love-music-festivals.github.io/arabaki2026/food-truck-square2-divertente.png" },
+        { name: "②DIVERTENTE", menus: ["ナポリピッツァドッグ マルゲリータ", "イタリアンフライドポテト ボロネーゼ", "湘湘ゆずビール"], message: "こだわりの生地がサックリ＆モッチリ！ピッツェリア発ドッグ型ナポリピッツァ。石窯から焼き立てをどうぞ！", img: "https://i-love-music-festivals.github.io/arabaki2026/food-truck-square2-divertente.png" },
         { name: "③YARN", menus: ["ローズポークと蓮根のキーマカレー", "レモンビール", "カルダモン塩レモンサワー"], message: "茨城の食を届けるキッチンカーYARNです。地産の食材とスパイスカレー、自家製ドリンクを提供します。", img: "https://i-love-music-festivals.github.io/arabaki2026/food-truck-square3-yarn.png" },
         { name: "④NOODLE STAND 栗原商店", menus: ["煮干しらーめん", "大葉のジェノバソース和えそば", "豚骨白湯らーめん"], message: "出汁の旨味で勝負。素材を活かす栗原商店の一杯。", img: "https://i-love-music-festivals.github.io/arabaki2026/food-truck-square4-noodle-stand-kurihara-shoten.png" },
         { name: "⑤旅するパエリア", menus: ["旅するパエリア", "local＆自然派ワイン", "黒毛和牛のローストビーフ"], message: "アラバキのみなさん！！昨年に引き続き九州から極上のパエリアをお届けしますのでお楽しみに！！", img: "https://i-love-music-festivals.github.io/arabaki2026/food-truck-square5-tabisuru-paella.png" }
@@ -400,13 +400,13 @@ function switchTab(target) {
             weatherSection.scrollTop = 0;
             window.scrollTo(0, 0); 
             
-            // 100ミリ秒ごとに、1.5秒間（計15回）強制的にスクロール位置を一番上に固定し続ける
+            // 通信環境により読み込みが遅れる場合を考慮し、3秒間（計30回）に延長
             let scrollCount = 0;
             const scrollInterval = setInterval(() => {
                 weatherSection.scrollTop = 0;
                 window.scrollTo(0, 0);
                 scrollCount++;
-                if (scrollCount >= 15) {
+                if (scrollCount >= 30) {
                     clearInterval(scrollInterval);
                 }
             }, 100);
@@ -968,6 +968,18 @@ window.addEventListener('DOMContentLoaded', () => {
         // 文字が入力・削除されるたびにローカルストレージへ保存する
         memoTextArea.addEventListener('input', () => {
             localStorage.setItem(MEMO_KEY, memoTextArea.value);
+        });
+    }
+
+    // ★追加: iframe(ウェザーニュース)のロード完了時にも一番上へ強制スクロール
+    const weatherIframe = document.querySelector('#weatherOnlineContent iframe');
+    if (weatherIframe) {
+        weatherIframe.addEventListener('load', () => {
+            const weatherSection = document.getElementById('weatherSection');
+            if (weatherSection && weatherSection.classList.contains('active')) {
+                weatherSection.scrollTop = 0;
+                window.scrollTo(0, 0);
+            }
         });
     }
 });
