@@ -276,6 +276,90 @@ const timetableData = {
     }
 };
 
+// --- 検索用：読み仮名辞書 ---
+// ※漢字や英語のアーティストはここに「ひらがな」で読みを登録してください。
+// ここに登録がない場合は、アーティスト名そのままで検索されます。
+const artistYomiDict = {
+    // Day 1
+    "町長挨拶": "ちょうちょうあいさつ",
+    "川崎中学校吹奏楽部": "かわさきちゅうがっこうすいそうがくぶ",
+    "ストレイテナー": "すとれいてなー",
+    "ELLEGARDEN": "えるれがーでん",
+    "東京スカパラダイスオーケストラ": "とうきょうすかぱらだいすおーけすとら",
+    "ASIAN KUNG-FU GENERATION": "あじあんかんふーじぇねれーしょん",
+    "森川葵咲樹": "もりかわあさぎ",
+    "TRAëLL": "とらえる",
+    "UNFAIR RULE (Acoustic Set)": "あんふぇあるーる",
+    "関取花": "せきとりはな",
+    "鈴木実貴子ズ": "すずきみきこず",
+    "奇妙礼太郎": "きみょうれいたろう",
+    "GLIM SPANKY (Acoustic Set)": "ぐりむすぱんきー",
+    "藤原美幸(秋田民謡)": "ふじわらみゆき",
+    "みちのくプロレス1": "みちのくぷろれす1",
+    "みちのくプロレス2": "みちのくぷろれす2",
+    "LOW IQ 01 & THE RHYTHM MAKERS": "ろうあいきゅうぜろいちあんどざりずむめいかーず",
+    "みちのくプロレス3": "みちのくぷろれす3",
+    "9mm Parabellum Bullet": "きゅうみりぱらべらむばれっと",
+    "西馬音内盆踊り1": "にしもないぼんおどり1",
+    "Crystal Lake": "くりすたるれいく",
+    "西馬音内盆踊り2": "にしもないぼんおどり2",
+    "西馬音内盆踊り3": "にしもないぼんおどり3",
+    "打首獄門同好会": "うちくびごくもんどうこうかい",
+    "超能力戦士ドリアン": "ちょうのうりょくせんしどりあん",
+    "のん & the tears of knight": "のんあんどざてぃあーずおぶないと",
+    "岸谷香": "きしたにかおり",
+    "夢弦会(津軽三味線)1": "むげんかい1",
+    "夢弦会(津軽三味線)2": "むげんかい2",
+    "夢弦会(津軽三味線)3": "むげんかい3",
+    "柴田聡子 (BAND SET)": "しばたさとこ",
+    "猪居亜美(クラシックギター)": "いのいあみ",
+    "奈良美智 (DJ)": "ならよしとも",
+    "もっさ(ネクライトーキー)": "もっさ",
+    "ヒグチアイ (for CAMPERS)": "ひぐちあい",
+    "いいちこ presents ENKAI": "いいちこぷれぜんつえんかい",
+    "杉本ラララ": "すぎもとららら",
+    "礼賛": "らいさん",
+    "OAU": "おーえーゆー",
+    "優里": "ゆうり",
+
+    // Day 2
+    "怒髪天": "どはつてん",
+    "布袋寅泰": "ほていともやす",
+    "MICHINOKU PEACE SESSION GTR祭'26": "みちのくぴーすせっしょんじーてぃーあーるまつり",
+    "中村旭": "なかむらあさひ",
+    "石崎ひゅーい": "いしざきひゅーい",
+    "山中さわお(弾き語り)": "やまなかさわお",
+    "中田裕二(弾り語り)": "なかだゆうじ",
+    "堂島孝平": "どうじまこうへい",
+    "曽我部恵一(弾き語り)": "そかべけいいち",
+    "向井秀徳アコースティック＆エレクトリック": "むかいしゅうとくあこーすてぃっくあんどえれくとりっく",
+    "おとどけチーたくん高速バンド": "おとどけちーたくんこうそくばんど",
+    "忘れらんねえよ柴田": "わすれらんねえよしばた",
+    "秋田民謡": "あきたみんよう",
+    "坂本サトル ARABAKI special": "さかもとさとる",
+    "秋山黄色": "あきやまきいろ",
+    "Ｔ字路s": "てぃーじろす",
+    "浅井健一": "あさいけんいち",
+    "川内太鼓": "かわうちだいこ",
+    "黒夢": "くろゆめ"
+    // 必要に応じてフェスの出演者を追加してください
+};
+
+// --- 検索用：文字の正規化関数 ---
+// カタカナをひらがなに変換し、濁点・半濁点を削除して統一する関数
+function normalizeForSearch(str) {
+    if (!str) return "";
+    // 1. カタカナをひらがなに変換
+    let normalized = str.replace(/[\u30a1-\u30f6]/g, function(match) {
+        return String.fromCharCode(match.charCodeAt(0) - 0x60);
+    });
+    // 2. 大文字小文字を統一（英語検索用）
+    normalized = normalized.toLowerCase();
+    // 3. 濁点・半濁点を分離して削除（「ば」「ぱ」→「は」にする）
+    normalized = normalized.normalize('NFD').replace(/[\u3099\u309A]/g, '');
+    return normalized;
+}
+
 /**
  * ==========================================
  * 【システム・ロジックエリア】
@@ -286,6 +370,10 @@ const timetableData = {
 // --- 状態管理変数 ---
 let currentDay = 1; // 現在選択されている日 (1: day1, 2: day2)
 let mapScale = 1.0; // マップのズーム倍率
+
+// --- 検索機能用変数 ---
+let allArtistsList = []; // サジェスト用の一覧（重複なし、ソート済み）
+let fullArtistData = []; // 検索結果表示用の詳細データ
 
 // --- ローカルストレージ（保存データ）の読み込み ---
 const FAV_KEY = APP_CONFIG.storagePrefix + 'favs';
@@ -878,9 +966,190 @@ const essentialUrls = [
     });
 }
 
+/**
+ * 検索用のアーティストデータを構築する
+ */
+function buildArtistSearchData() {
+    const artistNames = new Set();
+    fullArtistData = [];
+
+    Object.keys(timetableData).forEach(dayKey => {
+        const dayInfo = timetableData[dayKey];
+        const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
+
+        stagesInfo.forEach(stage => {
+            if (dayInfo[stage.id]) {
+                dayInfo[stage.id].forEach(artist => {
+                    // GUEST表記等を除外して純粋なアーティスト名を取得
+                    const cleanNameForSearch = artist.name.split('<br>')[0].trim();
+                    
+                    if (artistNames.has(cleanNameForSearch)) return; // 重複除外
+                    artistNames.add(cleanNameForSearch);
+                    
+                    // 辞書から読み仮名を取得（なければ名前そのまま）
+                    const yomi = artistYomiDict[cleanNameForSearch] || cleanNameForSearch;
+                    
+                    // 検索用の見えないキーワードを作成（読み仮名と名前の両方を正規化して合体）
+                    const normalizedKey = normalizeForSearch(yomi) + " " + normalizeForSearch(cleanNameForSearch);
+                    
+                    fullArtistData.push({
+                        searchName: cleanNameForSearch,
+                        normalizedKey: normalizedKey, // 検索ヒット用に追加
+                        originalArtist: artist,
+                        stage: stage,
+                        dayKey: dayKey,
+                        dayLabel: dayLabel,
+                        startMin: timeToMins(artist.start)
+                    });
+                });
+            }
+        });
+    });
+
+    // 読み仮名ベースで綺麗な五十音順にソート
+    fullArtistData.sort((a, b) => {
+        const yomiA = artistYomiDict[a.searchName] || a.searchName;
+        const yomiB = artistYomiDict[b.searchName] || b.searchName;
+        return yomiA.localeCompare(yomiB, 'ja');
+    });
+
+    // サジェスト表示用に整理（ソート済みの名前だけ抽出）
+    allArtistsList = fullArtistData.map(item => item.searchName);
+}
+
+/**
+ * 検索ボックスとポップアップのイベントを設定する
+ */
+function setupSearch() {
+    buildArtistSearchData();
+
+    const searchInput = document.getElementById('artistSearchInput');
+    const suggestList = document.getElementById('searchSuggestList');
+    const modalOverlay = document.getElementById('searchModalOverlay');
+    const modalClose = document.getElementById('searchModalClose');
+
+// 1. 入力時のサジェスト表示
+    searchInput.addEventListener('input', function() {
+        // 入力された文字も「ひらがな・濁点なし」に正規化する
+        const query = normalizeForSearch(this.value.trim());
+        suggestList.innerHTML = '';
+
+        if (query.length === 0) {
+            suggestList.style.display = 'none';
+            return;
+        }
+
+        // fullArtistData の normalizedKey（正規化済みの読み仮名＋名前）に対して検索を行う
+        const matchedItems = fullArtistData.filter(item => item.normalizedKey.startsWith(query));
+
+        if (matchedItems.length > 0) {
+            matchedItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.searchName; // 表示するのは元の正しい名前
+                // サジェストをクリックした時の処理
+                li.addEventListener('mousedown', () => {
+                    searchInput.value = ''; 
+                    suggestList.style.display = 'none';
+                    showSearchResults(item.searchName);
+                });
+                suggestList.appendChild(li);
+            });
+            suggestList.style.display = 'block';
+        } else {
+            suggestList.style.display = 'none';
+        }
+    });
+
+    // フォーカスが外れたらサジェストを隠す
+    searchInput.addEventListener('blur', () => {
+        suggestList.style.display = 'none';
+    });
+
+    // 2. モーダルを閉じる処理
+    modalClose.addEventListener('click', closeSearchModal);
+    modalOverlay.addEventListener('click', closeSearchModal);
+}
+
+/**
+ * モーダルを閉じる
+ */
+function closeSearchModal() {
+    document.getElementById('searchModalOverlay').style.display = 'none';
+    document.getElementById('searchModal').style.display = 'none';
+}
+
+/**
+ * 検索結果をポップアップで表示する
+ */
+function showSearchResults(searchName) {
+    // 選択された名前に一致するデータを全て取得 (複数日程・ステージ対応)
+    const results = fullArtistData.filter(item => item.searchName === searchName);
+    
+    // 日程が早い順 → 時間が早い順 にソート
+    results.sort((a, b) => {
+        if (a.dayKey !== b.dayKey) return a.dayKey.localeCompare(b.dayKey);
+        return a.startMin - b.startMin;
+    });
+
+    const contentArea = document.getElementById('searchModalContent');
+    contentArea.innerHTML = '';
+    document.getElementById('searchModalTitle').textContent = `「${searchName}」の出演情報`;
+
+    results.forEach(item => {
+        const artist = item.originalArtist;
+        const stage = item.stage;
+        
+        // お気に入り状態の判定
+        const cleanName = artist.name.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
+        const favId = `${item.dayKey}_${stage.id}_${cleanName}`;
+        const isFav = favorites[favId];
+        const escapedFavId = encodeURIComponent(favId);
+
+        // ボックスの背景色 (タイムテーブル描画処理と同じロジック)
+        const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
+        const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
+
+        const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
+        const displayGenre = artist.genre ? artist.genre : "";
+
+        // HTMLを生成 (ポップアップ内でお気に入りを切り替えるため toggleModalFav を追加)
+        const html = `
+            <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
+                <div class="artist-top">
+                    <span class="artist-time" style="font-size:13px;">${item.dayLabel} ${timeText}</span>
+                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
+                </div>
+                <div class="artist-name">${artist.name}</div>
+                <div class="artist-meta">[${stage.name}] ${displayGenre}</div>
+            </div>
+        `;
+        contentArea.insertAdjacentHTML('beforeend', html);
+    });
+
+    // モーダル表示
+    document.getElementById('searchModalOverlay').style.display = 'block';
+    document.getElementById('searchModal').style.display = 'flex';
+}
+
+/**
+ * ポップアップ内の星ボタンの見た目を切り替える
+ */
+function toggleModalFav(btn) {
+    if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        btn.closest('.artist-block').classList.remove('favorited');
+    } else {
+        btn.classList.add('active');
+        btn.closest('.artist-block').classList.add('favorited');
+    }
+}
+
 // --- 初期ロード時のイベント実行 ---
 window.addEventListener('DOMContentLoaded', () => {
     applyAppConfig();
+
+// ★ 検索機能の初期化を追加
+    setupSearch();
 
     const lastTab = localStorage.getItem(LAST_TAB_KEY) || 'day1';
     switchTab(lastTab); 

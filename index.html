@@ -32,6 +32,11 @@
             <div class="disclaimer">※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。</div>
             <div id="lastUpdated">Last Update: --/--/-- --:--</div> 
             
+<div class="search-container">
+                <input type="text" id="artistSearchInput" placeholder="アーティストを検索..." autocomplete="off">
+                <ul id="searchSuggestList" class="suggest-list"></ul>
+            </div>
+
             <div class="tabs">
                 <button class="tab-btn" id="btnDay1" onclick="switchTab('day1')">Day 1</button>
                 <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')">Day 2</button>
@@ -109,6 +114,15 @@
             </div>
             <textarea id="memoTextArea" placeholder="ライブの感想やメモを自由に書き込めます。&#13;&#10;入力すると自動保存されます。"></textarea>
         </div>
+    </div>
+
+<div id="searchModalOverlay" class="search-modal-overlay"></div>
+    <div id="searchModal" class="search-modal">
+        <div class="search-modal-header">
+            <h3 id="searchModalTitle">検索結果</h3>
+            <button id="searchModalClose" class="search-modal-close">×</button>
+        </div>
+        <div id="searchModalContent" class="search-modal-content"></div>
     </div>
 
     <script src="./script.js"></script>
