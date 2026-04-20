@@ -307,17 +307,13 @@ const artistYomiDict = {
     "藤原美幸(秋田民謡)": "ふじわらみゆき(あきたみんよう)",
     "リアクション ザ ブッタ": "りあくしょんざぶった",
     "TENDOUJI": "てんどうじ",
-    "みちのくプロレス1": "みちのくぷろれす1",
+    "みちのくプロレス": "みちのくぷろれす",
     "ドミコ": "どみこ",
-    "みちのくプロレス2": "みちのくぷろれす2",
     "LOW IQ 01 & THE RHYTHM MAKERS": "ろうあイクーいちあんどざりずむめーかーず",
-    "みちのくプロレス3": "みちのくぷろれす3",
     "9mm Parabellum Bullet": "きゅうみりぱらべらむばれっと",
-    "西馬音内盆踊り1": "にしもないぼんおどり1",
+    "西馬音内盆踊り": "にしもないぼんおどり",
     "Crystal Lake": "くりすたるれいく",
-    "西馬音内盆踊り2": "にしもないぼんおどり2",
     "KOTORI": "ことり",
-    "西馬音内盆踊り3": "にしもないぼんおどり3",
     "打首獄門同好会": "うちくびごくもんどうこうかい",
     "coldrain": "こーるどれいん",
 
@@ -329,11 +325,9 @@ const artistYomiDict = {
     "kurayamisaka": "くらやみざか",
     "のん & the tears of knight": "のんあんどざてぃあーずおぶないと",
     "岸谷香": "きしたにかおり",
-    "夢弦会(津軽三味線)1": "むげんかい(つがるしゃみせん)1",
+    "夢弦会(津軽三味線)": "むげんかい",
     "リーガルリリー": "りーがるりりー",
-    "夢弦会(津軽三味線)2": "むげんかい(つがるしゃみせん)2",
     "柴田聡子 (BAND SET)": "しばたさとこ(ばんどせっと)",
-    "夢弦会(津軽三味線)3": "むげんかい(つがるしゃみせん)3",
     "コレサワ": "これさわ",
 
     // HANAGASA
@@ -420,7 +414,7 @@ const artistYomiDict = {
 };
 
 // --- 検索用：文字の正規化関数 ---
-// カタカナをひらがなに変換し、濁点・半濁点を削除して統一する関数
+// カタカナをひらがなに変換し、大文字小文字を統一する（濁点は維持する）
 function normalizeForSearch(str) {
     if (!str) return "";
     // 1. カタカナをひらがなに変換
@@ -429,8 +423,8 @@ function normalizeForSearch(str) {
     });
     // 2. 大文字小文字を統一（英語検索用）
     normalized = normalized.toLowerCase();
-    // 3. 濁点・半濁点を分離して削除（「ば」「ぱ」→「は」にする）
-    normalized = normalized.normalize('NFD').replace(/[\u3099\u309A]/g, '');
+    // ★ 濁点・半濁点の削除処理を削除（コメントアウトまたは削除）
+    // normalized = normalized.normalize('NFD').replace(/[\u3099\u309A]/g, '');
     return normalized;
 }
 /**
@@ -1044,7 +1038,19 @@ const essentialUrls = [
  */
 function buildArtistSearchData() {
     const artistNames = new Set();
+    const baseNameMap = new Map(); // ベース名 → オリジナルアーティスト情報の配列
     fullArtistData = [];
+
+    // 末尾の数字を除去するヘルパー関数
+function getBaseName(name) {
+    // 末尾の数字を除去（例：「みちのくプロレス1」→「みちのくプロレス」）
+    // さらに「夢弦会(津軽三味線)1」のようなパターンも対応（カッコ＋数字の末尾を除去）
+    // 1. まず末尾の数字を除去（元のパターン）
+    let base = name.replace(/([ぁ-んァ-ヶ一-龥])(\d+)$/, '$1');
+    // 2. 末尾の「)数字」パターンを除去（例：「夢弦会(津軽三味線)1」→「夢弦会(津軽三味線)」）
+    base = base.replace(/\)(\d+)$/, ')');
+    return base;
+}
 
     Object.keys(timetableData).forEach(dayKey => {
         const dayInfo = timetableData[dayKey];
@@ -1053,40 +1059,52 @@ function buildArtistSearchData() {
         stagesInfo.forEach(stage => {
             if (dayInfo[stage.id]) {
                 dayInfo[stage.id].forEach(artist => {
-                    // GUEST表記等を除外して純粋なアーティスト名を取得
                     const cleanNameForSearch = artist.name.split('<br>')[0].trim();
+                    const baseName = getBaseName(cleanNameForSearch);
                     
-                    if (artistNames.has(cleanNameForSearch)) return; // 重複除外
-                    artistNames.add(cleanNameForSearch);
-                    
-// 辞書から読み仮名を取得（なければ名前そのまま）
-                    const yomi = artistYomiDict[cleanNameForSearch] || cleanNameForSearch;
-                    
-                    fullArtistData.push({
-                        searchName: cleanNameForSearch,
-                        normYomi: normalizeForSearch(yomi),               // 追加：読み仮名を正規化
-                        normName: normalizeForSearch(cleanNameForSearch), // 追加：元の名前を正規化
+                    // ベース名でグループ化して保存
+                    if (!baseNameMap.has(baseName)) {
+                        baseNameMap.set(baseName, []);
+                    }
+                    baseNameMap.get(baseName).push({
                         originalArtist: artist,
                         stage: stage,
                         dayKey: dayKey,
                         dayLabel: dayLabel,
                         startMin: timeToMins(artist.start)
                     });
+                    
+                    // 重複排除用（ベース名で管理）
+                    if (artistNames.has(baseName)) return;
+                    artistNames.add(baseName);
+                    
+                    const yomi = artistYomiDict[baseName] || artistYomiDict[cleanNameForSearch] || baseName;
+                    
+                    fullArtistData.push({
+                        searchName: baseName,           // 表示用の名前（数字なし）
+                        originalNames: baseNameMap.get(baseName).map(item => item.originalArtist.name.split('<br>')[0].trim()), // 元の名前リスト
+                        normYomi: normalizeForSearch(yomi),
+                        normName: normalizeForSearch(baseName),
+                        artistsGroup: baseNameMap.get(baseName), // グループ全体の情報
+                        dayKey: dayKey,
+                        dayLabel: dayLabel,
+                        startMin: Math.min(...baseNameMap.get(baseName).map(item => timeToMins(item.originalArtist.start))) // 最も早い開始時間
+                    });
                 });
             }
         });
     });
 
-    // 読み仮名ベースで綺麗な五十音順にソート
+    // 読み仮名ベースでソート
     fullArtistData.sort((a, b) => {
         const yomiA = artistYomiDict[a.searchName] || a.searchName;
         const yomiB = artistYomiDict[b.searchName] || b.searchName;
         return yomiA.localeCompare(yomiB, 'ja');
     });
 
-    // サジェスト表示用に整理（ソート済みの名前だけ抽出）
     allArtistsList = fullArtistData.map(item => item.searchName);
 }
+
 
 /**
  * 検索ボックスとポップアップのイベントを設定する
@@ -1154,8 +1172,16 @@ if (query.length === 0) {
  * モーダルを閉じる
  */
 function closeSearchModal() {
-    document.getElementById('searchModalOverlay').style.display = 'none';
     document.getElementById('searchModal').style.display = 'none';
+    document.getElementById('searchModalOverlay').style.display = 'none';
+
+    // 検索ボックスをクリア
+    const searchInput = document.getElementById('artistSearchInput');
+    const suggestList = document.getElementById('searchSuggestList');
+
+    searchInput.value = '';
+    suggestList.style.display = 'none';
+    suggestList.innerHTML = '';
 }
 
 /**
@@ -1165,12 +1191,12 @@ function showSearchResults(searchText) {
     const query = normalizeForSearch(searchText.trim());
     if (!query) return;
 
-    // 変更：入力された文字が、読み仮名か元の名前に前方一致するデータを全て取得
     const results = fullArtistData.filter(item => 
-        item.normYomi.startsWith(query) || item.normName.startsWith(query)
+        item.normYomi.startsWith(query) || 
+        item.normName.startsWith(query) ||
+        item.originalNames.some(orig => normalizeForSearch(orig).startsWith(query))
     );
     
-    // 日程が早い順 → 時間が早い順 にソート
     results.sort((a, b) => {
         if (a.dayKey !== b.dayKey) return a.dayKey.localeCompare(b.dayKey);
         return a.startMin - b.startMin;
@@ -1182,35 +1208,42 @@ function showSearchResults(searchText) {
 
     if (results.length === 0) {
         contentArea.innerHTML = '<div style="padding: 15px; text-align: center;">見つかりませんでした。</div>';
+        return;
     }
 
+    // 各アーティストを個別に表示（グループ化しない）
     results.forEach(item => {
-        const artist = item.originalArtist;
-        const stage = item.stage;
-        
-        // お気に入り状態の判定
-        const cleanName = artist.name.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
-        const favId = `${item.dayKey}_${stage.id}_${cleanName}`;
-        const isFav = favorites[favId];
-        const escapedFavId = encodeURIComponent(favId);
+        // 各グループ内の全アーティストを個別に表示
+        item.artistsGroup.forEach(groupItem => {
+            const artist = groupItem.originalArtist;
+            const stage = groupItem.stage;
+            const dayKey = groupItem.dayKey;
+            
+            // お気に入り状態の判定
+            const cleanName = artist.name.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
+            const favId = `${dayKey}_${stage.id}_${cleanName}`;
+            const isFav = favorites[favId];
+            const escapedFavId = encodeURIComponent(favId);
 
-        // ボックスの背景色 (タイムテーブル描画処理と同じロジック)
-        const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
-        const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
+            // ボックスの背景色
+            const lighterNames = ["川崎中学校吹奏部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
+            const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
 
-        const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
+            const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
+            const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
-        // 変更：HTMLを生成 (ジャンルを削除、ステージ名を日時の右に配置)
-        const html = `
-            <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
-                <div class="artist-top">
-                    <span class="artist-time">${item.dayLabel} ${timeText} <span class="artist-stage-name">[${stage.name}]</span></span>
-                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
+            // ★ 修正: カードのHTMLを生成（スタイルはCSSで制御）
+            const html = `
+                <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
+                    <div class="artist-top">
+                        <span class="artist-time">${dayLabel} ${timeText} <span class="artist-stage-name">${stage.name}</span></span>
+                        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
+                    </div>
+                    <div class="artist-name">${artist.name}</div>
                 </div>
-                <div class="artist-name">${artist.name}</div>
-            </div>
-        `;
-        contentArea.insertAdjacentHTML('beforeend', html);
+            `;
+            contentArea.insertAdjacentHTML('beforeend', html);
+        });
     });
 
     // モーダル表示
