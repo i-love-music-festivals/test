@@ -673,7 +673,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
  * アーティスト名が枠内に収まらない場合、フォントサイズを動的に縮小する
  */
 function adjustFontSize() {
-    document.querySelectorAll('.artist-block:not(.food-block)').forEach(block => {
+    document.querySelectorAll('.artist-block:not(.food-block):not(.search-modal-content .artist-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
         const timeEl = block.querySelector('.artist-time');
         if (!nameEl) return;
@@ -1246,7 +1246,6 @@ function showSearchResults(searchText) {
         });
     });
 
-    // モーダル表示
     document.getElementById('searchModalOverlay').style.display = 'block';
     document.getElementById('searchModal').style.display = 'flex';
 }
