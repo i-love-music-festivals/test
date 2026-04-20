@@ -393,15 +393,24 @@ function switchTab(target) {
         document.getElementById('weatherSection').classList.add('active');
         checkWeatherOnlineStatus(); 
         
-        // 描画の完了を待ってから一番上にスクロール
-        requestAnimationFrame(() => {
-            document.getElementById('weatherSection').scrollTop = 0;
-            // iframe内の遅延スクロール対策として、少し遅らせて再度位置をリセット
-            setTimeout(() => {
-                const weatherSection = document.getElementById('weatherSection');
-                if(weatherSection) weatherSection.scrollTop = 0;
-            }, 300);
-        });
+        // iframe(ウェザーニュース)内の遅延スクリプトによるスクロールジャンプ対策
+        const weatherSection = document.getElementById('weatherSection');
+        if (weatherSection) {
+            // まず即座に一番上へ
+            weatherSection.scrollTop = 0;
+            window.scrollTo(0, 0); 
+            
+            // 100ミリ秒ごとに、1.5秒間（計15回）強制的にスクロール位置を一番上に固定し続ける
+            let scrollCount = 0;
+            const scrollInterval = setInterval(() => {
+                weatherSection.scrollTop = 0;
+                window.scrollTo(0, 0);
+                scrollCount++;
+                if (scrollCount >= 15) {
+                    clearInterval(scrollInterval);
+                }
+            }, 100);
+        }
     } else if (target === 'memo') {
         document.getElementById('btnMemo').classList.add('active');
         document.getElementById('memoSection').classList.add('active');
