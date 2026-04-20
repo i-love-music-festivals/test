@@ -423,10 +423,9 @@ function normalizeForSearch(str) {
     });
     // 2. 大文字小文字を統一（英語検索用）
     normalized = normalized.toLowerCase();
-    // ★ 濁点・半濁点の削除処理を削除（コメントアウトまたは削除）
-    // normalized = normalized.normalize('NFD').replace(/[\u3099\u309A]/g, '');
     return normalized;
 }
+
 /**
  * ==========================================
  * 【システム・ロジックエリア】
@@ -439,7 +438,6 @@ let currentDay = 1; // 現在選択されている日 (1: day1, 2: day2)
 let mapScale = 1.0; // マップのズーム倍率
 
 // --- 検索機能用変数 ---
-let allArtistsList = []; // サジェスト用の一覧（重複なし、ソート済み）
 let fullArtistData = []; // 検索結果表示用の詳細データ
 
 // --- ローカルストレージ（保存データ）の読み込み ---
@@ -1101,8 +1099,6 @@ function getBaseName(name) {
         const yomiB = artistYomiDict[b.searchName] || b.searchName;
         return yomiA.localeCompare(yomiB, 'ja');
     });
-
-    allArtistsList = fullArtistData.map(item => item.searchName);
 }
 
 
