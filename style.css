@@ -638,35 +638,36 @@ h1 {
 }
 
 /* ==========================================
-   CSS: 天気セクション
+   CSS: 天気セクション（修正版）
    ========================================== */
 #weatherSection {
     background-color: var(--bg-color);
-    overflow-y: auto;
-    padding: 15px;
-}
-
-.weather-section-header {
-    font-size: 16px;
-    color: #0077B6; /* 天気らしい青系 */
-    border-bottom: 2px solid #0077B6;
-    padding-bottom: 5px;
-    margin-top: 0;
-    margin-bottom: 15px;
+    /* 修正: スクロールを無効にし、内部のFlexboxで高さを制御 */
+    overflow: hidden; 
+    padding: 0; /* 余白をゼロに */
 }
 
 .weather-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    height: 100%; /* セクション全体の高さを使う */
+    gap: 0; /* 要素間の隙間をなくす */
+}
+
+/* ヘッダーには少し余白を残して読みやすく */
+.weather-section-header {
+    font-size: 16px;
+    color: #0077B6;
+    border-bottom: 2px solid #0077B6;
+    padding: 15px 15px 5px 15px; /* コンテナが0なので内部で余白を確保 */
+    margin: 0;
 }
 
 .iframe-container {
     width: 100%;
-    height: 500px; 
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
+    flex-grow: 1; /* ★ 修正: これでデバイスの画面に合わせて高さが最大化されます */
+    border: none; /* 枠線を消してフル画面感を出す */
+    border-radius: 0;
     position: relative;
     background: #f9f9f9 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="%23999">Now Loading...</text></svg>') no-repeat center center;
 }
@@ -678,12 +679,15 @@ h1 {
     display: block;
 }
 
+/* 注意書きを最下部に配置 */
 .weather-link-notice {
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
     color: #666;
-    margin-top: -10px;
-    line-height: 1.5;
+    padding: 10px 5px; /* 下端に余白を確保 */
+    line-height: 1.4;
+    background-color: #fff; /* 背景色を固定 */
+    flex-shrink: 0; /* 潰れないように固定 */
 }
 
 .weather-link-notice a {
@@ -691,20 +695,15 @@ h1 {
     font-weight: bold;
 }
 
+/* オフライン表示も画面中央に来るよう調整 */
 .weather-offline-msg {
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    min-height: 300px;
     text-align: center;
     color: #888;
-    font-size: 14px;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
     padding: 20px;
-    margin-top: 20px;
-    background-color: #f9f9f9;
 }
 
 /* ==========================================
