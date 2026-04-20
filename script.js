@@ -396,20 +396,30 @@ function switchTab(target) {
         // iframe(ウェザーニュース)内の遅延スクリプトによるスクロールジャンプ対策
         const weatherSection = document.getElementById('weatherSection');
         if (weatherSection) {
-            // まず即座に一番上へ
             weatherSection.scrollTop = 0;
             window.scrollTo(0, 0); 
             
-            // 通信環境により読み込みが遅れる場合を考慮し、3秒間（計30回）に延長
-            let scrollCount = 0;
-            const scrollInterval = setInterval(() => {
+            // 強制スクロールロック（勝手なジャンプを完全に防ぐ）
+            const forceTop = () => {
                 weatherSection.scrollTop = 0;
                 window.scrollTo(0, 0);
-                scrollCount++;
-                if (scrollCount >= 30) {
-                    clearInterval(scrollInterval);
-                }
-            }, 100);
+            };
+            
+            // スクロールイベントを監視して強制的に0に戻す
+            weatherSection.addEventListener('scroll', forceTop);
+            
+            // ユーザーが自分で画面を触った（操作しようとした）場合はロックを解除する
+            const unlockScroll = () => {
+                weatherSection.removeEventListener('scroll', forceTop);
+                weatherSection.removeEventListener('touchstart', unlockScroll);
+                weatherSection.removeEventListener('wheel', unlockScroll);
+            };
+            
+            weatherSection.addEventListener('touchstart', unlockScroll, { passive: true });
+            weatherSection.addEventListener('wheel', unlockScroll, { passive: true });
+            
+            // ユーザーが何も操作しなくても、5秒後には自動でロック解除
+            setTimeout(unlockScroll, 5000);
         }
     } else if (target === 'memo') {
         document.getElementById('btnMemo').classList.add('active');
@@ -977,8 +987,11 @@ window.addEventListener('DOMContentLoaded', () => {
         weatherIframe.addEventListener('load', () => {
             const weatherSection = document.getElementById('weatherSection');
             if (weatherSection && weatherSection.classList.contains('active')) {
-                weatherSection.scrollTop = 0;
-                window.scrollTo(0, 0);
+                // ロード直後のスクロールジャンプに備えて少し遅延させて戻す
+                setTimeout(() => {
+                    weatherSection.scrollTop = 0;
+                    window.scrollTo(0, 0);
+                }, 100);
             }
         });
     }
