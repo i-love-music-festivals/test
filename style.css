@@ -4,7 +4,6 @@
    CSS: 変数・基本設定
    ========================================== */
 :root {
-    /* カラーパレット */
     --color-michinoku: #D4AF37;
     --color-arahabaki: #9932CC;
     --color-hatahata: #B0003A;
@@ -18,30 +17,26 @@
     --grid-border: #e0e0e0;
     --text-color: #333;
     
-    /* タイムテーブルの寸法設定 */
-    --time-width: 40px;   /* 時間軸カラムの幅 */
-    --col-width: 120px;   /* 1ステージの列幅 */
-    --px-per-min: 2;      /* 1分あたりのピクセル数（高さ） */
+    --time-width: 40px;
+    --col-width: 120px;
+    --px-per-min: 2;
 }
 
-/* ページ全体の基本スタイル */
 body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow: hidden; /* スクロールは内部コンテナに任せる */
+    overflow: hidden; 
 }
 
-/* アプリケーションの大枠 */
 .app-container {
     display: flex;
     flex-direction: column;
-    height: 100dvh; /* ★ 修正: スマホのURLバー等を考慮した動的な高さ(100dvh)を採用 */
+    height: 100dvh; 
 }
 
-/* ヘッダー領域 */
 header {
     background-color: #111;
     color: white;
@@ -62,7 +57,6 @@ h1 {
     color: #ccc;
 }
 
-/* タブボタン領域 */
 .tabs { 
     display: flex; 
     justify-content: center; 
@@ -86,7 +80,6 @@ h1 {
     font-weight: bold;
 }
 
-/* 各コンテンツセクション（タイムテーブル、フード、マップ） */
 .content-section { 
     display: none; 
     flex-grow: 1; 
@@ -98,7 +91,6 @@ h1 {
     flex-direction: column;
 }
 
-/* スクロール領域 */
 .scroll-container { 
     display: flex;
     flex-direction: column; 
@@ -110,7 +102,6 @@ h1 {
    CSS: タイムテーブル部分
    ========================================== */
 
-/* ステージ名ヘッダーのラッパー */
 .stage-headers-wrapper {
     display: flex;
     overflow-x: hidden; 
@@ -119,7 +110,6 @@ h1 {
     background: #f9f9f9;
 }
 
-/* 時間軸の上の空白部分（固定） */
 .stage-header-empty {
     width: var(--time-width);
     flex-shrink: 0;
@@ -146,7 +136,7 @@ h1 {
 .stage-header.mytt { 
     width: auto;
     min-width: var(--col-width); 
-    background: #ddd; /* #eee より少し暗く */ 
+    background: #ddd; 
 }
 
 .stage-name {
@@ -163,10 +153,9 @@ h1 {
 .stage-name.mytt { 
     color: #333; 
     text-shadow: none; 
-    background: #bbb; /* #ccc より少し暗く */
+    background: #bbb;
 }
 
-/* タイムテーブルのグリッド領域 */
 .timetable-wrapper { 
     display: flex; 
     flex-grow: 1; 
@@ -174,7 +163,6 @@ h1 {
     position: relative;
 }
 
-/* 時間軸（縦方向）固定 */
 .time-col {
     width: var(--time-width);
     flex-shrink: 0;
@@ -203,7 +191,12 @@ h1 {
     padding: 0 2px; 
 }
 
-/* 1列（ステージ）のグリッド */
+/* 追加: htmlのインラインスタイルから移動 */
+#gridContainer {
+    display: flex;
+    position: relative;
+}
+
 .grid-col { 
     width: var(--col-width);
     flex-shrink: 0; 
@@ -215,7 +208,6 @@ h1 {
     background-color: rgba(238, 238, 238, 0.9);
 }
 
-/* 1時間ごとの背景罫線 */
 .grid-bg-lines {
     position: absolute;
     inset: 0; 
@@ -225,7 +217,6 @@ h1 {
     z-index: 0;
 }
 
-/* アーティストのブロック */
 .artist-block {
     position: absolute;
     left: 2px; 
@@ -268,7 +259,7 @@ h1 {
     font-size: 13px; 
     line-height: 1.1; 
     margin-bottom: 2px; 
-    word-break: break-all;
+    word-break: normal;
     overflow-wrap: break-word; 
     display: block; 
 }
@@ -279,7 +270,6 @@ h1 {
     flex-shrink: 0;
 }
 
-/* お気に入り追加ボタン（★） */
 .fav-btn { 
     background: none;
     border: none; 
@@ -296,7 +286,6 @@ h1 {
     text-shadow: 0 0 3px rgba(0,0,0,0.8);
 }
 
-/* 現在時刻の赤いライン */
 .current-time-line { 
     position: absolute;
     left: 0; 
@@ -320,7 +309,6 @@ h1 {
     border-radius: 50%; 
 }
 
-/* 演奏中アーティストのエフェクト */
 @keyframes pulse-border {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); border-color: red; }
     70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); border-color: #ff6b6b; }
@@ -394,7 +382,6 @@ h1 {
     display: flex; 
 }
 
-/* フードカードのスタイル */
 .food-card {
     background: #fff;
     border: 1px solid #e0e0e0;
@@ -410,19 +397,18 @@ h1 {
     flex-shrink: 0;
 }
 
-/* 追加：フードカードのエリア名表示 */
 .food-card-area-badge {
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(230, 126, 34, 0.9); /* フードのテーマカラーを半透明に */
+    background: rgba(230, 126, 34, 0.9);
     color: #fff;
     padding: 4px 8px;
     font-size: 10px;
     font-weight: bold;
     border-bottom-right-radius: 8px;
     z-index: 5;
-    pointer-events: none; /* ドラッグやクリックの邪魔にならないようにする */
+    pointer-events: none;
 }
 
 .food-card:hover {
@@ -460,7 +446,6 @@ h1 {
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
 }
 
-/* ドラッグ＆ドロップ対応 */
 .draggable-card { 
     cursor: grab;
 }
@@ -540,7 +525,6 @@ h1 {
     display: block;
 }
 
-/* ズーム対応のラッパー */
 .map-wrapper { 
     display: block; 
     width: 100%; 
@@ -548,7 +532,7 @@ h1 {
     margin: 0 auto;
     text-align: center; 
     padding: 20px;
-    padding-bottom: 100px; /* ★修正: スクロール時にマップ最下部が隠れないよう余白を確保 */
+    padding-bottom: 100px;
     box-sizing: border-box; 
     transition: width 0.2s ease-out; 
 }
@@ -603,22 +587,21 @@ h1 {
     box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
 }
 
-/* 左上の公式HPリンクバナー */
 #officialLink {
     position: fixed;
     top: 10px;
-    left: 10px; /* 左側に配置 */
+    left: 10px;
     background: rgba(0, 0, 0, 0.7);
     color: #FFB100;
     padding: 5px 10px;
     border-radius: 5px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 18px; /* 時計と同じ文字サイズ */
+    font-size: 18px;
     font-weight: bold;
     z-index: 1000;
     border: 1px solid #FFB100;
     box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-    text-decoration: none; /* リンクの下線を消す */
+    text-decoration: none;
     display: inline-block;
 }
 
@@ -629,43 +612,40 @@ h1 {
     display: block; 
 }
 
-/* 公式HPリンク内の「公式」文字サイズ調整 */
 #officialLink .small-text {
-    font-size: 14px; /* お好みで微調整してください（HP側は18px） */
-    margin-right: 2px; /* 「公式」と「HP」の間にわずかに余白を入れると綺麗です */
-    font-weight: normal; /* 太字を解除するとさらにメリハリが出ます */
+    font-size: 14px;
+    margin-right: 2px;
+    font-weight: normal;
 }
 
 /* ==========================================
-   CSS: 天気セクション（修正版）
+   CSS: 天気セクション
    ========================================== */
 #weatherSection {
     background-color: var(--bg-color);
-    /* 修正: スクロールを無効にし、内部のFlexboxで高さを制御 */
     overflow: hidden; 
-    padding: 0; /* 余白をゼロに */
+    padding: 0;
 }
 
 .weather-content {
     display: flex;
     flex-direction: column;
-    height: 100%; /* セクション全体の高さを使う */
-    gap: 0; /* 要素間の隙間をなくす */
+    height: 100%;
+    gap: 0;
 }
 
-/* ヘッダーには少し余白を残して読みやすく */
 .weather-section-header {
     font-size: 16px;
     color: #0077B6;
     border-bottom: 2px solid #0077B6;
-    padding: 15px 15px 5px 15px; /* コンテナが0なので内部で余白を確保 */
+    padding: 15px 15px 5px 15px;
     margin: 0;
 }
 
 .iframe-container {
     width: 100%;
-    flex-grow: 1; /* ★ 修正: これでデバイスの画面に合わせて高さが最大化されます */
-    border: none; /* 枠線を消してフル画面感を出す */
+    flex-grow: 1;
+    border: none;
     border-radius: 0;
     position: relative;
     background: #f9f9f9 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="%23999">Now Loading...</text></svg>') no-repeat center center;
@@ -678,15 +658,14 @@ h1 {
     display: block;
 }
 
-/* 注意書きを最下部に配置 */
 .weather-link-notice {
     font-size: 11px;
     text-align: center;
     color: #666;
-    padding: 10px 5px; /* 下端に余白を確保 */
+    padding: 10px 5px;
     line-height: 1.4;
-    background-color: #fff; /* 背景色を固定 */
-    flex-shrink: 0; /* 潰れないように固定 */
+    background-color: #fff;
+    flex-shrink: 0;
 }
 
 .weather-link-notice a {
@@ -694,7 +673,6 @@ h1 {
     font-weight: bold;
 }
 
-/* オフライン表示も画面中央に来るよう調整 */
 .weather-offline-msg {
     flex-grow: 1;
     display: flex;
@@ -716,7 +694,7 @@ h1 {
     background-color: var(--bg-color);
     overflow-y: auto;
     padding: 15px;
-    display: none; /* 初期状態は非表示（JSで制御） */
+    display: none;
     flex-direction: column;
 }
 
@@ -726,14 +704,13 @@ h1 {
 
 .memo-section-header {
     font-size: 16px;
-    color: #27ae60; /* メモらしい緑色 */
+    color: #27ae60;
     border-bottom: 2px solid #27ae60;
     padding-bottom: 5px;
     margin-top: 0;
     margin-bottom: 15px;
 }
 
-/* 注意書きのスタイル */
 .memo-notice {
     font-size: 12px;
     color: #d35400;
@@ -746,16 +723,15 @@ h1 {
     flex-shrink: 0;
 }
 
-/* テキストエリア（入力欄）のスタイル */
 #memoTextArea {
-    flex-grow: 1; /* 余った高さを全て使う */
+    flex-grow: 1;
     width: 100%;
     box-sizing: border-box;
     padding: 12px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    resize: none; /* 右下のサイズ変更ハンドルを消す */
+    resize: none;
     font-family: inherit;
     min-height: 300px;
 }
@@ -776,15 +752,14 @@ h1 {
     justify-content: center;
 }
 
-/* 検索ボックス本体 */
 #artistSearchInput {
     width: 100%;
     padding: 10px 20px;
     border: none;
-    border-radius: 25px; /* 丸みを帯びたデザイン */
+    border-radius: 25px;
     font-size: 14px;
     outline: none;
-    background-color: #f1f3f4; /* 背景に馴染むGoogleライクな色 */
+    background-color: #f1f3f4;
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     transition: background-color 0.2s, box-shadow 0.2s;
     color: #333;
@@ -795,7 +770,6 @@ h1 {
     box-shadow: 0 1px 6px rgba(0,0,0,0.2);
 }
 
-/* 検索サジェストリスト */
 .suggest-list {
     position: absolute;
     top: 100%;
@@ -830,7 +804,6 @@ h1 {
     background-color: #f8f9fa;
 }
 
-/* 検索結果ポップアップ（モーダル） */
 .search-modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -839,7 +812,6 @@ h1 {
     display: none;
 }
 
-/* モーダル本体の高さ制御 */
 .search-modal {
     position: fixed;
     top: 50%;
@@ -854,7 +826,7 @@ h1 {
     flex-direction: column;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     max-height: 80vh;
-    overflow: hidden; /* 重要: 本体ではオーバーフローを隠し、内部でスクロールさせる */
+    overflow: hidden;
 }
 
 .search-modal-header {
@@ -881,10 +853,9 @@ h1 {
     line-height: 1;
 }
 
-/* コンテンツエリアのスクロール設定 */
 .search-modal-content {
     padding: 15px;
-    overflow-y: auto !important; /* 強制的にスクロール有効 */
+    overflow-y: auto !important;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -892,12 +863,9 @@ h1 {
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     flex: 1;
-    max-height: calc(80vh - 60px); /* ヘッダー分を除く */
+    max-height: calc(80vh - 60px);
 }
 
-/* ==========================================
-   CSS: モーダル内のアーティストカード調整
-   ========================================== */
 .search-modal-content .artist-block {
     position: relative !important;
     top: auto !important;
@@ -918,7 +886,6 @@ h1 {
     margin-bottom: 0 !important;
 }
 
-/* カード間の区切りを明確に */
 .search-modal-content .artist-block:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -951,10 +918,11 @@ h1 {
     margin-top: 8px;
     white-space: normal;
     line-height: 1.3;
-    word-break: break-word;
+    word-break: normal;
     color: #fff;
 }
 
 .search-modal-content .artist-meta {
+    font-size: 20px;
     display: none;
 }

@@ -32,8 +32,8 @@
             <div class="disclaimer">※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。</div>
             <div id="lastUpdated">Last Update: --/--/-- --:--</div> 
             
-<div class="search-container">
-                <input type="text" id="artistSearchInput" placeholder="出演アーティストを検索..." autocomplete="off">
+            <div class="search-container">
+                <input type="text" id="artistSearchInput" placeholder="出演アーティストを検索（前方一致）..." autocomplete="off">
                 <ul id="searchSuggestList" class="suggest-list"></ul>
             </div>
 
@@ -55,7 +55,7 @@
                 </div>
                 <div class="timetable-wrapper" id="ttWrapper" onscroll="syncScroll()">
                     <div class="time-col" id="timeCol"></div>
-                    <div style="display: flex; position: relative;" id="gridContainer">
+                    <div id="gridContainer">
                         <div class="current-time-line" id="currentTimeLine"></div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
         </div>
     </div>
 
-<div id="searchModalOverlay" class="search-modal-overlay"></div>
+    <div id="searchModalOverlay" class="search-modal-overlay"></div>
     <div id="searchModal" class="search-modal">
         <div class="search-modal-header">
             <h3 id="searchModalTitle">検索結果</h3>
