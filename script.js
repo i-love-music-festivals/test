@@ -310,7 +310,7 @@ const artistYomiDict = {
     "みちのくプロレス1": "みちのくぷろれす1",
     "ドミコ": "どみこ",
     "みちのくプロレス2": "みちのくぷろれす2",
-    "LOW IQ 01 & THE RHYTHM MAKERS": "ろうあいきゅーいちあんどざりずむめーかーず",
+    "LOW IQ 01 & THE RHYTHM MAKERS": "ろうあイクーいちあんどざりずむめーかーず",
     "みちのくプロレス3": "みちのくぷろれす3",
     "9mm Parabellum Bullet": "きゅうみりぱらべらむばれっと",
     "西馬音内盆踊り1": "にしもないぼんおどり1",
@@ -364,7 +364,7 @@ const artistYomiDict = {
     "10-FEET": "てんふぃーと",
     "布袋寅泰": "ほていともやす",
     "あいみょん": "あいみょん",
-    "MICHINOKU PEACE SESSION GTR祭'26": "みちのくぴーすせっしょんじーてぃーあーるまつりにじゅうろく
+    "MICHINOKU PEACE SESSION GTR祭'26": "みちのくぴーすせっしょんじーてぃーあーるまつりにじゅうろく",
 
     // ARAHABAKI
     "中村旭": "なかむらあさひ",
@@ -388,18 +388,12 @@ const artistYomiDict = {
     "忘れらんねえよ柴田": "わすれらんねえよしばた",
 
     // HATAHATA
-    "藤原美幸(秋田民謡)": "ふじわらみゆき(あきたみんよう)",
     "Blue Mash": "ぶるーまっしゅ",
     "BURNOUT SYNDROMES": "ばーんあうとしんどろーむず",
-    "みちのくプロレス1": "みちのくぷろれす1",
     "MAYSON's PARTY": "めいそんずぱーてぃー",
-    "みちのくプロレス2": "みちのくぷろれす2",
     "yonige": "よにげ",
-    "みちのくプロレス3": "みちのくぷろれす3",
     "PEDRO": "ぺどろ",
-    "西馬音内盆踊り1": "にしもないぼんおどりいち",
     "THE BACK HORN": "ざばっくほーん",
-    "西馬音内盆踊り2": "にしもないぼんおどり2",
     "eastern youth": "いーすたんゆーす",
     "LOSTAGE": "ろすとえいじ",
     "黒夢": "くろゆめ",
@@ -407,11 +401,8 @@ const artistYomiDict = {
     // TSUGARU
     "坂本サトル ARABAKI special": "さかもとさとるあらばきすぺしゃる",
     "luv": "らぶ",
-    "夢弦会(津軽三味線)1": "むげんかい(つがるしゃみせん)1",
     "the shes gone": "ざしーずごーん",
-    "夢弦会(津軽三味線)2": "むげんかい(つがるしゃみせん)2",
     "秋山黄色": "あきやまきいろ",
-    "夢弦会(津軽三味線)3": "むげんかい(つがるしゃみせん)3",
     "Ｔ字路s": "てぃーじろす",
     "Kvi Baba": "くゔぃばば",
     "TOOBOE": "とおぼえ",
@@ -426,7 +417,6 @@ const artistYomiDict = {
     "T.M.Revolution": "てぃーえむれぼりゅーしょん",
     "ゴスペラーズ": "ごすぺらーず",
     "SHISHAMO": "ししゃも"
-    // 必要に応じてフェスの出演者を追加してください
 };
 
 // --- 検索用：文字の正規化関数 ---
@@ -443,7 +433,6 @@ function normalizeForSearch(str) {
     normalized = normalized.normalize('NFD').replace(/[\u3099\u309A]/g, '');
     return normalized;
 }
-
 /**
  * ==========================================
  * 【システム・ロジックエリア】
@@ -1142,11 +1131,6 @@ function setupSearch() {
         } else {
             suggestList.style.display = 'none';
         }
-    });
-
-    // フォーカスが外れたらサジェストを隠す
-    searchInput.addEventListener('blur', () => {
-        suggestList.style.display = 'none';
     });
 
     // 2. モーダルを閉じる処理
