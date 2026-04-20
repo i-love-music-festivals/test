@@ -33,6 +33,9 @@ const stagesInfo = [
     { id: 'banetsu', name: '磐越', color: '#0077B6' }
 ];
 
+// 色を薄くするアーティスト名のリスト（定数として外出し）
+const LIGHTER_NAMES = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
+
 // --- 3. データ作成用ヘルパー関数 ---
 // アーティスト情報を配列化する記述を短縮するための関数
 const e = (name, start, end, genre, menu=[]) => ({ name, start, end, genre, menu });
@@ -488,8 +491,6 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const cleanName = artist.name.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
     const favId = `${dayKey}_${stage.id}_${cleanName}`;
     const isFav = favorites[favId];
-    
-    const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
     const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
 
     let isPlaying = false;
@@ -875,75 +876,17 @@ if ('serviceWorker' in navigator) {
                         }
                     });
                     
-                    const essentialUrls = [
+const essentialUrls = [
                         './',
                         './index.html',
                         './style.css',
                         './script.js',
                         './manifest.json',
-'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
+                        'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
                         'https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png',
                         'https://i-love-music-festivals.github.io/arabaki2026/icon.png',
                         'https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg',
-                        'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor1-iichiko.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor2-kirin-ichibanshibori.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor3-lawson.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor4-red-bull.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor5-aji-no-gyutan-kisuke.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor6-sendai-karamiso-ajiyoshi-ramen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor7-rifu-cho.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor8-kesennuma-shi-to-hoya-boya-to-ogatore.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor9-shiogama-shi.png',
-'https://i-love-music-festivals.github.io/arabaki2026/sponsor10-watari-cho.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu1-team-minamisanriku.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu2-bistro-encore.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu3-primal.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu4-hakata-hakuten.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu5-nine-gate-burger.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu6-sumibiyaki-torimabushidon-organ.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu7-taiwan-shokudo-paozuya.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu8-fuunji-hinomoto.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu9-sendai-izakaya-shuhei.png',
-'https://i-love-music-festivals.github.io/arabaki2026/ban-etsu10-istanbul-ginza.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru1-1-pound-steak-senmonten.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru2-Thai-Ryori-Aroi-Aroi.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru3-koenji-avocado-shokudo.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru4-wan-fu-chin.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru5-kingu-emon.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru6-rikyu.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru7-thanx.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru8-zao-onsen-otochaya.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru9-farmers-table-mano.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru10-chinami.png',
-'https://i-love-music-festivals.github.io/arabaki2026/tsugaru11-pizza-bakka.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata1-hatahata-bar-daigaku.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata2-rocky-stance.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata3-ny-hot-dog.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata4-curry-to-butadon-ishinomaki-yoshida-rock-shokudo.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata5-baran.png',
-'https://i-love-music-festivals.github.io/arabaki2026/hatahata6-mochimochi-potato-323-goshitsu.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square1-sunny-site-coffee.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square2-divertente.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square3-yarn.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square4-noodle-stand-kurihara-shoten.png',
-'https://i-love-music-festivals.github.io/arabaki2026/food-truck-square5-tabisuru-paella.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field1-okinawa-ryori-marine.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field2-bifuteki-dynamite.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field3-fujisan-shokudo.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field4-mugitorojin.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field5-owada-ramen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field6-hishimeki-do.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field7-ks-pit.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field8-maguro-donya-ito-suisan.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field9-rotisserie-chicken-senmonten-encinitas.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field10-gyoza-no-higuchi.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field11-nishikiya-kitchen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field12-hakata-kojiya.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field13-confetti.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png',
-'https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png'
+                        'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg'
                     ];
                     
                     const allUrlsToCache = [...new Set([...essentialUrls, ...dynamicImages])];
