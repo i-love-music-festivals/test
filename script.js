@@ -1059,15 +1059,13 @@ function buildArtistSearchData() {
                     if (artistNames.has(cleanNameForSearch)) return; // 重複除外
                     artistNames.add(cleanNameForSearch);
                     
-                    // 辞書から読み仮名を取得（なければ名前そのまま）
+// 辞書から読み仮名を取得（なければ名前そのまま）
                     const yomi = artistYomiDict[cleanNameForSearch] || cleanNameForSearch;
-                    
-                    // 検索用の見えないキーワードを作成（読み仮名と名前の両方を正規化して合体）
-                    const normalizedKey = normalizeForSearch(yomi) + " " + normalizeForSearch(cleanNameForSearch);
                     
                     fullArtistData.push({
                         searchName: cleanNameForSearch,
-                        normalizedKey: normalizedKey, // 検索ヒット用に追加
+                        normYomi: normalizeForSearch(yomi),               // 追加：読み仮名を正規化
+                        normName: normalizeForSearch(cleanNameForSearch), // 追加：元の名前を正規化
                         originalArtist: artist,
                         stage: stage,
                         dayKey: dayKey,
@@ -1107,13 +1105,15 @@ function setupSearch() {
         const query = normalizeForSearch(this.value.trim());
         suggestList.innerHTML = '';
 
-        if (query.length === 0) {
+if (query.length === 0) {
             suggestList.style.display = 'none';
             return;
         }
 
-        // fullArtistData の normalizedKey（正規化済みの読み仮名＋名前）に対して検索を行う
-        const matchedItems = fullArtistData.filter(item => item.normalizedKey.startsWith(query));
+        // 変更：読み仮名 または 元の名前 のどちらかが入力文字から始まる(前方一致)ものを検索
+        const matchedItems = fullArtistData.filter(item => 
+            item.normYomi.startsWith(query) || item.normName.startsWith(query)
+        );
 
         if (matchedItems.length > 0) {
             matchedItems.forEach(item => {
@@ -1121,7 +1121,7 @@ function setupSearch() {
                 li.textContent = item.searchName; // 表示するのは元の正しい名前
                 // サジェストをクリックした時の処理
                 li.addEventListener('mousedown', () => {
-                    searchInput.value = ''; 
+                    searchInput.value = item.searchName; // 検索窓に名前を残す
                     suggestList.style.display = 'none';
                     showSearchResults(item.searchName);
                 });
@@ -1130,6 +1130,18 @@ function setupSearch() {
             suggestList.style.display = 'block';
         } else {
             suggestList.style.display = 'none';
+        }
+    });
+
+    // 追加：Enterキー（スマホの検索ボタン含む）を押した時の処理
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const queryText = this.value.trim();
+            if (queryText.length > 0) {
+                suggestList.style.display = 'none';
+                showSearchResults(queryText);
+                this.blur(); // スマホのキーボードを閉じる
+            }
         }
     });
 
@@ -1149,9 +1161,14 @@ function closeSearchModal() {
 /**
  * 検索結果をポップアップで表示する
  */
-function showSearchResults(searchName) {
-    // 選択された名前に一致するデータを全て取得 (複数日程・ステージ対応)
-    const results = fullArtistData.filter(item => item.searchName === searchName);
+function showSearchResults(searchText) {
+    const query = normalizeForSearch(searchText.trim());
+    if (!query) return;
+
+    // 変更：入力された文字が、読み仮名か元の名前に前方一致するデータを全て取得
+    const results = fullArtistData.filter(item => 
+        item.normYomi.startsWith(query) || item.normName.startsWith(query)
+    );
     
     // 日程が早い順 → 時間が早い順 にソート
     results.sort((a, b) => {
@@ -1161,7 +1178,11 @@ function showSearchResults(searchName) {
 
     const contentArea = document.getElementById('searchModalContent');
     contentArea.innerHTML = '';
-    document.getElementById('searchModalTitle').textContent = `「${searchName}」の出演情報`;
+    document.getElementById('searchModalTitle').textContent = `「${searchText}」の出演情報`;
+
+    if (results.length === 0) {
+        contentArea.innerHTML = '<div style="padding: 15px; text-align: center;">見つかりませんでした。</div>';
+    }
 
     results.forEach(item => {
         const artist = item.originalArtist;
@@ -1178,17 +1199,15 @@ function showSearchResults(searchName) {
         const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
 
         const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
-        const displayGenre = artist.genre ? artist.genre : "";
 
-        // HTMLを生成 (ポップアップ内でお気に入りを切り替えるため toggleModalFav を追加)
+        // 変更：HTMLを生成 (ジャンルを削除、ステージ名を日時の右に配置)
         const html = `
             <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
                 <div class="artist-top">
-                    <span class="artist-time" style="font-size:13px;">${item.dayLabel} ${timeText}</span>
+                    <span class="artist-time">${item.dayLabel} ${timeText} <span class="artist-stage-name">[${stage.name}]</span></span>
                     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
                 </div>
                 <div class="artist-name">${artist.name}</div>
-                <div class="artist-meta">[${stage.name}] ${displayGenre}</div>
             </div>
         `;
         contentArea.insertAdjacentHTML('beforeend', html);
