@@ -33,9 +33,6 @@ const stagesInfo = [
     { id: 'banetsu', name: '磐越', color: '#0077B6' }
 ];
 
-// 色を薄くするアーティスト名のリスト（定数として外出し）
-const LIGHTER_NAMES = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
-
 // --- 3. データ作成用ヘルパー関数 ---
 // アーティスト情報を配列化する記述を短縮するための関数
 const e = (name, start, end, genre, menu=[]) => ({ name, start, end, genre, menu });
@@ -491,6 +488,8 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const cleanName = artist.name.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
     const favId = `${dayKey}_${stage.id}_${cleanName}`;
     const isFav = favorites[favId];
+    
+    const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
     const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
 
     let isPlaying = false;
@@ -877,17 +876,17 @@ if ('serviceWorker' in navigator) {
                     });
                     
 const essentialUrls = [
-                        './',
-                        './index.html',
-                        './style.css',
-                        './script.js',
-                        './manifest.json',
-                        'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
-                        'https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png',
-                        'https://i-love-music-festivals.github.io/arabaki2026/icon.png',
-                        'https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg',
-                        'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg'
-                    ];
+    './',
+    './index.html',
+    './style.css',
+    './script.js',
+    './manifest.json',
+    'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
+    'https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png',
+    'https://i-love-music-festivals.github.io/arabaki2026/icon.png',
+    'https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg',
+    'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg'
+]; // フード画像群は dynamicImages と統合されるため、ここには書かない
                     
                     const allUrlsToCache = [...new Set([...essentialUrls, ...dynamicImages])];
                     cache.addAll(allUrlsToCache).catch(err => console.log('一部のキャッシュに失敗しました', err));
