@@ -794,7 +794,7 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
 function renderFoodSection() {
     let html = '';
     html += `
-    <div class="food-area-toggle open" onclick="toggleFoodArea(this)" style="background-color: #fff0f5; border: 2px solid #ffb6c1;">
+    <div class="food-area-toggle open food-area-fav" onclick="toggleFoodArea(this)">
         <span>★ 食べたいものリスト</span>
         <span class="toggle-icon" style="transform: rotate(90deg);">▶</span>
     </div>
@@ -802,7 +802,7 @@ function renderFoodSection() {
     `;
     
     if (foodFavoritesOrder.length === 0) {
-        html += `<div style="flex: 1; padding: 15px; color: #777; font-size: 13px; text-align: center; border: 2px dashed #e0e0e0; border-radius: 8px;">右上にある星マーク(★)を押すと、ここに追加されます。<br>カードはメニュー部分をドラッグして並べ替え可能です。</div>`;
+        html += `<div class="food-empty-msg">右上にある星マーク(★)を押すと、ここに追加されます。<br>カードはメニュー部分をドラッグして並べ替え可能です。</div>`;
     } else {
         foodFavoritesOrder.forEach(favItem => {
             let shopData = null;
