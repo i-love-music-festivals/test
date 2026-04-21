@@ -21,11 +21,13 @@
     <link rel="icon" type="image/png" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
     
     <link rel="stylesheet" href="./style.css">
+    <script defer src="./script.js"></script>
 </head>
     
 <body>
     <div id="digitalClock">00:00:00</div>
     <a href="https://arabaki.com/" target="_blank" rel="noopener noreferrer" id="officialLink"><span class="small-text">公式</span>HP</a>
+    
     <div class="app-container">
         <header>
             <h1 id="appTitle">ARABAKI ROCK FEST.26<br>非公式アプリ</h1>
@@ -38,12 +40,12 @@
             </div>
 
             <div class="tabs">
-                <button class="tab-btn" id="btnDay1" onclick="switchTab('day1')">Day 1</button>
-                <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')">Day 2</button>
-                <button class="tab-btn" id="btnFood" onclick="switchTab('food')">フード</button>
-                <button class="tab-btn" id="btnMap" onclick="switchTab('map')">マップ</button>
-                <button class="tab-btn" id="btnWeather" onclick="switchTab('weather')">天気</button>
-                <button class="tab-btn" id="btnMemo" onclick="switchTab('memo')">メモ</button>
+                <button class="tab-btn" id="btnDay1" data-tab="day1">Day 1</button>
+                <button class="tab-btn" id="btnDay2" data-tab="day2">Day 2</button>
+                <button class="tab-btn" id="btnFood" data-tab="food">フード</button>
+                <button class="tab-btn" id="btnMap" data-tab="map">マップ</button>
+                <button class="tab-btn" id="btnWeather" data-tab="weather">天気</button>
+                <button class="tab-btn" id="btnMemo" data-tab="memo">メモ</button>
             </div>
         </header>
 
@@ -53,7 +55,7 @@
                     <div class="stage-header-empty"></div>
                     <div class="stage-header-list" id="stageHeaders"></div>
                 </div>
-                <div class="timetable-wrapper" id="ttWrapper" onscroll="syncScroll()">
+                <div class="timetable-wrapper" id="ttWrapper">
                     <div class="time-col" id="timeCol"></div>
                     <div id="gridContainer">
                         <div class="current-time-line" id="currentTimeLine"></div>
@@ -65,7 +67,6 @@
         <div id="foodSection" class="content-section">
             <h2 class="food-section-header">フードエリア一覧</h2>
             <div id="foodContainer"></div>
-
             <div style="margin-top: 20px; font-size: 11px; color: #666; text-align: left; padding-bottom: 20px;">
                 出典：ARABAKI ROCK FEST.26<br>
                 （<a href="https://arabaki.com/shop/" target="_blank" rel="noopener noreferrer" style="color: #0077B6;">https://arabaki.com/shop/</a>）
@@ -78,9 +79,9 @@
                 <img class="area-map-img" src="https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg" alt="Area Map 2">
             </div>
             <div class="map-controls">
-                <button class="zoom-btn" onclick="zoomMap(0.2)">＋</button>
-                <button class="zoom-btn" onclick="zoomMap(-0.2)">－</button>
-                <button class="zoom-btn" onclick="resetZoom()" style="font-size: 12px;">Reset</button>
+                <button class="zoom-btn" data-zoom="0.2">＋</button>
+                <button class="zoom-btn" data-zoom="-0.2">－</button>
+                <button class="zoom-btn" data-zoom="reset" style="font-size: 12px;">Reset</button>
             </div>
             <div style="text-align: left; padding: 10px 0 20px 0; font-size: 11px; color: #666; background-color: #fff;">
                 出典：ARABAKI ROCK FEST.26<br>
@@ -94,7 +95,6 @@
                 <div class="iframe-container">
                     <iframe src="https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/" title="1時間毎の天気"></iframe>
                 </div>
-
                 <div class="weather-link-notice">
                     ※サイト側のセキュリティ制限等でうまく表示されない場合は、<br>
                     <a href="https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/" target="_blank" rel="noopener noreferrer">こちらからウェザーニュースを開いて</a>ご確認ください。
@@ -124,7 +124,5 @@
         </div>
         <div id="searchModalContent" class="search-modal-content"></div>
     </div>
-
-    <script src="./script.js"></script>
 </body>
 </html>
