@@ -145,12 +145,12 @@ const timetableData = {
         michinoku: [
             e("町長挨拶", "11:55", "12:05"),
             e("川崎中学校吹奏楽部", "10:55", "11:15"),
-            e("ストレイテナー<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●サイトウタクヤ (w.o.d.)<br>●清水英介 (Age Factory)</span>", "12:05", "12:55", "Rock"),
+            e("ストレイテナー<br><span class='guest-info'>GUEST<br><span class='guest-item'>●サイトウタクヤ</span> <span class='guest-item'>●清水英介</span></span>", "12:05", "12:55", "Rock"),
             e("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
             e("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
             e("東京スカパラダイスオーケストラ", "16:45", "17:30", "Ska"),
             e("[Alexandros]", "18:15", "19:00", "Rock"),
-            e("ASIAN KUNG-FU GENERATION<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●岸田繁●岸谷香<br>●塩塚モエカ<br>●スカパラHorn Section<br>●TOSHI-LOW●のん<br>●細美武士●ホリエアツシ●Achico</span>", "19:50", "21:20", "Rock")
+            e("ASIAN KUNG-FU GENERATION<br><span class='guest-info'>GUEST<br><span class='guest-item'>●岸田繁</span> <span class='guest-item'>●岸谷香</span> <span class='guest-item'>●塩塚モエカ</span> <span class='guest-item'>●スカパラHorn Section</span> <span class='guest-item'>●TOSHI-LOW</span> <span class='guest-item'>●のん</span> <span class='guest-item'>●細美武士</span> <span class='guest-item'>●ホリエアツシ</span> <span class='guest-item'>●Achico</span></span>", "19:50", "21:20", "Rock")
         ],
         arahabaki: [
             e("Ayllton", "10:30", "11:00", "Acoustic"),
@@ -206,7 +206,7 @@ const timetableData = {
             e("yosugala", "19:00", "19:20"),
             e("もっさ(ネクライトーキー)", "20:30", "21:00", "Acoustic"),
             e("ヒグチアイ (for CAMPERS)", "22:00", "22:30", "Pop"),
-            e("いいちこ presents ENKAI<br><span style='font-size:9px;font-weight:normal'>アーティスト<br>●関取花<br>●Ｔ字路s<br>●ヒグチアイ<br>芸人<br>●オズワルド<br>●ダンビラムーチョ<br>●ナユタ<br>MC<br>●遠山大輔（グランジ）</span>", "22:30", "24:10", "Variety"),
+            e("いいちこ presents ENKAI<br><span class='guest-info'>アーティスト<br><span class='guest-item'>●関取花</span> <span class='guest-item'>●Ｔ字路s</span> <span class='guest-item'>●ヒグチアイ</span><br>芸人<br><span class='guest-item'>●オズワルド</span> <span class='guest-item'>●ダンビラムーチョ</span> <span class='guest-item'>●ナユタ</span><br>MC<br><span class='guest-item'>●遠山大輔（グランジ）</span></span>", "22:30", "24:10", "Variety"),
             e("杉本ラララ", "24:10", "24:40", "Acoustic")
         ],
         banetsu: [
@@ -214,7 +214,7 @@ const timetableData = {
             e("礼賛", "12:30", "13:15", "Hip Hop/Rock"),
             e("ハンブレッダーズ", "13:50", "14:35", "Rock"),
             e("くるり", "15:30", "16:15", "Alternative Rock"),
-            e("OAU<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●大木伸夫 (ACIDMAN)<br>●細美武士</span>", "16:50", "17:35", "Acoustic Rock"),
+            e("OAU<br><span class='guest-info'>GUEST<br><span class='guest-item'>●大木伸夫</span> <span class='guest-item'>●細美武士</span></span>", "16:50", "17:35", "Acoustic Rock"),
             e("優里", "18:10", "18:55", "Pop"),
             e("STUTS", "19:40", "20:25", "Hip Hop")
         ]
@@ -223,12 +223,12 @@ const timetableData = {
         date: "2026-04-26",
         michinoku: [
             e("Lexulty", "10:20", "10:40"),
-            e("怒髪天<br><span style='font-size:9px;font-weight:normal'>GUEST<br>●当日朝発表！</span>", "11:30", "12:20", "Punk"),
+            e("怒髪天<br><span class='guest-info'>GUEST<br><span class='guest-item'>●当日朝発表！</span></span>", "11:30", "12:20", "Punk"),
             e("MONGOL800", "13:00", "13:45", "Punk"),
             e("10-FEET", "14:35", "15:20", "Punk"),
             e("布袋寅泰", "16:05", "16:50", "Rock"),
             e("あいみょん", "17:35", "18:20", "Pop"),
-            e("MICHINOKU PEACE SESSION GTR祭'26<br><span style='font-size:9px;font-weight:normal'>SPECIAL BAND<br>●The Birthday<br>●Paledusk<br>●Keyboards：高野勲<br>GUEST<br>●うつみようこ●菅原卓郎<br>●曽我部恵一●竹安堅一<br>●TAKUMA●DURAN<br>●TOSHI-LOW<br>●ホリエアツシ●松尾レミ<br>●宮崎朝子<br>●山田将司&菅波栄純</span>", "19:30", "21:15", "Rock")
+            e("MICHINOKU PEACE SESSION GTR祭'26<br><span class='guest-info'>SPECIAL BAND<br><span class='guest-item'>●The Birthday</span> <span class='guest-item'>●Paledusk</span> <span class='guest-item'>●Keyboards：高野勲</span><br>GUEST<br><span class='guest-item'>●うつみようこ</span> <span class='guest-item'>●菅原卓郎</span> <span class='guest-item'>●曽我部恵一</span> <span class='guest-item'>●竹安堅一</span> <span class='guest-item'>●TAKUMA</span> <span class='guest-item'>●DURAN</span> <span class='guest-item'>●TOSHI-LOW</span> <span class='guest-item'>●ホリエアツシ</span> <span class='guest-item'>●松尾レミ</span> <span class='guest-item'>●宮崎朝子</span> <span class='guest-item'>●山田将司&菅波栄純</span></span>", "19:30", "21:15", "Rock")
         ],
         arahabaki: [
             e("中村旭", "10:30", "11:00", "Acoustic"),
@@ -576,29 +576,38 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
     const escapedFavId = encodeURIComponent(favId);
 
-    const isMayorGreeting = artist.name === "町長挨拶";
+const isMayorGreeting = artist.name === "町長挨拶";
     const isSpecialArtist = artist.name.includes("藤原美幸") || artist.name.includes("夢弦会");
     const isEventNoGenre = artist.name.includes("みちのくプロレス") || artist.name.includes("西馬音内盆踊り") || artist.name.includes("トークセッション") || artist.name.includes("おとどけチーたくん高速バンド");
 
+    // ★ マイタイテ用のステージバッジHTML（一番左上に配置用）
+    const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
+
     if (isMayorGreeting || isSpecialArtist) {
         const displayTime = isMayorGreeting ? "12:00-" : `${formatTimeDisplay(artist.start)}-`;
-        return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor}; flex-direction:row; align-items:center; gap:4px;">
+        // マイタイテの場合、特殊ブロックでは横並びにバッジを配置
+        const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name" style="margin-right:4px;">${stage.name}</span>` : '';
+        return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor}; flex-direction:row; align-items:center; flex-wrap:wrap; align-content:center; gap:2px;">
+                    ${inlineStageBadge}
                     <span class="artist-time" style="margin:0;">${displayTime}</span>
-                    <span class="artist-name" style="margin:0; font-size:11px; white-space:nowrap;"> ${artist.name}</span>
+                    <span class="artist-name" style="margin:0; font-size:11px; white-space:normal; flex: 1;">${artist.name}</span>
                     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')" style="margin-left:auto;">★</button>
                 </div>`;
     }
 
-    const displayGenre = (isEventNoGenre) ? "" : (artist.genre || "");
+    // ★ マイタイテの場合はジャンルを表示しない
+    const displayGenre = (isEventNoGenre || isMyTT) ? "" : (artist.genre || "");
     const timeText = isEventNoGenre ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
+    const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
     
     return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
+                ${stageBadgeHtml}
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
                     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')">★</button>
                 </div>
                 <div class="artist-name">${artist.name}</div>
-                <div class="artist-meta">${displayGenre}${isMyTT ? `<br>[${stage.name}]` : ''}</div>
+                ${metaHtml}
             </div>`;
 }
 
@@ -606,6 +615,10 @@ function adjustFontSize() {
     document.querySelectorAll('.artist-block:not(.food-block):not(.search-modal-content .artist-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
         const timeEl = block.querySelector('.artist-time');
+        const topEl = block.querySelector('.artist-top');
+        const stageBadge = block.querySelector('.mytt-stage-name');
+        const metaEl = block.querySelector('.artist-meta');
+
         if (!nameEl) return;
 
         const isRow = block.style.flexDirection === 'row';
@@ -614,9 +627,30 @@ function adjustFontSize() {
 
         targetEl.style.fontSize = fontSize + 'px';
         
+        // 1段階目：メインの文字（アーティスト名）を縮小
         while ((block.scrollHeight > block.offsetHeight || block.scrollWidth > block.clientWidth) && fontSize > 6) {
             fontSize -= 0.5;
             targetEl.style.fontSize = fontSize + 'px';
+        }
+
+        // 2段階目：それでも高さがはみ出る場合（マイタイムテーブルの短い枠など）
+        if (block.scrollHeight > block.offsetHeight) {
+            // ブロック内の余白やマージンをギリギリまで詰める
+            block.style.padding = '2px';
+            if (topEl) topEl.style.marginBottom = '0px';
+            if (stageBadge) {
+                stageBadge.style.marginBottom = '0px';
+                stageBadge.style.padding = '1px 4px';
+            }
+            
+            let subFontSize = 10; // サブ要素（時間など）の基準サイズ
+            // 時間、バッジ、ジャンル名などの文字サイズも全体的に縮小して収める
+            while ((block.scrollHeight > block.offsetHeight) && subFontSize > 5) {
+                subFontSize -= 0.5;
+                if (timeEl) timeEl.style.fontSize = subFontSize + 'px';
+                if (stageBadge) stageBadge.style.fontSize = Math.max(4, subFontSize - 2) + 'px';
+                if (metaEl) metaEl.style.fontSize = Math.max(5, subFontSize - 2) + 'px';
+            }
         }
     });
 }
