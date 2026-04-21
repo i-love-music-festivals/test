@@ -1,3 +1,5 @@
+// 【流用時の変更箇所】フェスごとにキャッシュ名（arabaki_2026_）を変更してください。
+// script.js内の APP_CONFIG.storagePrefix と一致させると確実です。
 const CACHE_NAME = 'arabaki_2026_cache-v3';
 
 self.addEventListener('fetch', event => {
@@ -26,6 +28,7 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.filter(name => {
+                    // 【流用時の変更箇所】キャッシュをクリアするプレフィックスを変更してください
                     return name.startsWith('arabaki_2026_') && name !== CACHE_NAME;
                 }).map(name => {
                     return caches.delete(name);
