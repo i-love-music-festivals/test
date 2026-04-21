@@ -2,16 +2,10 @@
 
 /* ==========================================
    CSS: 変数・基本設定
+   ステージカラーはJSの stagesInfo で制御されます。
    ========================================== */
 :root {
-    --color-michinoku: #D4AF37;
-    --color-arahabaki: #9932CC;
-    --color-hatahata: #B0003A;
-    --color-tsugaru: #8B8B00;
-    --color-hanagasa: #E83929;
-    --color-banetsu: #0077B6;
     --color-food: #E67E22;
-
     --color-mytt: #444444;
     --bg-color: #ffffff;
     --grid-border: #e0e0e0;
@@ -191,7 +185,6 @@ h1 {
     padding: 0 2px; 
 }
 
-/* 追加: htmlのインラインスタイルから移動 */
 #gridContainer {
     display: flex;
     position: relative;
@@ -930,30 +923,26 @@ h1 {
 /* ==========================================
    追加: GUEST表示＆マイタイムテーブルバッジ
    ========================================== */
-/* GUEST情報の全体コンテナ */
 .guest-info {
-    font-size: 9px; /* 9pxから少し大きく */
+    font-size: 9px; 
     font-weight: normal;
     display: block;
     margin-top: 2px;
     line-height: 1.2;
 }
 
-/* ●から始まる各アーティスト名 */
 .guest-item {
     display: inline-block;
     margin-right: 4px;
-    white-space: nowrap; /* 途中で折り返さず、●の塊ごとに折り返す */
+    white-space: nowrap; 
 }
 
-/* ポップアップ検索画面でのGUEST文字サイズ調整 */
 .search-modal-content .guest-info {
     font-size: 14px;
     margin-top: 4px;
     line-height: 1.4;
 }
 
-/* マイタイムテーブルのステージ名バッジ */
 .mytt-stage-name {
     font-size: 8px;
     background: rgba(0, 0, 0, 0.5);
