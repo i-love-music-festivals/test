@@ -951,3 +951,25 @@ h1 {
     align-self: flex-start;
     flex-shrink: 0;
 }
+
+/* ==========================================
+   追加: 出典・クレジット表記用の共通スタイル
+   ========================================== */
+/* HTMLで指定していたスタイルをここにまとめます */
+.source-credit {
+    text-align: left; 
+    padding: 10px 0 20px 0; 
+    font-size: 11px; 
+    color: #666; 
+    background-color: #fff;
+}
+
+/* フードセクションとマップセクションで共通で使えるリンク色です */
+.source-link {
+    color: #0077B6; 
+    text-decoration: none; /* 下線を消す設定 */
+}
+
+.source-link:hover {
+    text-decoration: underline; /* カーソルが乗った時だけ下線を出す */
+}
