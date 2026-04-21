@@ -2,8 +2,7 @@
 
 /* ==========================================
    CSS: 変数・基本設定
-   色やサイズなどの共通設定をここで定義します。
-   後からデザインを変えたい場合は、この数値をいじるだけで全体に反映されます。
+   ステージカラーはJSの stagesInfo で制御されます。
    ========================================== */
 :root {
     --color-food: #E67E22;
@@ -14,7 +13,7 @@
     
     --time-width: 40px;
     --col-width: 120px;
-    --px-per-min: 2; /* 1分を何ピクセルの高さで表現するか */
+    --px-per-min: 2;
 }
 
 body {
@@ -23,13 +22,13 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow: hidden;  /* 画面全体のスクロールを無効化（アプリのような操作感にするため） */
+    overflow: hidden; 
 }
 
 .app-container {
     display: flex;
     flex-direction: column;
-    height: 100dvh; /* スマホブラウザのアドレスバーを除いた実際の画面の高さ */
+    height: 100dvh; 
 }
 
 header {
@@ -76,13 +75,13 @@ h1 {
 }
 
 .content-section { 
-    display: none; /* 初期状態ではコンテンツを隠す */
+    display: none; 
     flex-grow: 1; 
     overflow: hidden;
 }
 
 .content-section.active { 
-    display: flex; /* アクティブなタブだけを表示する */
+    display: flex; 
     flex-direction: column;
 }
 
@@ -211,7 +210,6 @@ h1 {
     z-index: 0;
 }
 
-/* 修正点: タイムテーブルの各ブロックの基本スタイル */
 .artist-block {
     position: absolute;
     left: 2px; 
@@ -230,10 +228,8 @@ h1 {
     transition: border-color 0.2s;
 }
 
-/* 修正点: !importantを排除し、親要素（#gridContainer等）を指定することで優先度を上げて安全に上書きします */
-#gridContainer .artist-block.favorited,
-#searchModalContent .artist-block.favorited { 
-    border: 2px solid #FFD700;
+.artist-block.favorited { 
+    border: 2px solid #FFD700 !important;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.8); 
     z-index: 2;
 }
@@ -863,15 +859,14 @@ h1 {
     max-height: calc(80vh - 60px);
 }
 
-/* 修正点: !importantを減らし、親要素を明示することでCSSのルールを整頓 */
-#searchModalContent .artist-block {
-    position: relative;
-    top: auto;
-    left: auto;
-    right: auto;
-    height: auto;
+.search-modal-content .artist-block {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    height: auto !important;
     min-height: 80px;
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
     padding: 12px;
     width: 100%;
     box-sizing: border-box;
@@ -880,28 +875,28 @@ h1 {
     border-radius: 8px;
 }
 
-#searchModalContent .artist-block:last-child {
-    margin-bottom: 0;
+.search-modal-content .artist-block:last-child {
+    margin-bottom: 0 !important;
 }
 
-#searchModalContent .artist-block:not(:last-child) {
+.search-modal-content .artist-block:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-#searchModalContent .artist-top {
+.search-modal-content .artist-top {
     flex-wrap: wrap;
     gap: 4px;
 }
 
-#searchModalContent .artist-time {
-    font-size: 20px;
+.search-modal-content .artist-time {
+    font-size: 20px !important;
     font-weight: bold;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 }
 
-#searchModalContent .artist-stage-name {
+.search-modal-content .artist-stage-name {
     font-size: 20px;
     background: rgba(0, 0, 0, 0.5);
     padding: 2px 8px;
@@ -910,9 +905,9 @@ h1 {
     display: inline-block;
 }
 
-#searchModalContent .artist-name {
-    font-size: 20px;
-    font-weight: bold;
+.search-modal-content .artist-name {
+    font-size: 20px !important;
+    font-weight: bold !important;
     margin-top: 8px;
     white-space: normal;
     line-height: 1.3;
@@ -937,7 +932,7 @@ h1 {
     white-space: nowrap; 
 }
 
-#searchModalContent .guest-info {
+.search-modal-content .guest-info {
     font-size: 14px;
     margin-top: 4px;
     line-height: 1.4;

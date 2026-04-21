@@ -7,12 +7,11 @@
  */
 
 // --- 1. アプリケーション全体の設定 ---
-// 各種設定をひとまとめにすることで、後から変更しやすくしています。
 const APP_CONFIG = {
     festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
-    storagePrefix: "arabaki_2026_", // スマホに保存するデータの名前の先頭につく文字
-    startHour: 9,  // タイムテーブルの開始時間
-    endHour: 25,   // タイムテーブルの終了時間
+    storagePrefix: "arabaki_2026_",
+    startHour: 9, 
+    endHour: 25,
     days: [
         { id: 'day1', label: '4/25 (土)' },
         { id: 'day2', label: '4/26 (日)' }
@@ -20,24 +19,21 @@ const APP_CONFIG = {
 };
 
 // --- 2. ステージ情報定義 ---
-// ステージの増減や色の変更はここで行います。
 const stagesInfo = [
     { id: 'michinoku', name: '陸奥', color: '#D4AF37' },
-    { id: 'arahabaki', name: '荒吐エレアコ', color: '#9932CC' },
+    { id: 'arahabaki', name: '荒吐', color: '#9932CC' },
     { id: 'hatahata', name: '鰰', color: '#B0003A' },
     { id: 'tsugaru', name: '津軽', color: '#8B8B00' },
-    { id: 'hanagasa', name: '花笠スクエア', color: '#E83929' },
+    { id: 'hanagasa', name: '花笠', color: '#E83929' },
     { id: 'banetsu', name: '磐越', color: '#0077B6' }
 ];
 
 // --- 3. データ作成用ヘルパー関数 ---
-// 修正点：以前の「e」という分かりにくい関数名を、意味が通る名前に変更しました。
-// この関数を使うことで、データを書くときの文字数を減らしています。
-const createArtistItem = (name, start, end, genre = "") => ({ name, start, end, genre });
+// タイムテーブル用
+const e = (name, start, end, genre = "") => ({ name, start, end, genre });
 
-// お気に入りID（スマホに保存する際の鍵となる一意の文字列）を生成する関数
+// お気に入りID生成用の共通関数
 function getFavId(dayKey, stageId, artistName) {
-    // HTMLタグや記号を除去し、純粋な文字だけにします
     const cleanName = artistName.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
     return `${dayKey}_${stageId}_${cleanName}`;
 }
@@ -147,153 +143,153 @@ const timetableData = {
     day1: {
         date: "2026-04-25",
         michinoku: [
-            createArtistItem("町長挨拶", "11:55", "12:05"),
-            createArtistItem("川崎中学校吹奏楽部", "10:55", "11:15"),
-            createArtistItem("ストレイテナー<br><span class='guest-info'>GUEST<br><span class='guest-item'>●サイトウタクヤ</span> <span class='guest-item'>●清水英介</span></span>", "12:05", "12:55", "Rock"),
-            createArtistItem("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
-            createArtistItem("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
-            createArtistItem("東京スカパラダイスオーケストラ", "16:45", "17:30", "Ska"),
-            createArtistItem("[Alexandros]", "18:15", "19:00", "Rock"),
-            createArtistItem("ASIAN KUNG-FU GENERATION<br><span class='guest-info'>GUEST<br><span class='guest-item'>●岸田繁</span> <span class='guest-item'>●岸谷香</span> <span class='guest-item'>●塩塚モエカ</span> <span class='guest-item'>●スカパラHorn Section</span> <span class='guest-item'>●TOSHI-LOW</span> <span class='guest-item'>●のん</span> <span class='guest-item'>●細美武士</span> <span class='guest-item'>●ホリエアツシ</span> <span class='guest-item'>●Achico</span></span>", "19:50", "21:20", "Rock")
+            e("町長挨拶", "11:55", "12:05"),
+            e("川崎中学校吹奏楽部", "10:55", "11:15"),
+            e("ストレイテナー<br><span class='guest-info'>GUEST<br><span class='guest-item'>●サイトウタクヤ</span> <span class='guest-item'>●清水英介</span></span>", "12:05", "12:55", "Rock"),
+            e("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
+            e("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
+            e("東京スカパラダイスオーケストラ", "16:45", "17:30", "Ska"),
+            e("[Alexandros]", "18:15", "19:00", "Rock"),
+            e("ASIAN KUNG-FU GENERATION<br><span class='guest-info'>GUEST<br><span class='guest-item'>●岸田繁</span> <span class='guest-item'>●岸谷香</span> <span class='guest-item'>●塩塚モエカ</span> <span class='guest-item'>●スカパラHorn Section</span> <span class='guest-item'>●TOSHI-LOW</span> <span class='guest-item'>●のん</span> <span class='guest-item'>●細美武士</span> <span class='guest-item'>●ホリエアツシ</span> <span class='guest-item'>●Achico</span></span>", "19:50", "21:20", "Rock")
         ],
         arahabaki: [
-            createArtistItem("Ayllton", "10:30", "11:00", "Acoustic"),
-            createArtistItem("森川葵咲樹", "11:25", "11:55", "Acoustic"),
-            createArtistItem("TRAëLL", "12:20", "12:50", "Acoustic"),
-            createArtistItem("PES", "13:15", "13:45", "Hip Hop"),
-            createArtistItem("UNFAIR RULE (Acoustic Set)", "14:10", "14:40", "Rock"),
-            createArtistItem("さとう。", "15:05", "15:35", "Pop"),
-            createArtistItem("関取花", "16:00", "16:30", "Acoustic"),
-            createArtistItem("鈴木実貴子ズ", "16:55", "17:25", "Acoustic"),
-            createArtistItem("奇妙礼太郎", "17:50", "18:20", "Acoustic"),
-            createArtistItem("GLIM SPANKY (Acoustic Set)", "18:50", "19:20", "Rock")
+            e("Ayllton", "10:30", "11:00", "Acoustic"),
+            e("森川葵咲樹", "11:25", "11:55", "Acoustic"),
+            e("TRAëLL", "12:20", "12:50", "Acoustic"),
+            e("PES", "13:15", "13:45", "Hip Hop"),
+            e("UNFAIR RULE (Acoustic Set)", "14:10", "14:40", "Rock"),
+            e("さとう。", "15:05", "15:35", "Pop"),
+            e("関取花", "16:00", "16:30", "Acoustic"),
+            e("鈴木実貴子ズ", "16:55", "17:25", "Acoustic"),
+            e("奇妙礼太郎", "17:50", "18:20", "Acoustic"),
+            e("GLIM SPANKY (Acoustic Set)", "18:50", "19:20", "Rock")
         ],
         hatahata: [
-            createArtistItem("藤原美幸(秋田民謡)", "10:30", "10:45"),
-            createArtistItem("リアクション ザ ブッタ", "10:45", "11:20", "Rock"),
-            createArtistItem("TENDOUJI", "11:50", "12:25", "Indie Rock"),
-            createArtistItem("みちのくプロレス1", "12:25", "12:45"),
-            createArtistItem("ドミコ", "12:55", "13:30", "Garage Rock"),
-            createArtistItem("みちのくプロレス2", "13:30", "13:50"),
-            createArtistItem("LOW IQ 01 & THE RHYTHM MAKERS", "14:05", "14:40", "Punk"),
-            createArtistItem("みちのくプロレス3", "14:40", "15:00"),
-            createArtistItem("9mm Parabellum Bullet", "15:10", "15:45", "Rock"),
-            createArtistItem("西馬音内盆踊り1", "15:45", "16:05"),
-            createArtistItem("Crystal Lake", "16:15", "16:50", "Metalcore"),
-            createArtistItem("西馬音内盆踊り2", "16:50", "17:10"),
-            createArtistItem("KOTORI", "17:20", "17:55", "Rock"),
-            createArtistItem("西馬音内盆踊り3", "17:55", "18:15"),
-            createArtistItem("打首獄門同好会", "18:25", "19:00", "Loud Rock"),
-            createArtistItem("coldrain", "19:30", "20:05", "Post-Hardcore")
+            e("藤原美幸(秋田民謡)", "10:30", "10:45"),
+            e("リアクション ザ ブッタ", "10:45", "11:20", "Rock"),
+            e("TENDOUJI", "11:50", "12:25", "Indie Rock"),
+            e("みちのくプロレス1", "12:25", "12:45"),
+            e("ドミコ", "12:55", "13:30", "Garage Rock"),
+            e("みちのくプロレス2", "13:30", "13:50"),
+            e("LOW IQ 01 & THE RHYTHM MAKERS", "14:05", "14:40", "Punk"),
+            e("みちのくプロレス3", "14:40", "15:00"),
+            e("9mm Parabellum Bullet", "15:10", "15:45", "Rock"),
+            e("西馬音内盆踊り1", "15:45", "16:05"),
+            e("Crystal Lake", "16:15", "16:50", "Metalcore"),
+            e("西馬音内盆踊り2", "16:50", "17:10"),
+            e("KOTORI", "17:20", "17:55", "Rock"),
+            e("西馬音内盆踊り3", "17:55", "18:15"),
+            e("打首獄門同好会", "18:25", "19:00", "Loud Rock"),
+            e("coldrain", "19:30", "20:05", "Post-Hardcore")
         ],
         tsugaru: [
-            createArtistItem("Cha'R", "10:35", "10:55"),
-            createArtistItem("超能力戦士ドリアン", "11:30", "12:05", "Rock"),
-            createArtistItem("おいしくるメロンパン", "12:40", "13:15", "Rock"),
-            createArtistItem("NELKE", "13:50", "14:25", "Indie"),
-            createArtistItem("kurayamisaka", "14:55", "15:30", "Indie"),
-            createArtistItem("のん & the tears of knight", "16:00", "16:35", "Rock"),
-            createArtistItem("岸谷香", "17:05", "17:40", "Pop"),
-            createArtistItem("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional"),
-            createArtistItem("リーガルリリー", "18:20", "18:55", "Rock"),
-            createArtistItem("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional"),
-            createArtistItem("柴田聡子 (BAND SET)", "19:35", "20:10", "Pop"),
-            createArtistItem("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional"),
-            createArtistItem("コレサワ", "20:50", "21:25", "Pop")
+            e("Cha'R", "10:35", "10:55"),
+            e("超能力戦士ドリアン", "11:30", "12:05", "Rock"),
+            e("おいしくるメロンパン", "12:40", "13:15", "Rock"),
+            e("NELKE", "13:50", "14:25", "Indie"),
+            e("kurayamisaka", "14:55", "15:30", "Indie"),
+            e("のん & the tears of knight", "16:00", "16:35", "Rock"),
+            e("岸谷香", "17:05", "17:40", "Pop"),
+            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional"),
+            e("リーガルリリー", "18:20", "18:55", "Rock"),
+            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional"),
+            e("柴田聡子 (BAND SET)", "19:35", "20:10", "Pop"),
+            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional"),
+            e("コレサワ", "20:50", "21:25", "Pop")
         ],
         hanagasa: [
-            createArtistItem("Rol3ert", "11:50", "12:10"),
-            createArtistItem("猪居亜美(クラシックギター)", "13:20", "13:40"),
-            createArtistItem("奈良美智 (DJ)", "14:40", "15:10", "DJ"),
-            createArtistItem("Date fm SOUND GENIC トークセッション", "16:15", "16:35"),
-            createArtistItem("Date fm SOUND GENIC トークセッション", "17:35", "17:55"),
-            createArtistItem("yosugala", "19:00", "19:20"),
-            createArtistItem("もっさ(ネクライトーキー)", "20:30", "21:00", "Acoustic"),
-            createArtistItem("ヒグチアイ (for CAMPERS)", "22:00", "22:30", "Pop"),
-            createArtistItem("いいちこ presents ENKAI<br><span class='guest-info'>アーティスト<br><span class='guest-item'>●関取花</span> <span class='guest-item'>●Ｔ字路s</span> <span class='guest-item'>●ヒグチアイ</span><br>芸人<br><span class='guest-item'>●オズワルド</span> <span class='guest-item'>●ダンビラムーチョ</span> <span class='guest-item'>●ナユタ</span><br>MC<br><span class='guest-item'>●遠山大輔（グランジ）</span></span>", "22:30", "24:10", "Variety"),
-            createArtistItem("杉本ラララ", "24:10", "24:40", "Acoustic")
+            e("Rol3ert", "11:50", "12:10"),
+            e("猪居亜美(クラシックギター)", "13:20", "13:40"),
+            e("奈良美智 (DJ)", "14:40", "15:10", "DJ"),
+            e("Date fm SOUND GENIC トークセッション", "16:15", "16:35"),
+            e("Date fm SOUND GENIC トークセッション", "17:35", "17:55"),
+            e("yosugala", "19:00", "19:20"),
+            e("もっさ(ネクライトーキー)", "20:30", "21:00", "Acoustic"),
+            e("ヒグチアイ (for CAMPERS)", "22:00", "22:30", "Pop"),
+            e("いいちこ presents ENKAI<br><span class='guest-info'>アーティスト<br><span class='guest-item'>●関取花</span> <span class='guest-item'>●Ｔ字路s</span> <span class='guest-item'>●ヒグチアイ</span><br>芸人<br><span class='guest-item'>●オズワルド</span> <span class='guest-item'>●ダンビラムーチョ</span> <span class='guest-item'>●ナユタ</span><br>MC<br><span class='guest-item'>●遠山大輔（グランジ）</span></span>", "22:30", "24:10", "Variety"),
+            e("杉本ラララ", "24:10", "24:40", "Acoustic")
         ],
         banetsu: [
-            createArtistItem("MONKEY MAJIK", "11:00", "11:45", "Pop Rock"),
-            createArtistItem("礼賛", "12:30", "13:15", "Hip Hop/Rock"),
-            createArtistItem("ハンブレッダーズ", "13:50", "14:35", "Rock"),
-            createArtistItem("くるり", "15:30", "16:15", "Alternative Rock"),
-            createArtistItem("OAU<br><span class='guest-info'>GUEST<br><span class='guest-item'>●大木伸夫</span> <span class='guest-item'>●細美武士</span></span>", "16:50", "17:35", "Acoustic Rock"),
-            createArtistItem("優里", "18:10", "18:55", "Pop"),
-            createArtistItem("STUTS", "19:40", "20:25", "Hip Hop")
+            e("MONKEY MAJIK", "11:00", "11:45", "Pop Rock"),
+            e("礼賛", "12:30", "13:15", "Hip Hop/Rock"),
+            e("ハンブレッダーズ", "13:50", "14:35", "Rock"),
+            e("くるり", "15:30", "16:15", "Alternative Rock"),
+            e("OAU<br><span class='guest-info'>GUEST<br><span class='guest-item'>●大木伸夫</span> <span class='guest-item'>●細美武士</span></span>", "16:50", "17:35", "Acoustic Rock"),
+            e("優里", "18:10", "18:55", "Pop"),
+            e("STUTS", "19:40", "20:25", "Hip Hop")
         ]
     },
     day2: {
         date: "2026-04-26",
         michinoku: [
-            createArtistItem("Lexulty", "10:20", "10:40"),
-            createArtistItem("怒髪天<br><span class='guest-info'>GUEST<br><span class='guest-item'>●当日朝発表！</span></span>", "11:30", "12:20", "Punk"),
-            createArtistItem("MONGOL800", "13:00", "13:45", "Punk"),
-            createArtistItem("10-FEET", "14:35", "15:20", "Punk"),
-            createArtistItem("布袋寅泰", "16:05", "16:50", "Rock"),
-            createArtistItem("あいみょん", "17:35", "18:20", "Pop"),
-            createArtistItem("MICHINOKU PEACE SESSION GTR祭'26<br><span class='guest-info'>SPECIAL BAND<br><span class='guest-item'>●The Birthday</span> <span class='guest-item'>●Paledusk</span> <span class='guest-item'>●Keyboards：高野勲</span><br>GUEST<br><span class='guest-item'>●うつみようこ</span> <span class='guest-item'>●菅原卓郎</span> <span class='guest-item'>●曽我部恵一</span> <span class='guest-item'>●竹安堅一</span> <span class='guest-item'>●TAKUMA</span> <span class='guest-item'>●DURAN</span> <span class='guest-item'>●TOSHI-LOW</span> <span class='guest-item'>●ホリエアツシ</span> <span class='guest-item'>●松尾レミ</span> <span class='guest-item'>●宮崎朝子</span> <span class='guest-item'>●山田将司&菅波栄純</span></span>", "19:30", "21:15", "Rock")
+            e("Lexulty", "10:20", "10:40"),
+            e("怒髪天<br><span class='guest-info'>GUEST<br><span class='guest-item'>●当日朝発表！</span></span>", "11:30", "12:20", "Punk"),
+            e("MONGOL800", "13:00", "13:45", "Punk"),
+            e("10-FEET", "14:35", "15:20", "Punk"),
+            e("布袋寅泰", "16:05", "16:50", "Rock"),
+            e("あいみょん", "17:35", "18:20", "Pop"),
+            e("MICHINOKU PEACE SESSION GTR祭'26<br><span class='guest-info'>SPECIAL BAND<br><span class='guest-item'>●The Birthday</span> <span class='guest-item'>●Paledusk</span> <span class='guest-item'>●Keyboards：高野勲</span><br>GUEST<br><span class='guest-item'>●うつみようこ</span> <span class='guest-item'>●菅原卓郎</span> <span class='guest-item'>●曽我部恵一</span> <span class='guest-item'>●竹安堅一</span> <span class='guest-item'>●TAKUMA</span> <span class='guest-item'>●DURAN</span> <span class='guest-item'>●TOSHI-LOW</span> <span class='guest-item'>●ホリエアツシ</span> <span class='guest-item'>●松尾レミ</span> <span class='guest-item'>●宮崎朝子</span> <span class='guest-item'>●山田将司&菅波栄純</span></span>", "19:30", "21:15", "Rock")
         ],
         arahabaki: [
-            createArtistItem("中村旭", "10:30", "11:00", "Acoustic"),
-            createArtistItem("サカグチアミ", "11:25", "11:55", "Acoustic"),
-            createArtistItem("『ユイカ』", "12:20", "12:50", "Pop"),
-            createArtistItem("石崎ひゅーい", "13:15", "13:45", "Pop"),
-            createArtistItem("サバシスター (Acoustic Set)", "14:10", "14:40", "Rock"),
-            createArtistItem("山中さわお(弾き語り)", "15:05", "15:35", "Rock"),
-            createArtistItem("中田裕二(弾り語り)", "16:00", "16:30", "Pop/Rock"),
-            createArtistItem("堂島孝平", "16:55", "17:25", "Pop"),
-            createArtistItem("曽我部恵一(弾き語り)", "17:50", "18:20", "Acoustic"),
-            createArtistItem("向井秀徳アコースティック＆エレクトリック", "18:45", "19:15", "Alternative")
+            e("中村旭", "10:30", "11:00", "Acoustic"),
+            e("サカグチアミ", "11:25", "11:55", "Acoustic"),
+            e("『ユイカ』", "12:20", "12:50", "Pop"),
+            e("石崎ひゅーい", "13:15", "13:45", "Pop"),
+            e("サバシスター (Acoustic Set)", "14:10", "14:40", "Rock"),
+            e("山中さわお(弾き語り)", "15:05", "15:35", "Rock"),
+            e("中田裕二(弾り語り)", "16:00", "16:30", "Pop/Rock"),
+            e("堂島孝平", "16:55", "17:25", "Pop"),
+            e("曽我部恵一(弾き語り)", "17:50", "18:20", "Acoustic"),
+            e("向井秀徳アコースティック＆エレクトリック", "18:45", "19:15", "Alternative")
         ],
         hanagasa: [
-            createArtistItem("Luiz Murá (for CAMPERS)", "09:00", "09:35", "Acoustic"),
-            createArtistItem("おとどけチーたくん高速バンド", "10:30", "10:50"),
-            createArtistItem("Date fm トークセッション", "11:50", "12:10"),
-            createArtistItem("トークセッション 松田晋二の夜更けの囁き", "13:10", "13:30"),
-            createArtistItem("曽我部恵一 (DJ)", "14:35", "15:05", "DJ"),
-            createArtistItem("EMNW", "16:10", "16:40", "Rock"),
-            createArtistItem("忘れらんねえよ柴田", "17:45", "18:15", "Acoustic")
+            e("Luiz Murá (for CAMPERS)", "09:00", "09:35", "Acoustic"),
+            e("おとどけチーたくん高速バンド", "10:30", "10:50"),
+            e("Date fm トークセッション", "11:50", "12:10"),
+            e("トークセッション 松田晋二の夜更けの囁き", "13:10", "13:30"),
+            e("曽我部恵一 (DJ)", "14:35", "15:05", "DJ"),
+            e("EMNW", "16:10", "16:40", "Rock"),
+            e("忘れらんねえよ柴田", "17:45", "18:15", "Acoustic")
         ],
         hatahata: [
-            createArtistItem("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk"),
-            createArtistItem("Blue Mash", "10:30", "11:05", "Rock"),
-            createArtistItem("BURNOUT SYNDROMES", "11:35", "12:10", "Rock"),
-            createArtistItem("みちのくプロレス1", "12:10", "12:30"),
-            createArtistItem("MAYSON's PARTY", "12:45", "13:20", "Ska/Punk"),
-            createArtistItem("みちのくプロレス2", "13:20", "13:40"),
-            createArtistItem("yonige", "13:55", "14:30", "Rock"),
-            createArtistItem("みちのくプロレス3", "14:30", "14:50"),
-            createArtistItem("PEDRO", "15:05", "15:40", "Rock"),
-            createArtistItem("西馬音内盆踊り1", "15:40", "16:00"),
-            createArtistItem("THE BACK HORN", "16:15", "16:50", "Rock"),
-            createArtistItem("西馬音内盆踊り2", "16:50", "17:10"),
-            createArtistItem("eastern youth", "17:25", "18:00", "Punk/Emo"),
-            createArtistItem("LOSTAGE", "18:30", "19:05", "Rock"),
-            createArtistItem("黒夢", "19:35", "20:10", "Rock")
+            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk"),
+            e("Blue Mash", "10:30", "11:05", "Rock"),
+            e("BURNOUT SYNDROMES", "11:35", "12:10", "Rock"),
+            e("みちのくプロレス1", "12:10", "12:30"),
+            e("MAYSON's PARTY", "12:45", "13:20", "Ska/Punk"),
+            e("みちのくプロレス2", "13:20", "13:40"),
+            e("yonige", "13:55", "14:30", "Rock"),
+            e("みちのくプロレス3", "14:30", "14:50"),
+            e("PEDRO", "15:05", "15:40", "Rock"),
+            e("西馬音内盆踊り1", "15:40", "16:00"),
+            e("THE BACK HORN", "16:15", "16:50", "Rock"),
+            e("西馬音内盆踊り2", "16:50", "17:10"),
+            e("eastern youth", "17:25", "18:00", "Punk/Emo"),
+            e("LOSTAGE", "18:30", "19:05", "Rock"),
+            e("黒夢", "19:35", "20:10", "Rock")
         ],
         tsugaru: [
-            createArtistItem("坂本サトル ARABAKI special", "10:30", "11:15", "Acoustic"),
-            createArtistItem("luv", "11:45", "12:20", "Rock"),
-            createArtistItem("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional"),
-            createArtistItem("the shes gone", "13:00", "13:35", "Rock"),
-            createArtistItem("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional"),
-            createArtistItem("秋山黄色", "14:15", "14:50", "Rock"),
-            createArtistItem("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional"),
-            createArtistItem("Ｔ字路s", "15:35", "16:10", "Blues/Folk"),
-            createArtistItem("Kvi Baba", "16:40", "17:15", "Hip Hop"),
-            createArtistItem("TOOBOE", "17:45", "18:20", "Pop/Rock"),
-            createArtistItem("浅井健一", "18:50", "19:25", "Rock"),
-            createArtistItem("レトロリロン", "19:55", "20:30", "Pop")
+            e("坂本サトル ARABAKI special", "10:30", "11:15", "Acoustic"),
+            e("luv", "11:45", "12:20", "Rock"),
+            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional"),
+            e("the shes gone", "13:00", "13:35", "Rock"),
+            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional"),
+            e("秋山黄色", "14:15", "14:50", "Rock"),
+            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional"),
+            e("Ｔ字路s", "15:35", "16:10", "Blues/Folk"),
+            e("Kvi Baba", "16:40", "17:15", "Hip Hop"),
+            e("TOOBOE", "17:45", "18:20", "Pop/Rock"),
+            e("浅井健一", "18:50", "19:25", "Rock"),
+            e("レトロリロン", "19:55", "20:30", "Pop")
         ],
         banetsu: [
-            createArtistItem("川内太鼓", "10:00", "10:20"),
-            createArtistItem("GEZAN", "11:00", "11:45", "Alternative"),
-            createArtistItem("ハンバート ハンバート", "12:25", "13:10", "Folk"),
-            createArtistItem("KEIJU", "13:45", "14:30", "Hip Hop"),
-            createArtistItem("T.M.Revolution", "15:20", "16:05", "Pop"),
-            createArtistItem("ゴスペラーズ", "16:55", "17:40", "R&B/Pop"),
-            createArtistItem("SHISHAMO", "18:30", "19:15", "Rock")
+            e("川内太鼓", "10:00", "10:20"),
+            e("GEZAN", "11:00", "11:45", "Alternative"),
+            e("ハンバート ハンバート", "12:25", "13:10", "Folk"),
+            e("KEIJU", "13:45", "14:30", "Hip Hop"),
+            e("T.M.Revolution", "15:20", "16:05", "Pop"),
+            e("ゴスペラーズ", "16:55", "17:40", "R&B/Pop"),
+            e("SHISHAMO", "18:30", "19:15", "Rock")
         ]
     }
 };
@@ -412,7 +408,6 @@ const artistYomiDict = {
 };
 
 // --- 検索用：文字の正規化関数 ---
-// カタカナをひらがなに変換し、小文字に統一して検索しやすくします
 function normalizeForSearch(str) {
     if (!str) return "";
     let normalized = str.replace(/[\u30a1-\u30f6]/g, function(match) {
@@ -432,20 +427,17 @@ let currentDay = 1;
 let mapScale = 1.0;
 let fullArtistData = [];
 
-// localStorage（スマホ本体）にデータを保存するためのキー（名前）
 const FAV_KEY = APP_CONFIG.storagePrefix + 'favs';
 const FOOD_FAV_KEY = APP_CONFIG.storagePrefix + 'food_favs';
 const LAST_TAB_KEY = APP_CONFIG.storagePrefix + 'last_tab';
 const MEMO_KEY = APP_CONFIG.storagePrefix + 'memo';
 
-// 起動時に保存されたデータを読み込みます
 let favorites = JSON.parse(localStorage.getItem(FAV_KEY)) || {};
 let foodFavoritesOrder = JSON.parse(localStorage.getItem(FOOD_FAV_KEY)) || [];
 
 const saveFavorites = () => localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
 const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringify(foodFavoritesOrder));
 
-// アプリ起動時の初期設定
 function applyAppConfig() {
     const titleEl = document.getElementById('appTitle');
     if(titleEl) titleEl.innerHTML = APP_CONFIG.festivalName;
@@ -454,20 +446,23 @@ function applyAppConfig() {
     if (APP_CONFIG.days[1]) document.getElementById('btnDay2').textContent = APP_CONFIG.days[1].label;
 }
 
-// 修正点：イベント委譲のために、onclickではなく関数内で処理を完結させます
 function toggleFav(id) {
-    favorites[id] ? delete favorites[id] : favorites[id] = true;
+    const decodedId = decodeURIComponent(id);
+    favorites[decodedId] ? delete favorites[decodedId] : favorites[decodedId] = true;
     saveFavorites();
     renderTimetable(); 
 }
 
 function toggleFoodFav(shopName, areaName) {
-    const id = areaName + "::" + shopName; 
+    const decodedShopName = decodeURIComponent(shopName);
+    const decodedAreaName = decodeURIComponent(areaName);
+    const id = decodedAreaName + "::" + decodedShopName; 
+    
     const index = foodFavoritesOrder.findIndex(item => item.id === id);
     if (index > -1) {
         foodFavoritesOrder.splice(index, 1); 
     } else {
-        foodFavoritesOrder.push({ id: id, shopName: shopName, areaName: areaName }); 
+        foodFavoritesOrder.push({ id: id, shopName: decodedShopName, areaName: decodedAreaName }); 
     }
     saveFoodFavorites();
     renderFoodSection(); 
@@ -479,27 +474,23 @@ function toggleFoodArea(element) {
     if(content) content.classList.toggle('open');
 }
 
-// 「12:30」などの文字を、開始時刻からの「分」に変換します
 function timeToMins(timeStr) {
     const [h, m] = timeStr.split(':').map(Number);
     const adjustedH = h < APP_CONFIG.startHour ? h + 24 : h;
     return (adjustedH - APP_CONFIG.startHour) * 60 + m;
 }
 
-// 「25:00」などを「1:00」のように整えます
 function formatTimeDisplay(timeStr) {
     let [h, m] = timeStr.split(':').map(Number);
     if(h >= 24) h -= 24;
     return `${h}:${m.toString().padStart(2,'0')}`;
 }
 
-// タイムテーブルを横スクロールした時、上のステージ名も一緒に動かす処理
 function syncScroll() {
     const wrapper = document.getElementById('ttWrapper');
     document.getElementById('headerWrapper').scrollLeft = wrapper.scrollLeft;
 }
 
-// タブを切り替える処理
 function switchTab(target) {
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
 
@@ -510,10 +501,8 @@ function switchTab(target) {
         renderTimetable();
     } else {
         const btnId = 'btn' + target.charAt(0).toUpperCase() + target.slice(1);
-        const targetBtn = document.getElementById(btnId);
-        if (targetBtn) targetBtn.classList.add('active');
-        const targetSec = document.getElementById(target + 'Section');
-        if (targetSec) targetSec.classList.add('active');
+        document.getElementById(btnId).classList.add('active');
+        document.getElementById(target + 'Section').classList.add('active');
     }
     
     if (target === 'weather') {
@@ -528,7 +517,6 @@ function switchTab(target) {
     localStorage.setItem(LAST_TAB_KEY, target);
 }
 
-// 天気ウィジェットの表示・非表示（オフライン判定）
 function checkWeatherOnlineStatus() {
     const onlineContent = document.getElementById('weatherOnlineContent');
     const offlineContent = document.getElementById('weatherOfflineContent');
@@ -547,7 +535,6 @@ function checkWeatherOnlineStatus() {
 window.addEventListener('online', checkWeatherOnlineStatus);
 window.addEventListener('offline', checkWeatherOnlineStatus);
 
-// タイムテーブルのステージ名（ヘッダー）を描画
 function renderHeaders(myttCols) {
     let html = '';
     if(myttCols > 0) {
@@ -564,7 +551,6 @@ function renderHeaders(myttCols) {
     document.getElementById('stageHeaders').innerHTML = html;
 }
 
-// 修正点：インラインのonclickを削除し、代わりに data-favid を付与しています
 function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const startMin = timeToMins(artist.start);
     const endMin = timeToMins(artist.end);
@@ -588,24 +574,28 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     }
 
     const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
+    const escapedFavId = encodeURIComponent(favId);
 
-    const isMayorGreeting = artist.name === "町長挨拶";
+const isMayorGreeting = artist.name === "町長挨拶";
     const isSpecialArtist = artist.name.includes("藤原美幸") || artist.name.includes("夢弦会");
     const isEventNoGenre = artist.name.includes("みちのくプロレス") || artist.name.includes("西馬音内盆踊り") || artist.name.includes("トークセッション") || artist.name.includes("おとどけチーたくん高速バンド");
 
+    // ★ マイタイテ用のステージバッジHTML（一番左上に配置用）
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
 
     if (isMayorGreeting || isSpecialArtist) {
         const displayTime = isMayorGreeting ? "12:00-" : `${formatTimeDisplay(artist.start)}-`;
+        // マイタイテの場合、特殊ブロックでは横並びにバッジを配置
         const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name" style="margin-right:4px;">${stage.name}</span>` : '';
         return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor}; flex-direction:row; align-items:center; flex-wrap:wrap; align-content:center; gap:2px;">
                     ${inlineStageBadge}
                     <span class="artist-time" style="margin:0;">${displayTime}</span>
                     <span class="artist-name" style="margin:0; font-size:11px; white-space:normal; flex: 1;">${artist.name}</span>
-                    <button class="fav-btn ${isFav ? 'active' : ''}" data-favid="${favId}" style="margin-left:auto;">★</button>
+                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')" style="margin-left:auto;">★</button>
                 </div>`;
     }
 
+    // ★ マイタイテの場合はジャンルを表示しない
     const displayGenre = (isEventNoGenre || isMyTT) ? "" : (artist.genre || "");
     const timeText = isEventNoGenre ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
     const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
@@ -614,14 +604,13 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
                 ${stageBadgeHtml}
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
-                    <button class="fav-btn ${isFav ? 'active' : ''}" data-favid="${favId}">★</button>
+                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')">★</button>
                 </div>
                 <div class="artist-name">${artist.name}</div>
                 ${metaHtml}
             </div>`;
 }
 
-// 枠に文字が収まるようにフォントサイズを自動調整する機能
 function adjustFontSize() {
     document.querySelectorAll('.artist-block:not(.food-block):not(.search-modal-content .artist-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
@@ -638,12 +627,15 @@ function adjustFontSize() {
 
         targetEl.style.fontSize = fontSize + 'px';
         
+        // 1段階目：メインの文字（アーティスト名）を縮小
         while ((block.scrollHeight > block.offsetHeight || block.scrollWidth > block.clientWidth) && fontSize > 6) {
             fontSize -= 0.5;
             targetEl.style.fontSize = fontSize + 'px';
         }
 
+        // 2段階目：それでも高さがはみ出る場合（マイタイムテーブルの短い枠など）
         if (block.scrollHeight > block.offsetHeight) {
+            // ブロック内の余白やマージンをギリギリまで詰める
             block.style.padding = '2px';
             if (topEl) topEl.style.marginBottom = '0px';
             if (stageBadge) {
@@ -651,7 +643,8 @@ function adjustFontSize() {
                 stageBadge.style.padding = '1px 4px';
             }
             
-            let subFontSize = 10;
+            let subFontSize = 10; // サブ要素（時間など）の基準サイズ
+            // 時間、バッジ、ジャンル名などの文字サイズも全体的に縮小して収める
             while ((block.scrollHeight > block.offsetHeight) && subFontSize > 5) {
                 subFontSize -= 0.5;
                 if (timeEl) timeEl.style.fontSize = subFontSize + 'px';
@@ -662,7 +655,6 @@ function adjustFontSize() {
     });
 }
 
-// タイムテーブルの全体を描画する処理
 function renderTimetable() {
     const dayKey = `day${currentDay}`;
     const data = timetableData[dayKey];
@@ -743,7 +735,6 @@ function renderTimetable() {
     adjustFontSize(); 
 }
 
-// 現在時刻の赤い線を更新する処理
 function updateCurrentTimeLine() {
     const line = document.getElementById('currentTimeLine');
     if(!line) return;
@@ -766,7 +757,6 @@ function updateCurrentTimeLine() {
     line.style.display = 'none'; 
 }
 
-// 修正点：フードカード生成時も onclick を削除し data 属性を使用
 function generateFoodCard(shop, areaName, isDraggable = false) {
     const menuItems = shop.menus.map(m => `<li>${m}</li>`).join('');
     const messageHtml = shop.message.replace(/\n/g, '<br>');
@@ -779,14 +769,17 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
     const id = areaName + "::" + shop.name;
     const isFav = foodFavoritesOrder.some(item => item.id === id);
     
+    // アポストロフィ等もエスケープする
+    const encShopName = encodeURIComponent(shop.name).replace(/'/g, "%27");
+    const encAreaName = encodeURIComponent(areaName).replace(/'/g, "%27");
+    
     const classes = isDraggable ? "food-card draggable-card" : "food-card";
     const dragAttr = isDraggable ? `draggable="true" data-id="${id}"` : `data-id="${id}"`;
 
-    // data-shopname と data-areaname を使ってJS側に情報を渡します
     return `
     <div class="${classes}" ${dragAttr}>
     <div class="food-card-area-badge">${areaName}</div>
-        <button class="food-fav-btn ${isFav ? 'active' : ''}" data-shopname="${shop.name}" data-areaname="${areaName}">★</button>
+        <button class="food-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFoodFav('${encShopName}', '${encAreaName}')">★</button>
         <div class="food-card-img-wrapper">
             ${imgHtml}
         </div>
@@ -801,7 +794,7 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
 function renderFoodSection() {
     let html = '';
     html += `
-    <div class="food-area-toggle open" style="background-color: #fff0f5; border: 2px solid #ffb6c1;">
+    <div class="food-area-toggle open" onclick="toggleFoodArea(this)" style="background-color: #fff0f5; border: 2px solid #ffb6c1;">
         <span>★ 食べたいものリスト</span>
         <span class="toggle-icon" style="transform: rotate(90deg);">▶</span>
     </div>
@@ -829,7 +822,7 @@ function renderFoodSection() {
     foodList.forEach(area => {
         const shopsHtml = area.menu.map(shop => generateFoodCard(shop, area.name, false)).join('');
         html += `
-        <div class="food-area-toggle">
+        <div class="food-area-toggle" onclick="toggleFoodArea(this)">
             <span>${area.name}</span>
             <span class="toggle-icon">▶</span>
         </div>
@@ -842,7 +835,6 @@ function renderFoodSection() {
     setupDragAndDrop(); 
 }
 
-// ドラッグ＆ドロップでフードの並び順を変える処理
 function setupDragAndDrop() {
     const container = document.getElementById('foodFavoritesList');
     if (!container) return;
@@ -896,17 +888,16 @@ function updateFoodFavoritesOrder() {
     saveFoodFavorites();
 }
 
-// マップの拡大縮小処理
 function zoomMap(delta) {
-    if (delta === 'reset') {
-        mapScale = 1.0;
-    } else {
-        mapScale = Math.min(Math.max(0.5, mapScale + parseFloat(delta)), 3.0);
-    }
+    mapScale = Math.min(Math.max(0.5, mapScale + delta), 3.0);
     document.getElementById('mapWrapper').style.width = `${mapScale * 100}%`;
 }
 
-// デジタル時計の更新
+function resetZoom() {
+    mapScale = 1.0;
+    document.getElementById('mapWrapper').style.width = `100%`;
+}
+
 function updateClock() {
     const now = new Date();
     const h = String(now.getHours()).padStart(2, '0');
@@ -929,7 +920,41 @@ function displayLastModified() {
     }
 }
 
-// 検索用データの事前構築
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => {
+                console.log('Service Worker: 登録成功');
+                const CACHE_NAME = APP_CONFIG.storagePrefix + 'cache-v3';
+                caches.open(CACHE_NAME).then(cache => {
+                    const dynamicImages = [];
+                    foodList.forEach(area => {
+                        if (area.menu) {
+                            area.menu.forEach(shop => {
+                                if (shop.img) dynamicImages.push(shop.img);
+                            });
+                        }
+                    });
+                    const essentialUrls = [
+                        './',
+                        './index.html',
+                        './style.css',
+                        './script.js',
+                        './manifest.json',
+                        'https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/',
+                        'https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png',
+                        'https://i-love-music-festivals.github.io/arabaki2026/icon.png',
+                        'https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg',
+                        'https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg'
+                    ];
+                    const allUrlsToCache = [...new Set([...essentialUrls, ...dynamicImages])];
+                    cache.addAll(allUrlsToCache).catch(err => console.log('一部のキャッシュに失敗しました', err));
+                });
+            })
+            .catch(err => console.log('Service Worker: 登録失敗', err));
+    });
+}
+
 function buildArtistSearchData() {
     const artistNames = new Set();
     const baseNameMap = new Map(); 
@@ -987,7 +1012,6 @@ function buildArtistSearchData() {
     });
 }
 
-// 検索機能のセットアップ
 function setupSearch() {
     buildArtistSearchData();
 
@@ -1085,19 +1109,19 @@ function showSearchResults(searchText) {
             
             const favId = getFavId(dayKey, stage.id, artist.name);
             const isFav = favorites[favId];
-            
-            const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
+            const escapedFavId = encodeURIComponent(favId);
+
+            const lighterNames = ["川崎中学校吹奏部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
             const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
 
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
-            // 修正点：ここでもonclickを削除し、data-favidを使用
             const html = `
                 <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
                     <div class="artist-top">
                         <span class="artist-time">${dayLabel} ${timeText} <span class="artist-stage-name">${stage.name}</span></span>
-                        <button class="fav-btn ${isFav ? 'active' : ''}" data-favid="${favId}">★</button>
+                        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
                     </div>
                     <div class="artist-name">${artist.name}</div>
                 </div>
@@ -1110,61 +1134,19 @@ function showSearchResults(searchText) {
     document.getElementById('searchModal').style.display = 'flex';
 }
 
-// ============================================================================
-// 【重要】イベント委譲（Event Delegation）のセットアップ
-// 画面全体に対するクリック操作をここで一括で監視・処理します。
-// ============================================================================
-function setupEventDelegation() {
-    document.addEventListener('click', (e) => {
-        
-        // 1. お気に入りボタン（★）がクリックされた時の処理
-        if (e.target.closest('.fav-btn')) {
-            const btn = e.target.closest('.fav-btn');
-            const favId = btn.getAttribute('data-favid');
-            
-            // タイムテーブルのお気に入りの場合
-            if (favId) {
-                toggleFav(favId);
-                // モーダル内でクリックされた場合は、モーダル内の見た目も更新
-                if (btn.closest('#searchModalContent')) {
-                    btn.classList.toggle('active');
-                    btn.closest('.artist-block').classList.toggle('favorited');
-                }
-            }
-        }
-        
-        // 2. フードのお気に入りボタンがクリックされた時の処理
-        if (e.target.closest('.food-fav-btn')) {
-            const btn = e.target.closest('.food-fav-btn');
-            const shopName = btn.getAttribute('data-shopname');
-            const areaName = btn.getAttribute('data-areaname');
-            if (shopName && areaName) toggleFoodFav(shopName, areaName);
-        }
-
-        // 3. フードエリアのアコーディオン（開閉）がクリックされた時の処理
-        if (e.target.closest('.food-area-toggle')) {
-            toggleFoodArea(e.target.closest('.food-area-toggle'));
-        }
-
-        // 4. タブ切り替えボタンがクリックされた時の処理
-        if (e.target.closest('.tab-btn')) {
-            const tabName = e.target.closest('.tab-btn').getAttribute('data-tab');
-            if (tabName) switchTab(tabName);
-        }
-
-        // 5. マップのズームボタンがクリックされた時の処理
-        if (e.target.closest('.zoom-btn')) {
-            const zoomValue = e.target.closest('.zoom-btn').getAttribute('data-zoom');
-            if (zoomValue) zoomMap(zoomValue);
-        }
-    });
+function toggleModalFav(btn) {
+    if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        btn.closest('.artist-block').classList.remove('favorited');
+    } else {
+        btn.classList.add('active');
+        btn.closest('.artist-block').classList.add('favorited');
+    }
 }
 
-// ページが読み込まれた時に最初に実行される処理
 window.addEventListener('DOMContentLoaded', () => {
     applyAppConfig();
     setupSearch();
-    setupEventDelegation(); // イベント委譲を開始
 
     const lastTab = localStorage.getItem(LAST_TAB_KEY) || 'day1';
     switchTab(lastTab); 
