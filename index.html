@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Loading...</title>
+    <title>ARABAKI ROCK FEST.26</title>
     
     <link rel="manifest" href="./manifest.json">
   
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
+    <meta property="og:title" content="非公式アプリ">
+    <meta property="og:description" content="タイムテーブル、フード、エリアマップ等を確認できる非公式アプリです。">
     <meta property="og:url" content="https://i-love-music-festivals.github.io/arabaki2026/">
-    <meta property="og:image" content="">
+    <meta property="og:image" content="https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="フェスタイムテーブル">
+    <meta property="og:site_name" content="フェスタイムテーブル 非公式ガイド">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="">
+    <meta name="twitter:image" content="https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png">
 
     <link rel="apple-touch-icon" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
     <link rel="icon" type="image/png" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
@@ -25,13 +25,14 @@
 <body>
     <div id="digitalClock">00:00:00</div>
     
-    <a href="#" target="_blank" rel="noopener noreferrer" id="officialLink">
-        </a>
+    <a href="https://arabaki.com/" target="_blank" rel="noopener noreferrer" id="officialLink">
+        <span class="small-text">公式</span>HP
+    </a>
     
     <div class="app-container">
         <header>
-            <h1 id="appTitle"></h1>
-            <div id="disclaimerContainer" class="disclaimer"></div>
+            <h1 id="appTitle">ARABAKI ROCK FEST.26<br>非公式アプリ</h1>
+            <div class="disclaimer">※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。</div>
             <div id="lastUpdated">Last Update: --/--/-- --:--</div> 
             
             <div class="search-container">
@@ -40,8 +41,8 @@
             </div>
 
             <div class="tabs">
-                <button class="tab-btn" id="btnDay1" onclick="switchTab('day1')"></button>
-                <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')"></button>
+                <button class="tab-btn" id="btnDay1" onclick="switchTab('day1')">Day 1</button>
+                <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')">Day 2</button>
                 <button class="tab-btn" id="btnFood" onclick="switchTab('food')">フード</button>
                 <button class="tab-btn" id="btnMap" onclick="switchTab('map')">マップ</button>
                 <button class="tab-btn" id="btnWeather" onclick="switchTab('weather')">天気</button>
@@ -67,22 +68,37 @@
         <div id="foodSection" class="content-section">
             <h2 class="food-section-header">フードエリア一覧</h2>
             <div id="foodContainer"></div>
+            <div class="source-credit">
+                出典：ARABAKI ROCK FEST.26<br>
+                （<a href="https://arabaki.com/area/" target="_blank" rel="noopener noreferrer" class="source-link">https://arabaki.com/area/</a>）
+            </div>
         </div>
 
         <div id="mapSection" class="content-section">
-            <div class="map-wrapper" id="mapWrapper"></div>
+            <div class="map-wrapper" id="mapWrapper">
+                <img class="area-map-img" src="https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg" alt="Area Map 1">
+                <img class="area-map-img" src="https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg" alt="Area Map 2">
+            </div>
             <div class="map-controls">
                 <button class="zoom-btn" onclick="zoomMap(0.2)">＋</button>
                 <button class="zoom-btn" onclick="zoomMap(-0.2)">－</button>
                 <button class="zoom-btn zoom-btn-reset" onclick="resetZoom()">Reset</button>
             </div>
+            <div class="source-credit">
+                出典：ARABAKI ROCK FEST.26<br>
+                （<a href="https://arabaki.com/area/" target="_blank" rel="noopener noreferrer" class="source-link">https://arabaki.com/area/</a>）
+            </div>
         </div>
 
         <div id="weatherSection" class="content-section">
             <div id="weatherOnlineContent" class="weather-content">
-                <h2 class="weather-section-header">周辺の天気</h2>
+                <h2 class="weather-section-header">エコキャンプみちのく周辺の天気</h2>
                 <div class="iframe-container">
                     <iframe src="https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/" title="1時間毎の天気"></iframe>
+                </div>
+                <div class="weather-link-notice">
+                    ※サイト側のセキュリティ制限等でうまく表示されない場合は、<br>
+                    <a href="https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/" target="_blank" rel="noopener noreferrer">こちらからウェザーニュースを開いて</a>ご確認ください。
                 </div>
             </div>
             <div id="weatherOfflineContent" class="weather-offline-msg">
@@ -94,8 +110,8 @@
             <h2 class="memo-section-header">メモ</h2>
             <div class="memo-notice">
                 ※注意点※<br>
-                ・ブラウザの履歴データを消去するとメモも消えてしまいます。<br>
-                ・他の端末との共有はできません。
+                ・ブラウザのキャッシュ（履歴データ）クリアを行うと、マイタイムテーブル等を含めてメモの内容も消えてしまいます。<br>
+                ・他のデバイス（スマホからPCなど）への共有はできません。
             </div>
             <textarea id="memoTextArea" placeholder="ライブの感想やメモを自由に書き込めます。&#13;&#10;入力すると自動保存されます。"></textarea>
         </div>

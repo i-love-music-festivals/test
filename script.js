@@ -8,19 +8,7 @@
 
 // --- 1. アプリケーション全体の設定 ---
 const APP_CONFIG = {
-    pageTitle: "ARABAKI ROCK FEST.26",
     festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
-    metaDescription: "タイムテーブル、フード、エリアマップ等を確認できる非公式アプリです。",
-    metaOgImage: "https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png",
-    officialUrl: "https://arabaki.com/",
-    disclaimers: [
-        "※各アーティストのジャンルはAIによる判定です。",
-        "※最新情報は公式HPで確認してください。"
-    ],
-    mapImages: [
-        "https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg",
-        "https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg"
-    ],
     storagePrefix: "arabaki_2026_",
     startHour: 9, 
     endHour: 25,
@@ -41,8 +29,10 @@ const stagesInfo = [
 ];
 
 // --- 3. データ作成用ヘルパー関数 ---
+// { isLightBg: true } のような「意味（フラグ）」を持たせ、画面の作り方をロジックに指示します。
 const e = (name, start, end, genre = "", options = {}) => ({ name, start, end, genre, ...options });
 
+// お気に入り保存用のIDを作る関数（名前の記号を取り除いて一意にする）
 function getFavId(dayKey, stageId, artistName) {
     const cleanName = artistName.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
     return `${dayKey}_${stageId}_${cleanName}`;
@@ -149,12 +139,13 @@ const foodList = [
 ];
 
 // --- 5. タイムテーブル・出演アーティストデータ ---
+// isLightBg や hideEndTime、isSpecialLayout などのフラグ（意味）を持たせます
 const timetableData = {
     day1: {
         date: "2026-04-25",
         michinoku: [
-            e("町長挨拶", "11:55", "12:05", "", { isSubEvent: true, isRowLayout: true, displayTime: "12:00-" }),
-            e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isSubEvent: true }),
+            e("町長挨拶", "11:55", "12:05", "", { isLightBg: true, isSpecialLayout: true, displayTime: "12:00-" }),
+            e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isLightBg: true }),
             e("ストレイテナー<br><span class='guest-info'>GUEST<br><span class='guest-item'>●サイトウタクヤ</span> <span class='guest-item'>●清水英介</span></span>", "12:05", "12:55", "Rock"),
             e("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
             e("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
@@ -175,36 +166,36 @@ const timetableData = {
             e("GLIM SPANKY (Acoustic Set)", "18:50", "19:20", "Rock")
         ],
         hatahata: [
-            e("藤原美幸(秋田民謡)", "10:30", "10:45", "", { isSubEvent: true, isRowLayout: true }),
+            e("藤原美幸(秋田民謡)", "10:30", "10:45", "", { isLightBg: true, isSpecialLayout: true }),
             e("リアクション ザ ブッタ", "10:45", "11:20", "Rock"),
             e("TENDOUJI", "11:50", "12:25", "Indie Rock"),
-            e("みちのくプロレス1", "12:25", "12:45", "", { isSubEvent: true, hideEndTime: true }),
+            e("みちのくプロレス1", "12:25", "12:45", "", { isLightBg: true, hideEndTime: true }),
             e("ドミコ", "12:55", "13:30", "Garage Rock"),
-            e("みちのくプロレス2", "13:30", "13:50", "", { isSubEvent: true, hideEndTime: true }),
+            e("みちのくプロレス2", "13:30", "13:50", "", { isLightBg: true, hideEndTime: true }),
             e("LOW IQ 01 & THE RHYTHM MAKERS", "14:05", "14:40", "Punk"),
-            e("みちのくプロレス3", "14:40", "15:00", "", { isSubEvent: true, hideEndTime: true }),
+            e("みちのくプロレス3", "14:40", "15:00", "", { isLightBg: true, hideEndTime: true }),
             e("9mm Parabellum Bullet", "15:10", "15:45", "Rock"),
-            e("西馬音内盆踊り1", "15:45", "16:05", "", { isSubEvent: true, hideEndTime: true }),
+            e("西馬音内盆踊り1", "15:45", "16:05", "", { isLightBg: true, hideEndTime: true }),
             e("Crystal Lake", "16:15", "16:50", "Metalcore"),
-            e("西馬音内盆踊り2", "16:50", "17:10", "", { isSubEvent: true, hideEndTime: true }),
+            e("西馬音内盆踊り2", "16:50", "17:10", "", { isLightBg: true, hideEndTime: true }),
             e("KOTORI", "17:20", "17:55", "Rock"),
-            e("西馬音内盆踊り3", "17:55", "18:15", "", { isSubEvent: true, hideEndTime: true }),
+            e("西馬音内盆踊り3", "17:55", "18:15", "", { isLightBg: true, hideEndTime: true }),
             e("打首獄門同好会", "18:25", "19:00", "Loud Rock"),
             e("coldrain", "19:30", "20:05", "Post-Hardcore")
         ],
         tsugaru: [
-            e("Cha'R", "10:35", "10:55", "", { isSubEvent: true }),
+            e("Cha'R", "10:35", "10:55", "", { isLightBg: true }),
             e("超能力戦士ドリアン", "11:30", "12:05", "Rock"),
             e("おいしくるメロンパン", "12:40", "13:15", "Rock"),
             e("NELKE", "13:50", "14:25", "Indie"),
             e("kurayamisaka", "14:55", "15:30", "Indie"),
             e("のん & the tears of knight", "16:00", "16:35", "Rock"),
             e("岸谷香", "17:05", "17:40", "Pop"),
-            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional", { isSubEvent: true, isRowLayout: true }),
+            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("リーガルリリー", "18:20", "18:55", "Rock"),
-            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional", { isSubEvent: true, isRowLayout: true }),
+            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("柴田聡子 (BAND SET)", "19:35", "20:10", "Pop"),
-            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional", { isSubEvent: true, isRowLayout: true }),
+            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("コレサワ", "20:50", "21:25", "Pop")
         ],
         hanagasa: [
@@ -232,7 +223,7 @@ const timetableData = {
     day2: {
         date: "2026-04-26",
         michinoku: [
-            e("Lexulty", "10:20", "10:40", "", { isSubEvent: true }),
+            e("Lexulty", "10:20", "10:40", "", { isLightBg: true }),
             e("怒髪天<br><span class='guest-info'>GUEST<br><span class='guest-item'>●当日朝発表！</span></span>", "11:30", "12:20", "Punk"),
             e("MONGOL800", "13:00", "13:45", "Punk"),
             e("10-FEET", "14:35", "15:20", "Punk"),
@@ -262,18 +253,18 @@ const timetableData = {
             e("忘れらんねえよ柴田", "17:45", "18:15", "Acoustic")
         ],
         hatahata: [
-            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk", { isSubEvent: true, isRowLayout: true }),
+            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk", { isLightBg: true, isSpecialLayout: true }),
             e("Blue Mash", "10:30", "11:05", "Rock"),
             e("BURNOUT SYNDROMES", "11:35", "12:10", "Rock"),
-            e("みちのくプロレス1", "12:10", "12:30", "", { isSubEvent: true, hideEndTime: true }),
+            e("みちのくプロレス1", "12:10", "12:30", "", { isLightBg: true, hideEndTime: true }),
             e("MAYSON's PARTY", "12:45", "13:20", "Ska/Punk"),
-            e("みちのくプロレス2", "13:20", "13:40", "", { isSubEvent: true, hideEndTime: true }),
+            e("みちのくプロレス2", "13:20", "13:40", "", { isLightBg: true, hideEndTime: true }),
             e("yonige", "13:55", "14:30", "Rock"),
-            e("みちのくプロレス3", "14:30", "14:50", "", { isSubEvent: true, hideEndTime: true }),
+            e("みちのくプロレス3", "14:30", "14:50", "", { isLightBg: true, hideEndTime: true }),
             e("PEDRO", "15:05", "15:40", "Rock"),
-            e("西馬音内盆踊り1", "15:40", "16:00", "", { isSubEvent: true, hideEndTime: true }),
+            e("西馬音内盆踊り1", "15:40", "16:00", "", { isLightBg: true, hideEndTime: true }),
             e("THE BACK HORN", "16:15", "16:50", "Rock"),
-            e("西馬音内盆踊り2", "16:50", "17:10", "", { isSubEvent: true, hideEndTime: true }),
+            e("西馬音内盆踊り2", "16:50", "17:10", "", { isLightBg: true, hideEndTime: true }),
             e("eastern youth", "17:25", "18:00", "Punk/Emo"),
             e("LOSTAGE", "18:30", "19:05", "Rock"),
             e("黒夢", "19:35", "20:10", "Rock")
@@ -281,11 +272,11 @@ const timetableData = {
         tsugaru: [
             e("坂本サトル ARABAKI special", "10:30", "11:15", "Acoustic"),
             e("luv", "11:45", "12:20", "Rock"),
-            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional", { isSubEvent: true, isRowLayout: true }),
+            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("the shes gone", "13:00", "13:35", "Rock"),
-            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional", { isSubEvent: true, isRowLayout: true }),
+            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("秋山黄色", "14:15", "14:50", "Rock"),
-            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional", { isSubEvent: true, isRowLayout: true }),
+            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("Ｔ字路s", "15:35", "16:10", "Blues/Folk"),
             e("Kvi Baba", "16:40", "17:15", "Hip Hop"),
             e("TOOBOE", "17:45", "18:20", "Pop/Rock"),
@@ -417,14 +408,16 @@ const artistYomiDict = {
     "SHISHAMO": "ししゃも"
 };
 
-// 全角・半角やひらがな・カタカナを統一する関数
+// 検索用：全角・半角やひらがな・カタカナを統一する関数
 function normalizeForSearch(str) {
     if (!str) return "";
     let normalized = str.replace(/[\u30a1-\u30f6]/g, function(match) {
         return String.fromCharCode(match.charCodeAt(0) - 0x60);
     });
-    return normalized.toLowerCase();
+    normalized = normalized.toLowerCase();
+    return normalized;
 }
+
 
 /**
  * ==========================================
@@ -435,6 +428,7 @@ let currentDay = 1;
 let mapScale = 1.0;
 let fullArtistData = [];
 
+// LocalStorageのキー
 const FAV_KEY = APP_CONFIG.storagePrefix + 'favs';
 const FOOD_FAV_KEY = APP_CONFIG.storagePrefix + 'food_favs';
 const LAST_TAB_KEY = APP_CONFIG.storagePrefix + 'last_tab';
@@ -446,55 +440,16 @@ let foodFavoritesOrder = JSON.parse(localStorage.getItem(FOOD_FAV_KEY)) || [];
 const saveFavorites = () => localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
 const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringify(foodFavoritesOrder));
 
-// 初期設定の適用（HTMLの箱にデータを流し込む処理）
+// 初期設定の適用
 function applyAppConfig() {
-    // 1. タイトルの流し込み
-    const titleHead = document.getElementById('pageTitle');
-    if(titleHead) titleHead.textContent = APP_CONFIG.pageTitle;
-    
-    // 2. メタ情報（OGP等）の動的生成。毎回追加するのではなく、探して上書きします。
-    const createMeta = (attrName, attrValue, content) => {
-        let meta = document.querySelector(`meta[${attrName}="${attrValue}"]`);
-        if (!meta) {
-            meta = document.createElement('meta');
-            meta.setAttribute(attrName, attrValue);
-            document.head.appendChild(meta);
-        }
-        meta.setAttribute('content', content);
-    };
-    createMeta('property', 'og:title', APP_CONFIG.pageTitle + " 非公式アプリ");
-    createMeta('property', 'og:description', APP_CONFIG.metaDescription);
-    createMeta('property', 'og:image', APP_CONFIG.metaOgImage);
-    createMeta('name', 'twitter:image', APP_CONFIG.metaOgImage);
-
-    // 3. 画面上のヘッダータイトル
     const titleEl = document.getElementById('appTitle');
     if(titleEl) titleEl.innerHTML = APP_CONFIG.festivalName;
-    
-    // 4. 注意書きの流し込み
-    const disclaimerEl = document.getElementById('disclaimerContainer');
-    if (disclaimerEl && APP_CONFIG.disclaimers) {
-        disclaimerEl.innerHTML = APP_CONFIG.disclaimers.join('<br>');
-    }
 
-    // 5. 公式リンクの流し込み
-    const linkEl = document.getElementById('officialLink');
-    if (linkEl && APP_CONFIG.officialUrl) {
-        linkEl.href = APP_CONFIG.officialUrl;
-        linkEl.innerHTML = '<span class="small-text">公式</span>HP';
-    }
-
-    // 6. タブのラベル設定
     if (APP_CONFIG.days[0]) document.getElementById('btnDay1').textContent = APP_CONFIG.days[0].label;
     if (APP_CONFIG.days[1]) document.getElementById('btnDay2').textContent = APP_CONFIG.days[1].label;
-    
-    // 7. マップ画像の流し込み
-    const mapWrapper = document.getElementById('mapWrapper');
-    if (mapWrapper && APP_CONFIG.mapImages) {
-        mapWrapper.innerHTML = APP_CONFIG.mapImages.map(src => `<img class="area-map-img" src="${src}" alt="Area Map">`).join('');
-    }
 }
 
+// お気に入り切り替え
 function toggleFav(id) {
     const decodedId = decodeURIComponent(id);
     favorites[decodedId] ? delete favorites[decodedId] : favorites[decodedId] = true;
@@ -502,6 +457,7 @@ function toggleFav(id) {
     renderTimetable(); 
 }
 
+// フードのお気に入り切り替え
 function toggleFoodFav(shopName, areaName) {
     const decodedShopName = decodeURIComponent(shopName);
     const decodedAreaName = decodeURIComponent(areaName);
@@ -517,32 +473,36 @@ function toggleFoodFav(shopName, areaName) {
     renderFoodSection(); 
 }
 
+// フードのアコーディオン開閉
 function toggleFoodArea(element) {
     element.classList.toggle('open');
     const content = element.nextElementSibling;
     if(content) content.classList.toggle('open');
 }
 
+// 時間文字列（HH:MM）を分数（数値）に変換
 function timeToMins(timeStr) {
-    if(!timeStr) return 0;
     const [h, m] = timeStr.split(':').map(Number);
     const adjustedH = h < APP_CONFIG.startHour ? h + 24 : h;
     return (adjustedH - APP_CONFIG.startHour) * 60 + m;
 }
 
+// 表示用に時間をフォーマット
 function formatTimeDisplay(timeStr) {
-    if(!timeStr) return "";
     let [h, m] = timeStr.split(':').map(Number);
     if(h >= 24) h -= 24;
     return `${h}:${m.toString().padStart(2,'0')}`;
 }
 
+// タイムテーブルのヘッダーと本体のスクロールを同期
 function syncScroll() {
     const wrapper = document.getElementById('ttWrapper');
     document.getElementById('headerWrapper').scrollLeft = wrapper.scrollLeft;
 }
 
+// タブの切り替え
 function switchTab(target) {
+    // 全てのタブとコンテンツをリセット
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
 
     if (target === 'day1' || target === 'day2') {
@@ -556,34 +516,45 @@ function switchTab(target) {
         document.getElementById(target + 'Section').classList.add('active');
     }
     
-    if (target === 'weather') checkWeatherOnlineStatus(); 
+    // 天気タブを開いた時の処理
+    if (target === 'weather') {
+        checkWeatherOnlineStatus(); 
+        const weatherSection = document.getElementById('weatherSection');
+        if (weatherSection) {
+            weatherSection.scrollTop = 0;
+            window.scrollTo(0, 0); 
+        }
+    }
     
     localStorage.setItem(LAST_TAB_KEY, target);
 }
 
+// 【改善箇所】天気のオンライン・オフライン判定（CSSクラスの付与のみを行う）
 function checkWeatherOnlineStatus() {
     const weatherSection = document.getElementById('weatherSection');
     if (weatherSection) {
         if (navigator.onLine) {
-            weatherSection.classList.remove('is-offline');
+            weatherSection.classList.remove('is-offline'); // CSSで表示切り替え
         } else {
-            weatherSection.classList.add('is-offline'); 
+            weatherSection.classList.add('is-offline');    // CSSで表示切り替え
         }
     }
 }
 window.addEventListener('online', checkWeatherOnlineStatus);
 window.addEventListener('offline', checkWeatherOnlineStatus);
 
+// ステージのヘッダーを描画
 function renderHeaders(myttCols) {
     let html = '';
     if(myttCols > 0) {
+        // ※ここのstyleは動的な計算（変数）なのでJSに書いてOKです
         html += `<div class="stage-header mytt" style="width: calc(var(--col-width) * ${myttCols});">
                     <div class="stage-name mytt">マイタイテ</div>
                  </div>`;
     }
     stagesInfo.forEach(stage => {
-        // 色を直接背景色とするのではなく、CSS変数として渡す
-        const style = `style="background-color: var(--stage-color); --stage-color: ${stage.color}"`;
+        // 背景色はデータ由来なのでインラインスタイルでOK
+        const style = `style="background-color: ${stage.color}"`;
         html += `<div class="stage-header">
                     <div class="stage-name" ${style}>${stage.name}</div>
                  </div>`;
@@ -591,7 +562,7 @@ function renderHeaders(myttCols) {
     document.getElementById('stageHeaders').innerHTML = html;
 }
 
-// データに基づいて「意味のあるクラス」を付与してHTMLを生成する
+// アーティストの四角いブロック（HTML）を生成
 function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const startMin = timeToMins(artist.start);
     const endMin = timeToMins(artist.end);
@@ -599,6 +570,9 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
 
     const favId = getFavId(dayKey, stage.id, artist.name);
     const isFav = favorites[favId];
+    
+    // データ（artist.isLightBgフラグ）を見て背景色を透過させる
+    const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
 
     let isPlaying = false;
     const now = new Date();
@@ -611,24 +585,16 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
         if(currentMins >= startMin && currentMins < endMin) isPlaying = true;
     }
 
-    // データ側の指示（意味）に基づいてクラスを付与する
-    const classesList = ['artist-block'];
-    if (isFav) classesList.push('favorited');
-    if (isPlaying) classesList.push('playing');
-    if (artist.isSubEvent) classesList.push('sub-event');
-    if (artist.isRowLayout) classesList.push('row-layout');
-    
-    const classes = classesList.join(' ');
+    const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
     const escapedFavId = encodeURIComponent(favId);
 
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
-    // CSS変数でステージカラーを渡し、実際の描画（透過等）はCSSに任せる
-    const blockStyle = `top:${startMin*2}px; height:${duration*2}px; --stage-color:${stage.color};`;
 
-    if (artist.isRowLayout) {
+    // 特殊レイアウト指定がある場合
+    if (artist.isSpecialLayout) {
         const displayTime = artist.displayTime || `${formatTimeDisplay(artist.start)}-`;
         const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name" style="margin-right:4px;">${stage.name}</span>` : '';
-        return `<div class="${classes}" style="${blockStyle}">
+        return `<div class="${classes} artist-block-special" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
                     ${inlineStageBadge}
                     <span class="artist-time">${displayTime}</span>
                     <span class="artist-name">${artist.name}</span>
@@ -636,27 +602,33 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
                 </div>`;
     }
 
+    // 時間を隠すフラグやマイタイテならジャンルを非表示にする
+    const displayGenre = (artist.hideEndTime || isMyTT) ? "" : (artist.genre || "");
     const timeText = artist.hideEndTime ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
+    const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
     
-    return `<div class="${classes}" style="${blockStyle}">
+    return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
+                ${stageBadgeHtml}
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
                     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')">★</button>
                 </div>
-                ${stageBadgeHtml}
                 <div class="artist-name">${artist.name}</div>
+                ${metaHtml}
             </div>`;
 }
 
+// 枠内に文字が収まるようにフォントサイズを自動調整
 function adjustFontSize() {
     document.querySelectorAll('.artist-block:not(.food-block):not(.search-modal-content .artist-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
         const timeEl = block.querySelector('.artist-time');
         const stageBadge = block.querySelector('.mytt-stage-name');
-        
+        const metaEl = block.querySelector('.artist-meta');
+
         if (!nameEl) return;
 
-        const isRow = block.classList.contains('row-layout');
+        const isRow = block.classList.contains('artist-block-special');
         let fontSize = isRow ? 11 : (nameEl.innerText === "" ? 11 : 13);
         const targetEl = (isRow || nameEl.innerText !== "") ? nameEl : timeEl;
 
@@ -674,14 +646,16 @@ function adjustFontSize() {
                 subFontSize -= 0.5;
                 if (timeEl) timeEl.style.fontSize = subFontSize + 'px';
                 if (stageBadge) stageBadge.style.fontSize = Math.max(4, subFontSize - 2) + 'px';
+                if (metaEl) metaEl.style.fontSize = Math.max(5, subFontSize - 2) + 'px';
             }
         }
     });
 }
 
+// タイムテーブル全体の描画
 function renderTimetable() {
     const dayKey = `day${currentDay}`;
-    const data = timetableData[dayKey] || {};
+    const data = timetableData[dayKey];
 
     let timeHtml = '';
     for(let h = APP_CONFIG.startHour; h <= APP_CONFIG.endHour; h++) {
@@ -689,6 +663,7 @@ function renderTimetable() {
     }
     document.getElementById('timeCol').innerHTML = timeHtml;
 
+    // マイタイムテーブルの構築
     let myTtItems = [];
     stagesInfo.forEach((stage, stageIndex) => {
         (data[stage.id] || []).forEach(artist => {
@@ -755,14 +730,13 @@ function renderTimetable() {
     adjustFontSize(); 
 }
 
+// 現在時刻線の更新
 function updateCurrentTimeLine() {
     const line = document.getElementById('currentTimeLine');
     if(!line) return;
 
     const now = new Date();
     const dayKey = `day${currentDay}`;
-    if (!timetableData[dayKey]) return;
-    
     const dataDate = new Date(timetableData[dayKey].date);
     const isNextDayEarly = now.getHours() < APP_CONFIG.startHour && now.getDate() === dataDate.getDate() + 1;
     
@@ -779,10 +753,7 @@ function updateCurrentTimeLine() {
     line.style.display = 'none'; 
 }
 
-// ---------------------------------------------------------
-// （※フード関連やドラッグ＆ドロップ、検索の処理はロジック変更が不要なため割愛せずそのまま残します）
-// ---------------------------------------------------------
-
+// フードカードの生成
 function generateFoodCard(shop, areaName, isDraggable = false) {
     const menuItems = shop.menus.map(m => `<li>${m}</li>`).join('');
     const messageHtml = shop.message.replace(/\n/g, '<br>');
@@ -810,8 +781,10 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
     </div>`;
 }
 
+// フードセクションの描画
 function renderFoodSection() {
     let html = '';
+    // 【改善箇所】toggle-iconのインラインスタイル(style="transform:...")を削除しました
     html += `
     <div class="food-area-toggle open food-area-fav" onclick="toggleFoodArea(this)">
         <span>★ 食べたいものリスト</span>
@@ -852,6 +825,7 @@ function renderFoodSection() {
     setupDragAndDrop(); 
 }
 
+// ドラッグ＆ドロップ機能
 function setupDragAndDrop() {
     const container = document.getElementById('foodFavoritesList');
     if (!container) return;
@@ -905,6 +879,7 @@ function updateFoodFavoritesOrder() {
     saveFoodFavorites();
 }
 
+// マップのズーム機能
 function zoomMap(delta) {
     mapScale = Math.min(Math.max(0.5, mapScale + delta), 3.0);
     document.getElementById('mapWrapper').style.width = `${mapScale * 100}%`;
@@ -914,6 +889,7 @@ function resetZoom() {
     document.getElementById('mapWrapper').style.width = `100%`;
 }
 
+// 時計と更新日時の表示
 function updateClock() {
     const now = new Date();
     const h = String(now.getHours()).padStart(2, '0');
@@ -936,6 +912,7 @@ function displayLastModified() {
     }
 }
 
+// 検索データの構築
 function buildArtistSearchData() {
     const artistNames = new Set();
     const baseNameMap = new Map(); 
@@ -987,6 +964,7 @@ function buildArtistSearchData() {
     });
 }
 
+// 検索機能のセットアップ
 function setupSearch() {
     buildArtistSearchData();
     const searchInput = document.getElementById('artistSearchInput');
@@ -1067,6 +1045,7 @@ function showSearchResults(searchText) {
     document.getElementById('searchModalTitle').textContent = `「${searchText}」の出演情報`;
 
     if (results.length === 0) {
+        // 【改善箇所】インラインスタイルを削除し、クラス名（.search-empty-msg）に置き換えました
         contentArea.innerHTML = '<div class="search-empty-msg">見つかりませんでした。</div>';
         return;
     }
@@ -1080,14 +1059,12 @@ function showSearchResults(searchText) {
             const favId = getFavId(dayKey, stage.id, artist.name);
             const isFav = favorites[favId];
             const escapedFavId = encodeURIComponent(favId);
+            const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
-            // モーダル内でもCSS変数（--stage-color）を使って色を渡します
-            const blockStyle = `--stage-color:${stage.color};`;
-
             const html = `
-                <div class="artist-block ${isFav ? 'favorited' : ''}" style="${blockStyle}">
+                <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
                     <div class="artist-top">
                         <span class="artist-time">${dayLabel} ${timeText} <span class="artist-stage-name">${stage.name}</span></span>
                         <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
@@ -1113,6 +1090,7 @@ function toggleModalFav(btn) {
     }
 }
 
+// ページ読み込み完了時の処理
 window.addEventListener('DOMContentLoaded', () => {
     applyAppConfig();
     setupSearch();
