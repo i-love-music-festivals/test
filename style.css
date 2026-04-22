@@ -1028,3 +1028,19 @@ h1 {
 .artist-block-special .fav-btn {
     margin-left: auto; /* ボタンを右端に寄せる */
 }
+
+/* ==========================================
+   フォントサイズ自動調整時のコンパクトモード
+   ========================================== */
+.compact-mode {
+    padding: 2px !important;
+}
+
+.compact-mode .artist-top {
+    margin-bottom: 0px !important;
+}
+
+.compact-mode .mytt-stage-name {
+    margin-bottom: 0px !important;
+    padding: 1px 4px !important;
+}

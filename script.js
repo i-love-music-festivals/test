@@ -30,7 +30,9 @@ const stagesInfo = [
 
 // --- 3. データ作成用ヘルパー関数 ---
 // タイムテーブル用
-const e = (name, start, end, genre = "") => ({ name, start, end, genre });
+// 初心者向け解説：options オブジェクトを追加しました。
+// ここに isLightBg:true (背景を薄くする) などのフラグを渡すことで、データに「意味」を持たせます。
+const e = (name, start, end, genre = "", options = {}) => ({ name, start, end, genre, ...options });
 
 // お気に入りID生成用の共通関数
 function getFavId(dayKey, stageId, artistName) {
@@ -139,12 +141,14 @@ const foodList = [
 ];
 
 // --- 5. タイムテーブル・出演アーティストデータ ---
+// 初心者向け解説：
+// { isLightBg: true } などを渡すことで、名前（文字列）に関わらずロジックが自動的に判断できるようになりました。
 const timetableData = {
     day1: {
         date: "2026-04-25",
         michinoku: [
-            e("町長挨拶", "11:55", "12:05"),
-            e("川崎中学校吹奏楽部", "10:55", "11:15"),
+            e("町長挨拶", "11:55", "12:05", "", { isLightBg: true, isSpecialLayout: true, displayTime: "12:00-" }),
+            e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isLightBg: true }),
             e("ストレイテナー<br><span class='guest-info'>GUEST<br><span class='guest-item'>●サイトウタクヤ</span> <span class='guest-item'>●清水英介</span></span>", "12:05", "12:55", "Rock"),
             e("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
             e("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
@@ -165,44 +169,44 @@ const timetableData = {
             e("GLIM SPANKY (Acoustic Set)", "18:50", "19:20", "Rock")
         ],
         hatahata: [
-            e("藤原美幸(秋田民謡)", "10:30", "10:45"),
+            e("藤原美幸(秋田民謡)", "10:30", "10:45", "", { isLightBg: true, isSpecialLayout: true }),
             e("リアクション ザ ブッタ", "10:45", "11:20", "Rock"),
             e("TENDOUJI", "11:50", "12:25", "Indie Rock"),
-            e("みちのくプロレス1", "12:25", "12:45"),
+            e("みちのくプロレス1", "12:25", "12:45", "", { isLightBg: true, hideEndTime: true }),
             e("ドミコ", "12:55", "13:30", "Garage Rock"),
-            e("みちのくプロレス2", "13:30", "13:50"),
+            e("みちのくプロレス2", "13:30", "13:50", "", { isLightBg: true, hideEndTime: true }),
             e("LOW IQ 01 & THE RHYTHM MAKERS", "14:05", "14:40", "Punk"),
-            e("みちのくプロレス3", "14:40", "15:00"),
+            e("みちのくプロレス3", "14:40", "15:00", "", { isLightBg: true, hideEndTime: true }),
             e("9mm Parabellum Bullet", "15:10", "15:45", "Rock"),
-            e("西馬音内盆踊り1", "15:45", "16:05"),
+            e("西馬音内盆踊り1", "15:45", "16:05", "", { isLightBg: true, hideEndTime: true }),
             e("Crystal Lake", "16:15", "16:50", "Metalcore"),
-            e("西馬音内盆踊り2", "16:50", "17:10"),
+            e("西馬音内盆踊り2", "16:50", "17:10", "", { isLightBg: true, hideEndTime: true }),
             e("KOTORI", "17:20", "17:55", "Rock"),
-            e("西馬音内盆踊り3", "17:55", "18:15"),
+            e("西馬音内盆踊り3", "17:55", "18:15", "", { isLightBg: true, hideEndTime: true }),
             e("打首獄門同好会", "18:25", "19:00", "Loud Rock"),
             e("coldrain", "19:30", "20:05", "Post-Hardcore")
         ],
         tsugaru: [
-            e("Cha'R", "10:35", "10:55"),
+            e("Cha'R", "10:35", "10:55", "", { isLightBg: true }),
             e("超能力戦士ドリアン", "11:30", "12:05", "Rock"),
             e("おいしくるメロンパン", "12:40", "13:15", "Rock"),
             e("NELKE", "13:50", "14:25", "Indie"),
             e("kurayamisaka", "14:55", "15:30", "Indie"),
             e("のん & the tears of knight", "16:00", "16:35", "Rock"),
             e("岸谷香", "17:05", "17:40", "Pop"),
-            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional"),
+            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("リーガルリリー", "18:20", "18:55", "Rock"),
-            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional"),
+            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("柴田聡子 (BAND SET)", "19:35", "20:10", "Pop"),
-            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional"),
+            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("コレサワ", "20:50", "21:25", "Pop")
         ],
         hanagasa: [
             e("Rol3ert", "11:50", "12:10"),
             e("猪居亜美(クラシックギター)", "13:20", "13:40"),
             e("奈良美智 (DJ)", "14:40", "15:10", "DJ"),
-            e("Date fm SOUND GENIC トークセッション", "16:15", "16:35"),
-            e("Date fm SOUND GENIC トークセッション", "17:35", "17:55"),
+            e("Date fm SOUND GENIC トークセッション", "16:15", "16:35", "", { hideEndTime: true }),
+            e("Date fm SOUND GENIC トークセッション", "17:35", "17:55", "", { hideEndTime: true }),
             e("yosugala", "19:00", "19:20"),
             e("もっさ(ネクライトーキー)", "20:30", "21:00", "Acoustic"),
             e("ヒグチアイ (for CAMPERS)", "22:00", "22:30", "Pop"),
@@ -222,7 +226,7 @@ const timetableData = {
     day2: {
         date: "2026-04-26",
         michinoku: [
-            e("Lexulty", "10:20", "10:40"),
+            e("Lexulty", "10:20", "10:40", "", { isLightBg: true }),
             e("怒髪天<br><span class='guest-info'>GUEST<br><span class='guest-item'>●当日朝発表！</span></span>", "11:30", "12:20", "Punk"),
             e("MONGOL800", "13:00", "13:45", "Punk"),
             e("10-FEET", "14:35", "15:20", "Punk"),
@@ -244,26 +248,26 @@ const timetableData = {
         ],
         hanagasa: [
             e("Luiz Murá (for CAMPERS)", "09:00", "09:35", "Acoustic"),
-            e("おとどけチーたくん高速バンド", "10:30", "10:50"),
-            e("Date fm トークセッション", "11:50", "12:10"),
-            e("トークセッション 松田晋二の夜更けの囁き", "13:10", "13:30"),
+            e("おとどけチーたくん高速バンド", "10:30", "10:50", "", { hideEndTime: true }),
+            e("Date fm トークセッション", "11:50", "12:10", "", { hideEndTime: true }),
+            e("トークセッション 松田晋二の夜更けの囁き", "13:10", "13:30", "", { hideEndTime: true }),
             e("曽我部恵一 (DJ)", "14:35", "15:05", "DJ"),
             e("EMNW", "16:10", "16:40", "Rock"),
             e("忘れらんねえよ柴田", "17:45", "18:15", "Acoustic")
         ],
         hatahata: [
-            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk"),
+            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk", { isLightBg: true, isSpecialLayout: true }),
             e("Blue Mash", "10:30", "11:05", "Rock"),
             e("BURNOUT SYNDROMES", "11:35", "12:10", "Rock"),
-            e("みちのくプロレス1", "12:10", "12:30"),
+            e("みちのくプロレス1", "12:10", "12:30", "", { isLightBg: true, hideEndTime: true }),
             e("MAYSON's PARTY", "12:45", "13:20", "Ska/Punk"),
-            e("みちのくプロレス2", "13:20", "13:40"),
+            e("みちのくプロレス2", "13:20", "13:40", "", { isLightBg: true, hideEndTime: true }),
             e("yonige", "13:55", "14:30", "Rock"),
-            e("みちのくプロレス3", "14:30", "14:50"),
+            e("みちのくプロレス3", "14:30", "14:50", "", { isLightBg: true, hideEndTime: true }),
             e("PEDRO", "15:05", "15:40", "Rock"),
-            e("西馬音内盆踊り1", "15:40", "16:00"),
+            e("西馬音内盆踊り1", "15:40", "16:00", "", { isLightBg: true, hideEndTime: true }),
             e("THE BACK HORN", "16:15", "16:50", "Rock"),
-            e("西馬音内盆踊り2", "16:50", "17:10"),
+            e("西馬音内盆踊り2", "16:50", "17:10", "", { isLightBg: true, hideEndTime: true }),
             e("eastern youth", "17:25", "18:00", "Punk/Emo"),
             e("LOSTAGE", "18:30", "19:05", "Rock"),
             e("黒夢", "19:35", "20:10", "Rock")
@@ -271,11 +275,11 @@ const timetableData = {
         tsugaru: [
             e("坂本サトル ARABAKI special", "10:30", "11:15", "Acoustic"),
             e("luv", "11:45", "12:20", "Rock"),
-            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional"),
+            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("the shes gone", "13:00", "13:35", "Rock"),
-            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional"),
+            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("秋山黄色", "14:15", "14:50", "Rock"),
-            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional"),
+            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional", { isLightBg: true, isSpecialLayout: true }),
             e("Ｔ字路s", "15:35", "16:10", "Blues/Folk"),
             e("Kvi Baba", "16:40", "17:15", "Hip Hop"),
             e("TOOBOE", "17:45", "18:20", "Pop/Rock"),
@@ -559,8 +563,8 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const favId = getFavId(dayKey, stage.id, artist.name);
     const isFav = favorites[favId];
     
-    const lighterNames = ["川崎中学校吹奏楽部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
-    const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
+    // データ（artist.isLightBg）を見て背景色を変える
+    const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
 
     let isPlaying = false;
     const now = new Date();
@@ -576,28 +580,26 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
     const escapedFavId = encodeURIComponent(favId);
 
-const isMayorGreeting = artist.name === "町長挨拶";
-    const isSpecialArtist = artist.name.includes("藤原美幸") || artist.name.includes("夢弦会");
-    const isEventNoGenre = artist.name.includes("みちのくプロレス") || artist.name.includes("西馬音内盆踊り") || artist.name.includes("トークセッション") || artist.name.includes("おとどけチーたくん高速バンド");
-
     // ★ マイタイテ用のステージバッジHTML（一番左上に配置用）
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
 
-    if (isMayorGreeting || isSpecialArtist) {
-        const displayTime = isMayorGreeting ? "12:00-" : `${formatTimeDisplay(artist.start)}-`;
-        // マイタイテの場合、特殊ブロックでは横並びにバッジを配置
+    // データ（artist.isSpecialLayout）を見て、特殊レイアウトのクラスをつけるか判断する
+    if (artist.isSpecialLayout) {
+        const displayTime = artist.displayTime || `${formatTimeDisplay(artist.start)}-`;
         const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name" style="margin-right:4px;">${stage.name}</span>` : '';
-        return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor}; flex-direction:row; align-items:center; flex-wrap:wrap; align-content:center; gap:2px;">
+        
+        // CSSクラス「artist-block-special」を使ってスタイルをあてる
+        return `<div class="${classes} artist-block-special" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
                     ${inlineStageBadge}
-                    <span class="artist-time" style="margin:0;">${displayTime}</span>
-                    <span class="artist-name" style="margin:0; font-size:11px; white-space:normal; flex: 1;">${artist.name}</span>
-                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')" style="margin-left:auto;">★</button>
+                    <span class="artist-time">${displayTime}</span>
+                    <span class="artist-name">${artist.name}</span>
+                    <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')">★</button>
                 </div>`;
     }
 
-    // ★ マイタイテの場合はジャンルを表示しない
-    const displayGenre = (isEventNoGenre || isMyTT) ? "" : (artist.genre || "");
-    const timeText = isEventNoGenre ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
+    // ★ マイタイテや、データを隠すフラグがある場合はジャンルを表示しない
+    const displayGenre = (artist.hideEndTime || isMyTT) ? "" : (artist.genre || "");
+    const timeText = artist.hideEndTime ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
     const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
     
     return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
@@ -621,7 +623,8 @@ function adjustFontSize() {
 
         if (!nameEl) return;
 
-        const isRow = block.style.flexDirection === 'row';
+        // 特殊レイアウト（横並び）かどうかの判定をクラス名で行う
+        const isRow = block.classList.contains('artist-block-special');
         let fontSize = isRow ? 11 : (nameEl.innerText === "" ? 11 : 13);
         const targetEl = (isRow || nameEl.innerText !== "") ? nameEl : timeEl;
 
@@ -635,13 +638,8 @@ function adjustFontSize() {
 
         // 2段階目：それでも高さがはみ出る場合（マイタイムテーブルの短い枠など）
         if (block.scrollHeight > block.offsetHeight) {
-            // ブロック内の余白やマージンをギリギリまで詰める
-            block.style.padding = '2px';
-            if (topEl) topEl.style.marginBottom = '0px';
-            if (stageBadge) {
-                stageBadge.style.marginBottom = '0px';
-                stageBadge.style.padding = '1px 4px';
-            }
+            // クラス「compact-mode」を付与して、CSS側で余白を詰める
+            block.classList.add('compact-mode');
             
             let subFontSize = 10; // サブ要素（時間など）の基準サイズ
             // 時間、バッジ、ジャンル名などの文字サイズも全体的に縮小して収める
@@ -1111,8 +1109,8 @@ function showSearchResults(searchText) {
             const isFav = favorites[favId];
             const escapedFavId = encodeURIComponent(favId);
 
-            const lighterNames = ["川崎中学校吹奏部", "町長挨拶", "藤原美幸", "みちのくプロレス", "西馬音内盆踊り", "Cha'R", "夢弦会", "Lexulty"];
-            const boxBgColor = lighterNames.some(t => artist.name.includes(t)) ? `${stage.color}b3` : stage.color;
+            // データ（artist.isLightBg）をそのまま見るように修正
+            const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
 
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
