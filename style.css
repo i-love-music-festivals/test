@@ -2,18 +2,19 @@
 
 /* ==========================================
    CSS 変数（共通で使う色やサイズ）
-   フェスごとに色を変えたい場合はここを調整します
+   アプリ全体のベースとなる色やサイズをここで一括管理します。
+   別のフェスに流用する際は、ここの数値を変更するだけで全体の雰囲気が変わります。
    ========================================== */
 :root {
-    --color-food: #E67E22;
-    --color-mytt: #444444;
-    --bg-color: #ffffff;
-    --grid-border: #e0e0e0;
-    --text-color: #333;
+    --color-food: #E67E22;   /* フードエリアのテーマカラー（オレンジ） */
+    --color-mytt: #444444;   /* マイタイムテーブルのテーマカラー */
+    --bg-color: #ffffff;     /* アプリ全体の背景色 */
+    --grid-border: #e0e0e0;  /* タイムテーブルの区切り線の色 */
+    --text-color: #333;      /* 基本の文字色 */
     
-    --time-width: 40px;      /* 時間列の幅 */
-    --col-width: 120px;      /* 1ステージの幅 */
-    --px-per-min: 2;         /* 1分あたりの高さ（ピクセル） */
+    --time-width: 40px;      /* 左端の時間軸列の幅 */
+    --col-width: 120px;      /* 1つのステージ列の幅 */
+    --px-per-min: 2;         /* 1分あたりの高さ（ピクセル）。2なら60分で120pxになります */
 }
 
 /* ==========================================
@@ -22,16 +23,18 @@
 body {
     margin: 0;
     padding: 0;
+    /* スマホでもPCでも読みやすい標準的なフォントを指定 */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow: hidden; /* スマホでの不要なスクロールを防ぐ */
+    overflow: hidden; /* アプリのように振る舞わせるため、画面全体の不要なスクロールを禁止 */
 }
 
+/* 画面全体を覆うコンテナ（flexboxを使って上下にレイアウトを分割） */
 .app-container {
     display: flex;
     flex-direction: column;
-    height: 100dvh; /* スマホのアドレスバーを除いた実際の画面高さ */
+    height: 100dvh; /* スマホのアドレスバーを除いた実際の画面の高さにぴったり合わせる */
 }
 
 /* ==========================================
@@ -42,7 +45,7 @@ header {
     color: white;
     padding: 10px;
     text-align: center;
-    flex-shrink: 0;
+    flex-shrink: 0; /* ヘッダーが潰れないようにする */
     z-index: 100;
 }
 
@@ -57,12 +60,14 @@ h1 {
     color: #ccc;
 }
 
+/* タブボタンを横並びにするエリア */
 .tabs { 
     display: flex; 
     justify-content: center; 
     gap: 5px;
 }
 
+/* タブボタンの基本デザイン */
 .tab-btn {
     background-color: #333;
     color: white;
@@ -71,28 +76,33 @@ h1 {
     border-radius: 4px;
     font-size: 13px;
     cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.2s, font-weight 0.2s;
+    white-space: nowrap; /* テキストの折り返しを禁止 */
+    transition: background-color 0.2s, font-weight 0.2s; /* ホバー時などのアニメーション */
 }
 
-/* アクティブ（選択中）のタブのデザイン */
+/* アクティブ（現在選択中）のタブのデザイン */
 .tab-btn.active { 
     background-color: #D81B60; 
     font-weight: bold;
 }
 
-/* タブごとのコンテンツエリア。非アクティブ時は隠す */
+/* ==========================================
+   コンテンツエリア（タブで切り替わる画面）
+   ========================================== */
+/* デフォルトではすべてのセクションを非表示（display: none）にする */
 .content-section { 
     display: none; 
     flex-grow: 1; 
     overflow: hidden;
 }
 
+/* JavaScriptで .active クラスが付いたセクションだけを表示する */
 .content-section.active { 
     display: flex; 
     flex-direction: column;
 }
 
+/* タイムテーブル内のスクロール領域 */
 .scroll-container { 
     display: flex;
     flex-direction: column; 
@@ -101,8 +111,9 @@ h1 {
 }
 
 /* ==========================================
-   タイムテーブル部分
+   タイムテーブル部分（ヘッダー）
    ========================================== */
+/* ステージ名が並ぶヘッダー部分を横スクロール可能にする */
 .stage-headers-wrapper {
     display: flex;
     overflow-x: hidden; 
@@ -117,13 +128,14 @@ h1 {
     flex-shrink: 0;
     background: #fff;
     border-right: 1px solid var(--grid-border);
-    position: sticky;
+    position: sticky; /* 横スクロールしても左端に追従させる */
     left: 0;
     z-index: 10;
 }
 
 .stage-header-list { display: flex; }
 
+/* 各ステージ名の枠 */
 .stage-header {
     width: var(--col-width);
     flex-shrink: 0;
@@ -133,12 +145,14 @@ h1 {
     box-sizing: border-box;
 }
 
+/* マイタイムテーブル用の特殊なヘッダー（列が増えると幅も広がる） */
 .stage-header.mytt { 
     width: auto;
     min-width: var(--col-width); 
     background: #ddd; 
 }
 
+/* ステージ名のバッジデザイン */
 .stage-name {
     font-weight: bold;
     font-size: 14px; 
@@ -146,7 +160,7 @@ h1 {
     color: #fff;
     padding: 4px; 
     border-radius: 4px; 
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* 文字を読みやすくするための影 */
     display: block; 
 }
 
@@ -156,6 +170,10 @@ h1 {
     background: #bbb;
 }
 
+/* ==========================================
+   タイムテーブル部分（本体のグリッド）
+   ========================================== */
+/* スクロール領域全体を囲むラッパー */
 .timetable-wrapper { 
     display: flex; 
     flex-grow: 1; 
@@ -169,11 +187,12 @@ h1 {
     flex-shrink: 0;
     background: #fff;
     border-right: 1px solid var(--grid-border);
-    position: sticky; /* 横スクロールしても左端に追従させる */
+    position: sticky; /* 横スクロールしても常に左端に固定表示させる */
     left: 0;
     z-index: 5;
 }
 
+/* 1時間ごとのメモリ（高さはCSS変数で計算） */
 .time-slot {
     height: calc(60 * var(--px-per-min) * 1px);
     box-sizing: border-box;
@@ -184,6 +203,7 @@ h1 {
     position: relative;
 }
 
+/* 時間のテキスト位置を少し上にずらして線と合わせる */
 .time-slot span { 
     position: absolute; 
     top: -8px; 
@@ -192,11 +212,13 @@ h1 {
     padding: 0 2px; 
 }
 
+/* アーティストが配置されるグリッドコンテナ */
 #gridContainer {
     display: flex;
     position: relative;
 }
 
+/* 各ステージの縦列 */
 .grid-col { 
     width: var(--col-width);
     flex-shrink: 0; 
@@ -206,19 +228,21 @@ h1 {
 
 .grid-col.mytt { background-color: rgba(238, 238, 238, 0.9); }
 
-/* 背景のグリッド線（1時間ごとの区切り線） */
+/* 背景のグリッド線（1時間ごとの横線を描画） */
 .grid-bg-lines {
     position: absolute;
     inset: 0; 
-    pointer-events: none;
+    pointer-events: none; /* クリックをすり抜けさせる */
     background-size: 100% calc(60 * var(--px-per-min) * 1px);
     background-image: linear-gradient(to bottom, var(--grid-border) 1px, transparent 1px);
     z-index: 0;
 }
 
-/* アーティストの四角いブロック */
+/* ==========================================
+   アーティストブロック（ライブ情報の四角い箱）
+   ========================================== */
 .artist-block {
-    position: absolute;
+    position: absolute; /* 時間に応じた位置（top）をJSで指定するため必須 */
     left: 2px; 
     right: 2px; 
     border-radius: 4px; 
@@ -235,13 +259,14 @@ h1 {
     transition: border-color 0.2s;
 }
 
-/* お気に入り登録時の見た目 */
+/* お気に入り登録時の見た目（黄色い枠と光彩） */
 .artist-block.favorited { 
     border: 2px solid #FFD700 !important;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.8); 
     z-index: 2;
 }
 
+/* ブロック内の上部（時間と星ボタンの配置） */
 .artist-top { 
     display: flex; 
     justify-content: space-between; 
@@ -252,19 +277,23 @@ h1 {
 
 .artist-time { font-weight: bold; font-size: 10px; }
 
+/* アーティスト名 */
 .artist-name { 
     font-weight: 800; 
     font-size: 13px; 
     line-height: 1.1; 
     margin-bottom: 2px; 
     word-break: normal;
-    overflow-wrap: break-word; 
+    overflow-wrap: break-word; /* 長い英単語などで枠を突き破らないようにする */
     display: block; 
 }
 
+/* ジャンルなどのメタ情報 */
 .artist-meta { font-size: 9px; opacity: 0.9; flex-shrink: 0; }
 
-/* お気に入りの星ボタン */
+/* ==========================================
+   星ボタン（お気に入り切り替え）
+   ========================================== */
 .fav-btn { 
     background: none;
     border: none; 
@@ -281,6 +310,9 @@ h1 {
     text-shadow: 0 0 3px rgba(0,0,0,0.8);
 }
 
+/* ==========================================
+   現在時刻ラインとライブ中のアニメーション
+   ========================================== */
 /* 現在時刻を示す赤い横線 */
 .current-time-line { 
     position: absolute;
@@ -290,10 +322,11 @@ h1 {
     background-color: red; 
     z-index: 10; 
     pointer-events: none; 
-    display: none; 
+    display: none; /* 初期状態は非表示（JSで表示に切り替える） */
     box-shadow: 0 0 5px red;
 }
 
+/* 左端の赤い丸 */
 .current-time-line::before { 
     content: ''; 
     position: absolute; 
@@ -305,7 +338,7 @@ h1 {
     border-radius: 50%; 
 }
 
-/* 演奏中のアーティストブロックを点滅させるアニメーション */
+/* 演奏中のアーティストブロックを点滅させるアニメーション定義 */
 @keyframes pulse-border {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); border-color: red; }
     70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); border-color: #ff6b6b; }
@@ -313,7 +346,7 @@ h1 {
 
 .artist-block.playing { 
     border: 3px solid red;
-    animation: pulse-border 1.5s infinite; 
+    animation: pulse-border 1.5s infinite; /* アニメーションの適用 */
     z-index: 3; 
 }
 
@@ -355,7 +388,7 @@ h1 {
 
 .food-area-toggle:hover { background-color: #eee; }
 
-/* 親要素に.openがついたら、中のアイコンを回転させる */
+/* 親要素に.openがついたら、中の▶アイコンを90度回転させて▼にする */
 .food-area-toggle.open .toggle-icon { transform: rotate(90deg); }
 
 .toggle-icon { 
@@ -364,12 +397,13 @@ h1 {
     color: #888;
 }
 
+/* アコーディオンの中身（フードカードを並べるコンテナ） */
 .food-area-content {
     display: none; /* デフォルトは非表示 */
     gap: 15px;
     margin-bottom: 20px;
     flex-wrap: nowrap; 
-    overflow-x: auto;  /* 横スクロール対応 */
+    overflow-x: auto;  /* カードがはみ出る場合は横スクロールさせる */
     padding-bottom: 10px; 
 }
 
@@ -389,9 +423,10 @@ h1 {
     position: relative;
     min-width: 190px; 
     width: 190px;
-    flex-shrink: 0;
+    flex-shrink: 0; /* 横スクロール時にも縮まないようにする */
 }
 
+/* カード左上のエリア名バッジ */
 .food-card-area-badge {
     position: absolute;
     top: 0;
@@ -411,6 +446,7 @@ h1 {
     transform: translateY(-2px);
 }
 
+/* フード用のお気に入りボタン（丸い背景付き） */
 .food-fav-btn {
     position: absolute;
     top: 10px;
@@ -438,6 +474,7 @@ h1 {
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
 }
 
+/* ドラッグ＆ドロップ用クラス */
 .draggable-card { cursor: grab; }
 .draggable-card.dragging {
     opacity: 0.5;
@@ -445,6 +482,7 @@ h1 {
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
+/* フード画像の表示枠 */
 .food-card-img-wrapper {
     width: 100%;
     height: 140px;
@@ -461,9 +499,10 @@ h1 {
 .food-card-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* 画像の縦横比を維持したまま枠を埋める */
 }
 
+/* フードテキストエリア */
 .food-card-body {
     padding: 5px;
     display: flex;
@@ -492,7 +531,7 @@ h1 {
     font-size: 10px;
     color: #666;
     margin: 0;
-    margin-top: auto;
+    margin-top: auto; /* 余白を埋めてテキストを下揃えにする */
     line-height: 1.5;
     padding-top: 5px;
     border-top: 3px dashed #999;
@@ -510,6 +549,7 @@ h1 {
 
 #mapSection.active { display: block; }
 
+/* 地図画像のラッパー（ズーム機能のため幅を可変にする） */
 .map-wrapper { 
     display: block; 
     width: 100%; 
@@ -530,6 +570,7 @@ h1 {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
+/* 地図のズームコントローラー */
 .map-controls { 
     position: fixed;
     bottom: 20px; 
@@ -555,6 +596,7 @@ h1 {
     justify-content: center;
 }
 
+/* デジタル時計（画面右上に固定） */
 #digitalClock {
     position: fixed;
     top: 10px; 
@@ -572,6 +614,7 @@ h1 {
     box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
 }
 
+/* 公式HPリンク（画面左上に固定） */
 #officialLink {
     position: fixed;
     top: 10px;
@@ -627,6 +670,7 @@ h1 {
     margin: 0;
 }
 
+/* iframeを表示するコンテナ（読み込み中はLoadingテキストを表示） */
 .iframe-container {
     width: 100%;
     flex-grow: 1;
@@ -658,7 +702,7 @@ h1 {
     font-weight: bold;
 }
 
-/* オフライン状態の切り替えロジック */
+/* オフライン状態の切り替えロジック（CSSで表示を切り替える） */
 #weatherOfflineContent { display: none; }
 #weatherSection.is-offline #weatherOnlineContent { display: none; }
 #weatherSection.is-offline #weatherOfflineContent { display: flex; }
@@ -707,6 +751,7 @@ h1 {
     flex-shrink: 0;
 }
 
+/* メモ入力用のテキストエリア */
 #memoTextArea {
     flex-grow: 1;
     width: 100%;
@@ -754,6 +799,7 @@ h1 {
     box-shadow: 0 1px 6px rgba(0,0,0,0.2);
 }
 
+/* サジェスト（検索候補）リスト */
 .suggest-list {
     position: absolute;
     top: 100%;
@@ -799,6 +845,7 @@ h1 {
     display: none;
 }
 
+/* 検索結果を表示するモーダルウィンドウ */
 .search-modal {
     position: fixed;
     top: 50%;
@@ -853,7 +900,7 @@ h1 {
     max-height: calc(80vh - 60px);
 }
 
-/* モーダル内に表示されるアーティストカード（!importantを削除） */
+/* モーダル内に表示されるアーティストカード（!importantを削除して整理しました） */
 .search-modal-content .artist-block {
     position: relative;
     top: auto;
@@ -881,7 +928,7 @@ h1 {
 }
 
 .search-modal-content .artist-time {
-    font-size: 20px !important;
+    font-size: 20px;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -898,8 +945,8 @@ h1 {
 }
 
 .search-modal-content .artist-name {
-    font-size: 20px !important;
-    font-weight: bold !important;
+    font-size: 20px;
+    font-weight: bold;
     margin-top: 8px;
     white-space: normal;
     line-height: 1.3;
@@ -963,6 +1010,7 @@ h1 {
 
 .zoom-btn-reset { font-size: 12px; }
 
+/* 食べたいものリスト専用の色指定 */
 .food-area-toggle.food-area-fav {
     background-color: #fff0f5;
     border: 2px solid #ffb6c1;
@@ -978,6 +1026,7 @@ h1 {
     border-radius: 8px;
 }
 
+/* 特殊なレイアウト（町長挨拶など）のためのクラス */
 .artist-block-special {
     flex-direction: row;
     align-items: center;
