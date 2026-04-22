@@ -1,6 +1,6 @@
 // 【流用時の変更箇所】フェスごとにキャッシュ名（arabaki_2026_）を変更してください。
 // script.js内の APP_CONFIG.storagePrefix と一致させると確実です。
-const CACHE_NAME = 'arabaki_2026_cache-v3';
+const CACHE_NAME = 'arabaki_2026_cache-v4';
 
 self.addEventListener('fetch', event => {
     event.respondWith(
