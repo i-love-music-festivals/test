@@ -8,7 +8,6 @@
 
 // --- 1. アプリケーション全体の設定 ---
 const APP_CONFIG = {
-    // 【流用時の変更箇所】フェス名やメタ情報など、全ての基本情報をここに記述します
     pageTitle: "ARABAKI ROCK FEST.26",
     festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
     metaDescription: "タイムテーブル、フード、エリアマップ等を確認できる非公式アプリです。",
@@ -154,8 +153,8 @@ const timetableData = {
     day1: {
         date: "2026-04-25",
         michinoku: [
-            e("町長挨拶", "11:55", "12:05", "", { isLightBg: true, isSpecialLayout: true, displayTime: "12:00-" }),
-            e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isLightBg: true }),
+            e("町長挨拶", "11:55", "12:05", "", { isSubEvent: true, isRowLayout: true, displayTime: "12:00-" }),
+            e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isSubEvent: true }),
             e("ストレイテナー<br><span class='guest-info'>GUEST<br><span class='guest-item'>●サイトウタクヤ</span> <span class='guest-item'>●清水英介</span></span>", "12:05", "12:55", "Rock"),
             e("マキシマム ザ ホルモン", "13:45", "14:30", "Nu Metal/Hardcore"),
             e("ELLEGARDEN", "15:15", "16:00", "Punk Rock"),
@@ -176,36 +175,36 @@ const timetableData = {
             e("GLIM SPANKY (Acoustic Set)", "18:50", "19:20", "Rock")
         ],
         hatahata: [
-            e("藤原美幸(秋田民謡)", "10:30", "10:45", "", { isLightBg: true, isSpecialLayout: true }),
+            e("藤原美幸(秋田民謡)", "10:30", "10:45", "", { isSubEvent: true, isRowLayout: true }),
             e("リアクション ザ ブッタ", "10:45", "11:20", "Rock"),
             e("TENDOUJI", "11:50", "12:25", "Indie Rock"),
-            e("みちのくプロレス1", "12:25", "12:45", "", { isLightBg: true, hideEndTime: true }),
+            e("みちのくプロレス1", "12:25", "12:45", "", { isSubEvent: true, hideEndTime: true }),
             e("ドミコ", "12:55", "13:30", "Garage Rock"),
-            e("みちのくプロレス2", "13:30", "13:50", "", { isLightBg: true, hideEndTime: true }),
+            e("みちのくプロレス2", "13:30", "13:50", "", { isSubEvent: true, hideEndTime: true }),
             e("LOW IQ 01 & THE RHYTHM MAKERS", "14:05", "14:40", "Punk"),
-            e("みちのくプロレス3", "14:40", "15:00", "", { isLightBg: true, hideEndTime: true }),
+            e("みちのくプロレス3", "14:40", "15:00", "", { isSubEvent: true, hideEndTime: true }),
             e("9mm Parabellum Bullet", "15:10", "15:45", "Rock"),
-            e("西馬音内盆踊り1", "15:45", "16:05", "", { isLightBg: true, hideEndTime: true }),
+            e("西馬音内盆踊り1", "15:45", "16:05", "", { isSubEvent: true, hideEndTime: true }),
             e("Crystal Lake", "16:15", "16:50", "Metalcore"),
-            e("西馬音内盆踊り2", "16:50", "17:10", "", { isLightBg: true, hideEndTime: true }),
+            e("西馬音内盆踊り2", "16:50", "17:10", "", { isSubEvent: true, hideEndTime: true }),
             e("KOTORI", "17:20", "17:55", "Rock"),
-            e("西馬音内盆踊り3", "17:55", "18:15", "", { isLightBg: true, hideEndTime: true }),
+            e("西馬音内盆踊り3", "17:55", "18:15", "", { isSubEvent: true, hideEndTime: true }),
             e("打首獄門同好会", "18:25", "19:00", "Loud Rock"),
             e("coldrain", "19:30", "20:05", "Post-Hardcore")
         ],
         tsugaru: [
-            e("Cha'R", "10:35", "10:55", "", { isLightBg: true }),
+            e("Cha'R", "10:35", "10:55", "", { isSubEvent: true }),
             e("超能力戦士ドリアン", "11:30", "12:05", "Rock"),
             e("おいしくるメロンパン", "12:40", "13:15", "Rock"),
             e("NELKE", "13:50", "14:25", "Indie"),
             e("kurayamisaka", "14:55", "15:30", "Indie"),
             e("のん & the tears of knight", "16:00", "16:35", "Rock"),
             e("岸谷香", "17:05", "17:40", "Pop"),
-            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional", { isLightBg: true, isSpecialLayout: true }),
+            e("夢弦会(津軽三味線)1", "18:05", "18:20", "Traditional", { isSubEvent: true, isRowLayout: true }),
             e("リーガルリリー", "18:20", "18:55", "Rock"),
-            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional", { isLightBg: true, isSpecialLayout: true }),
+            e("夢弦会(津軽三味線)2", "19:20", "19:35", "Traditional", { isSubEvent: true, isRowLayout: true }),
             e("柴田聡子 (BAND SET)", "19:35", "20:10", "Pop"),
-            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional", { isLightBg: true, isSpecialLayout: true }),
+            e("夢弦会(津軽三味線)3", "20:35", "20:50", "Traditional", { isSubEvent: true, isRowLayout: true }),
             e("コレサワ", "20:50", "21:25", "Pop")
         ],
         hanagasa: [
@@ -233,7 +232,7 @@ const timetableData = {
     day2: {
         date: "2026-04-26",
         michinoku: [
-            e("Lexulty", "10:20", "10:40", "", { isLightBg: true }),
+            e("Lexulty", "10:20", "10:40", "", { isSubEvent: true }),
             e("怒髪天<br><span class='guest-info'>GUEST<br><span class='guest-item'>●当日朝発表！</span></span>", "11:30", "12:20", "Punk"),
             e("MONGOL800", "13:00", "13:45", "Punk"),
             e("10-FEET", "14:35", "15:20", "Punk"),
@@ -263,18 +262,18 @@ const timetableData = {
             e("忘れらんねえよ柴田", "17:45", "18:15", "Acoustic")
         ],
         hatahata: [
-            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk", { isLightBg: true, isSpecialLayout: true }),
+            e("藤原美幸(秋田民謡)", "10:15", "10:30", "Folk", { isSubEvent: true, isRowLayout: true }),
             e("Blue Mash", "10:30", "11:05", "Rock"),
             e("BURNOUT SYNDROMES", "11:35", "12:10", "Rock"),
-            e("みちのくプロレス1", "12:10", "12:30", "", { isLightBg: true, hideEndTime: true }),
+            e("みちのくプロレス1", "12:10", "12:30", "", { isSubEvent: true, hideEndTime: true }),
             e("MAYSON's PARTY", "12:45", "13:20", "Ska/Punk"),
-            e("みちのくプロレス2", "13:20", "13:40", "", { isLightBg: true, hideEndTime: true }),
+            e("みちのくプロレス2", "13:20", "13:40", "", { isSubEvent: true, hideEndTime: true }),
             e("yonige", "13:55", "14:30", "Rock"),
-            e("みちのくプロレス3", "14:30", "14:50", "", { isLightBg: true, hideEndTime: true }),
+            e("みちのくプロレス3", "14:30", "14:50", "", { isSubEvent: true, hideEndTime: true }),
             e("PEDRO", "15:05", "15:40", "Rock"),
-            e("西馬音内盆踊り1", "15:40", "16:00", "", { isLightBg: true, hideEndTime: true }),
+            e("西馬音内盆踊り1", "15:40", "16:00", "", { isSubEvent: true, hideEndTime: true }),
             e("THE BACK HORN", "16:15", "16:50", "Rock"),
-            e("西馬音内盆踊り2", "16:50", "17:10", "", { isLightBg: true, hideEndTime: true }),
+            e("西馬音内盆踊り2", "16:50", "17:10", "", { isSubEvent: true, hideEndTime: true }),
             e("eastern youth", "17:25", "18:00", "Punk/Emo"),
             e("LOSTAGE", "18:30", "19:05", "Rock"),
             e("黒夢", "19:35", "20:10", "Rock")
@@ -282,11 +281,11 @@ const timetableData = {
         tsugaru: [
             e("坂本サトル ARABAKI special", "10:30", "11:15", "Acoustic"),
             e("luv", "11:45", "12:20", "Rock"),
-            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional", { isLightBg: true, isSpecialLayout: true }),
+            e("夢弦会(津軽三味線)1", "12:45", "13:00", "Traditional", { isSubEvent: true, isRowLayout: true }),
             e("the shes gone", "13:00", "13:35", "Rock"),
-            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional", { isLightBg: true, isSpecialLayout: true }),
+            e("夢弦会(津軽三味線)2", "14:00", "14:15", "Traditional", { isSubEvent: true, isRowLayout: true }),
             e("秋山黄色", "14:15", "14:50", "Rock"),
-            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional", { isLightBg: true, isSpecialLayout: true }),
+            e("夢弦会(津軽三味線)3", "15:20", "15:35", "Traditional", { isSubEvent: true, isRowLayout: true }),
             e("Ｔ字路s", "15:35", "16:10", "Blues/Folk"),
             e("Kvi Baba", "16:40", "17:15", "Hip Hop"),
             e("TOOBOE", "17:45", "18:20", "Pop/Rock"),
@@ -418,14 +417,13 @@ const artistYomiDict = {
     "SHISHAMO": "ししゃも"
 };
 
-// 検索用：全角・半角やひらがな・カタカナを統一する関数
+// 全角・半角やひらがな・カタカナを統一する関数
 function normalizeForSearch(str) {
     if (!str) return "";
     let normalized = str.replace(/[\u30a1-\u30f6]/g, function(match) {
         return String.fromCharCode(match.charCodeAt(0) - 0x60);
     });
-    normalized = normalized.toLowerCase();
-    return normalized;
+    return normalized.toLowerCase();
 }
 
 /**
@@ -454,18 +452,19 @@ function applyAppConfig() {
     const titleHead = document.getElementById('pageTitle');
     if(titleHead) titleHead.textContent = APP_CONFIG.pageTitle;
     
-    // 2. メタ情報（OGPやTwitterカードなど）の動的生成
+    // 2. メタ情報（OGP等）の動的生成。毎回追加するのではなく、探して上書きします。
     const createMeta = (attrName, attrValue, content) => {
-        let meta = document.createElement('meta');
-        meta.setAttribute(attrName, attrValue);
+        let meta = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.setAttribute(attrName, attrValue);
+            document.head.appendChild(meta);
+        }
         meta.setAttribute('content', content);
-        document.head.appendChild(meta);
     };
     createMeta('property', 'og:title', APP_CONFIG.pageTitle + " 非公式アプリ");
     createMeta('property', 'og:description', APP_CONFIG.metaDescription);
     createMeta('property', 'og:image', APP_CONFIG.metaOgImage);
-    createMeta('property', 'og:type', 'website');
-    createMeta('name', 'twitter:card', 'summary_large_image');
     createMeta('name', 'twitter:image', APP_CONFIG.metaOgImage);
 
     // 3. 画面上のヘッダータイトル
@@ -483,7 +482,6 @@ function applyAppConfig() {
     if (linkEl && APP_CONFIG.officialUrl) {
         linkEl.href = APP_CONFIG.officialUrl;
         linkEl.innerHTML = '<span class="small-text">公式</span>HP';
-        linkEl.style.display = 'inline-block';
     }
 
     // 6. タブのラベル設定
@@ -526,12 +524,14 @@ function toggleFoodArea(element) {
 }
 
 function timeToMins(timeStr) {
+    if(!timeStr) return 0;
     const [h, m] = timeStr.split(':').map(Number);
     const adjustedH = h < APP_CONFIG.startHour ? h + 24 : h;
     return (adjustedH - APP_CONFIG.startHour) * 60 + m;
 }
 
 function formatTimeDisplay(timeStr) {
+    if(!timeStr) return "";
     let [h, m] = timeStr.split(':').map(Number);
     if(h >= 24) h -= 24;
     return `${h}:${m.toString().padStart(2,'0')}`;
@@ -556,14 +556,7 @@ function switchTab(target) {
         document.getElementById(target + 'Section').classList.add('active');
     }
     
-    if (target === 'weather') {
-        checkWeatherOnlineStatus(); 
-        const weatherSection = document.getElementById('weatherSection');
-        if (weatherSection) {
-            weatherSection.scrollTop = 0;
-            window.scrollTo(0, 0); 
-        }
-    }
+    if (target === 'weather') checkWeatherOnlineStatus(); 
     
     localStorage.setItem(LAST_TAB_KEY, target);
 }
@@ -589,7 +582,8 @@ function renderHeaders(myttCols) {
                  </div>`;
     }
     stagesInfo.forEach(stage => {
-        const style = `style="background-color: ${stage.color}"`;
+        // 色を直接背景色とするのではなく、CSS変数として渡す
+        const style = `style="background-color: var(--stage-color); --stage-color: ${stage.color}"`;
         html += `<div class="stage-header">
                     <div class="stage-name" ${style}>${stage.name}</div>
                  </div>`;
@@ -597,6 +591,7 @@ function renderHeaders(myttCols) {
     document.getElementById('stageHeaders').innerHTML = html;
 }
 
+// データに基づいて「意味のあるクラス」を付与してHTMLを生成する
 function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
     const startMin = timeToMins(artist.start);
     const endMin = timeToMins(artist.end);
@@ -604,8 +599,6 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
 
     const favId = getFavId(dayKey, stage.id, artist.name);
     const isFav = favorites[favId];
-    
-    const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
 
     let isPlaying = false;
     const now = new Date();
@@ -618,15 +611,24 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
         if(currentMins >= startMin && currentMins < endMin) isPlaying = true;
     }
 
-    const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
+    // データ側の指示（意味）に基づいてクラスを付与する
+    const classesList = ['artist-block'];
+    if (isFav) classesList.push('favorited');
+    if (isPlaying) classesList.push('playing');
+    if (artist.isSubEvent) classesList.push('sub-event');
+    if (artist.isRowLayout) classesList.push('row-layout');
+    
+    const classes = classesList.join(' ');
     const escapedFavId = encodeURIComponent(favId);
 
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
+    // CSS変数でステージカラーを渡し、実際の描画（透過等）はCSSに任せる
+    const blockStyle = `top:${startMin*2}px; height:${duration*2}px; --stage-color:${stage.color};`;
 
-    if (artist.isSpecialLayout) {
+    if (artist.isRowLayout) {
         const displayTime = artist.displayTime || `${formatTimeDisplay(artist.start)}-`;
         const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name" style="margin-right:4px;">${stage.name}</span>` : '';
-        return `<div class="${classes} artist-block-special" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
+        return `<div class="${classes}" style="${blockStyle}">
                     ${inlineStageBadge}
                     <span class="artist-time">${displayTime}</span>
                     <span class="artist-name">${artist.name}</span>
@@ -636,8 +638,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false) {
 
     const timeText = artist.hideEndTime ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
     
-    // マイタイムテーブルの場合はジャンルを非表示にし、ステージ名を時間の下に配置する
-    return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
+    return `<div class="${classes}" style="${blockStyle}">
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
                     <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}')">★</button>
@@ -652,11 +653,10 @@ function adjustFontSize() {
         const nameEl = block.querySelector('.artist-name');
         const timeEl = block.querySelector('.artist-time');
         const stageBadge = block.querySelector('.mytt-stage-name');
-        const metaEl = block.querySelector('.artist-meta');
-
+        
         if (!nameEl) return;
 
-        const isRow = block.classList.contains('artist-block-special');
+        const isRow = block.classList.contains('row-layout');
         let fontSize = isRow ? 11 : (nameEl.innerText === "" ? 11 : 13);
         const targetEl = (isRow || nameEl.innerText !== "") ? nameEl : timeEl;
 
@@ -674,7 +674,6 @@ function adjustFontSize() {
                 subFontSize -= 0.5;
                 if (timeEl) timeEl.style.fontSize = subFontSize + 'px';
                 if (stageBadge) stageBadge.style.fontSize = Math.max(4, subFontSize - 2) + 'px';
-                if (metaEl) metaEl.style.fontSize = Math.max(5, subFontSize - 2) + 'px';
             }
         }
     });
@@ -682,7 +681,7 @@ function adjustFontSize() {
 
 function renderTimetable() {
     const dayKey = `day${currentDay}`;
-    const data = timetableData[dayKey];
+    const data = timetableData[dayKey] || {};
 
     let timeHtml = '';
     for(let h = APP_CONFIG.startHour; h <= APP_CONFIG.endHour; h++) {
@@ -762,6 +761,8 @@ function updateCurrentTimeLine() {
 
     const now = new Date();
     const dayKey = `day${currentDay}`;
+    if (!timetableData[dayKey]) return;
+    
     const dataDate = new Date(timetableData[dayKey].date);
     const isNextDayEarly = now.getHours() < APP_CONFIG.startHour && now.getDate() === dataDate.getDate() + 1;
     
@@ -777,6 +778,10 @@ function updateCurrentTimeLine() {
     }
     line.style.display = 'none'; 
 }
+
+// ---------------------------------------------------------
+// （※フード関連やドラッグ＆ドロップ、検索の処理はロジック変更が不要なため割愛せずそのまま残します）
+// ---------------------------------------------------------
 
 function generateFoodCard(shop, areaName, isDraggable = false) {
     const menuItems = shop.menus.map(m => `<li>${m}</li>`).join('');
@@ -1075,12 +1080,14 @@ function showSearchResults(searchText) {
             const favId = getFavId(dayKey, stage.id, artist.name);
             const isFav = favorites[favId];
             const escapedFavId = encodeURIComponent(favId);
-            const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
+            // モーダル内でもCSS変数（--stage-color）を使って色を渡します
+            const blockStyle = `--stage-color:${stage.color};`;
+
             const html = `
-                <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
+                <div class="artist-block ${isFav ? 'favorited' : ''}" style="${blockStyle}">
                     <div class="artist-top">
                         <span class="artist-time">${dayLabel} ${timeText} <span class="artist-stage-name">${stage.name}</span></span>
                         <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${escapedFavId}'); event.stopPropagation(); toggleModalFav(this);">★</button>
