@@ -27,29 +27,28 @@
     <div id="digitalClock">00:00:00</div>
     
     <a href="#" target="_blank" rel="noopener noreferrer" id="officialLink">
-        <span class="small-text">公式</span>HP
-    </a>
+        </a>
     
     <div class="app-container">
         
         <header>
             <h1 id="appTitle"></h1>
-            <div class="disclaimer">※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。</div>
+            <div id="disclaimerText" class="disclaimer"></div>
             
-            <div id="lastUpdated">Last Update: --/--/-- --:--</div> 
+            <div id="lastUpdated"></div> 
             
             <div class="search-container">
-                <input type="text" id="artistSearchInput" placeholder="出演アーティストを検索（前方一致）..." autocomplete="off">
+                <input type="text" id="artistSearchInput" autocomplete="off">
                 <ul id="searchSuggestList" class="suggest-list"></ul>
             </div>
 
             <div class="tabs">
                 <button class="tab-btn" id="btnDay1" onclick="switchTab('day1')"></button>
                 <button class="tab-btn" id="btnDay2" onclick="switchTab('day2')"></button>
-                <button class="tab-btn" id="btnFood" onclick="switchTab('food')">フード</button>
-                <button class="tab-btn" id="btnMap" onclick="switchTab('map')">マップ</button>
-                <button class="tab-btn" id="btnWeather" onclick="switchTab('weather')">天気</button>
-                <button class="tab-btn" id="btnMemo" onclick="switchTab('memo')">メモ</button>
+                <button class="tab-btn" id="btnFood" onclick="switchTab('food')"></button>
+                <button class="tab-btn" id="btnMap" onclick="switchTab('map')"></button>
+                <button class="tab-btn" id="btnWeather" onclick="switchTab('weather')"></button>
+                <button class="tab-btn" id="btnMemo" onclick="switchTab('memo')"></button>
             </div>
         </header>
 
@@ -69,14 +68,13 @@
         </div>
 
         <div id="foodSection" class="content-section">
-            <h2 class="food-section-header">フードエリア一覧</h2>
+            <h2 class="food-section-header" id="foodHeader"></h2>
             <div id="foodContainer"></div>
             <div class="source-credit" id="foodSourceCredit"></div>
         </div>
 
         <div id="mapSection" class="content-section">
-            <div class="map-wrapper" id="mapWrapper">
-                </div>
+            <div class="map-wrapper" id="mapWrapper"></div>
             <div class="map-controls">
                 <button class="zoom-btn" onclick="zoomMap(0.2)">＋</button>
                 <button class="zoom-btn" onclick="zoomMap(-0.2)">－</button>
@@ -88,33 +86,23 @@
         <div id="weatherSection" class="content-section">
             <div id="weatherOnlineContent" class="weather-content">
                 <h2 class="weather-section-header" id="weatherTitle"></h2>
-                <div class="iframe-container" id="weatherIframeContainer">
-                    </div>
-                <div class="weather-link-notice">
-                    ※サイト側のセキュリティ制限等でうまく表示されない場合は、<br>
-                    <a href="#" target="_blank" rel="noopener noreferrer" id="weatherLinkText">こちらからウェザーニュースを開いて</a>ご確認ください。
-                </div>
+                <div class="iframe-container" id="weatherIframeContainer"></div>
+                <div class="weather-link-notice" id="weatherNotice"></div>
             </div>
-            <div id="weatherOfflineContent" class="weather-offline-msg">
-                <p>現在オフラインです。<br>天気情報を取得するにはインターネットの接続が必要です。</p>
-            </div>
+            <div id="weatherOfflineContent" class="weather-offline-msg"></div>
         </div>
         
         <div id="memoSection" class="content-section">
-            <h2 class="memo-section-header">メモ</h2>
-            <div class="memo-notice">
-                ※注意点※<br>
-                ・ブラウザのキャッシュ（履歴データ）クリアを行うと、マイタイムテーブル等を含めてメモの内容も消えてしまいます。<br>
-                ・他のデバイス（スマホからPCなど）への共有はできません。
-            </div>
-            <textarea id="memoTextArea" placeholder="ライブの感想やメモを自由に書き込めます。&#13;&#10;入力すると自動保存されます。"></textarea>
+            <h2 class="memo-section-header" id="memoHeader"></h2>
+            <div class="memo-notice" id="memoNotice"></div>
+            <textarea id="memoTextArea"></textarea>
         </div>
     </div>
 
     <div id="searchModalOverlay" class="search-modal-overlay"></div>
     <div id="searchModal" class="search-modal">
         <div class="search-modal-header">
-            <h3 id="searchModalTitle">検索結果</h3>
+            <h3 id="searchModalTitle"></h3>
             <button id="searchModalClose" class="search-modal-close">×</button>
         </div>
         <div id="searchModalContent" class="search-modal-content"></div>

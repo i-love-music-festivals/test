@@ -1,6 +1,8 @@
-// 【流用時の変更箇所】フェスごとにキャッシュ名（プレフィックス + バージョン）を変更してください。
+// 【流用時の変更箇所】フェスごとにここ（CACHE_PREFIX）を変更してください。
 // 内容を更新した際は、ここの 'v4' を 'v5' のように変えると確実です。
-const CACHE_NAME = 'arabaki_2026_cache-v4';
+const CACHE_PREFIX = 'arabaki_2026_'; 
+const CACHE_VERSION = 'v5';
+const CACHE_NAME = CACHE_PREFIX + 'cache-' + CACHE_VERSION;
 
 // インストール時に、古いService Workerを待たずにすぐ新しいものをアクティブにする
 self.addEventListener('install', event => {
@@ -13,7 +15,8 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.filter(name => {
-                    return name.startsWith('arabaki_2026_') && name !== CACHE_NAME;
+                    // プレフィックスが一致し、かつ現在のバージョンではない古いキャッシュを対象にする
+                    return name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME;
                 }).map(name => {
                     return caches.delete(name);
                 })
