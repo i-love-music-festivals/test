@@ -2,21 +2,47 @@
  * ==========================================
  * 【設定・データエリア】
  * 今後、別のフェスや別年度に流用する場合は、
- * この APP_CONFIG や各種データを書き換えるだけで対応可能です。
+ * HTMLを一切触らず、この APP_CONFIG だけを書き換えてください。
  * ==========================================
  */
 
 // --- 1. アプリケーション全体の設定 ---
-// フェス名、開催時間、日程などを設定します。
 const APP_CONFIG = {
+    // 画面に表示するアプリのタイトル（改行タグ <br> が使えます）
     festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
-    storagePrefix: "arabaki_2026_", // ローカルストレージ（お気に入り保存）のキー
-    startHour: 9, // タイムテーブルの開始時間
-    endHour: 25,  // タイムテーブルの終了時間（25=深夜1時）
+    // ブラウザのタブに表示するタイトル（HTMLの<title>に入ります）
+    pageTitle: "ARABAKI ROCK FEST.26",
+    // フェス公式のURL（左上のリンクボタンに入ります）
+    officialUrl: "https://arabaki.com/",
+    // お気に入り情報をブラウザに保存する際の名前（他のフェスと被らないように）
+    storagePrefix: "arabaki_2026_", 
+    // タイムテーブルの開始・終了時間（25=深夜1時）
+    startHour: 9, 
+    endHour: 25,  
+    // 日程とタブの表示名
     days: [
         { id: 'day1', label: '4/25 (土)' },
         { id: 'day2', label: '4/26 (日)' }
-    ]
+    ],
+    // マップ画面に表示する画像のURL（複数枚設定できます）
+    mapImages: [
+        "https://i-love-music-festivals.github.io/arabaki2026/arabaki26_areamap_ver02.jpg",
+        "https://i-love-music-festivals.github.io/arabaki2026/tentarea_26.jpg"
+    ],
+    // 天気画面の設定
+    weather: {
+        // 天気予報の対象エリア名
+        areaName: "エコキャンプみちのく周辺の天気",
+        // アプリ内で埋め込み表示（iframe）するためのURL
+        iframeUrl: "https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/",
+        // 外部サイトとして直接開くためのURL
+        linkUrl: "https://weathernews.jp/onebox/tenki/spot/camp/02/9624686/"
+    },
+    // 出典・クレジット表記の設定（マップ画面とフード画面の下部に入ります）
+    source: {
+        text: "出典：ARABAKI ROCK FEST.26",
+        url: "https://arabaki.com/area/"
+    }
 };
 
 // --- 2. ステージ情報定義 ---
@@ -444,13 +470,67 @@ let foodFavoritesOrder = JSON.parse(localStorage.getItem(FOOD_FAV_KEY)) || [];
 const saveFavorites = () => localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
 const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringify(foodFavoritesOrder));
 
-// 初期設定の適用（タイトルや日程タブのテキストをセット）
+// 初期設定の適用（HTMLの空の箱に、APP_CONFIGのデータを流し込むロジック）
 function applyAppConfig() {
+    // 1. タイトルの設定
+    // HTMLの <title id="pageTitle"> を探して文字を入れる
+    const pageTitleEl = document.getElementById('pageTitle');
+    if(pageTitleEl) pageTitleEl.textContent = APP_CONFIG.pageTitle;
+
+    // HTMLの <h1 id="appTitle"> を探して文字（HTML）を入れる
     const titleEl = document.getElementById('appTitle');
     if(titleEl) titleEl.innerHTML = APP_CONFIG.festivalName;
 
+    // 2. 公式HPリンクの設定
+    // <a id="officialLink"> を探して、飛び先のURLを設定する
+    const officialLinkEl = document.getElementById('officialLink');
+    if(officialLinkEl) officialLinkEl.href = APP_CONFIG.officialUrl;
+
+    // 3. 日程タブの設定
     if (APP_CONFIG.days[0]) document.getElementById('btnDay1').textContent = APP_CONFIG.days[0].label;
     if (APP_CONFIG.days[1]) document.getElementById('btnDay2').textContent = APP_CONFIG.days[1].label;
+
+    // 4. マップ画像の設定
+    // <div id="mapWrapper"> を探す
+    const mapWrapper = document.getElementById('mapWrapper');
+    if (mapWrapper && APP_CONFIG.mapImages) {
+        // 設定された画像の数だけループ処理
+        APP_CONFIG.mapImages.forEach(src => {
+            // JS上で <img> タグを作る
+            const img = document.createElement('img');
+            img.className = 'area-map-img'; // CSSで見た目を整えるためのクラス名
+            img.src = src;                  // 画像のURLをセット
+            img.alt = 'Area Map';
+            // 作った <img> タグを mapWrapper の中に追加する
+            mapWrapper.appendChild(img);
+        });
+    }
+
+    // 5. 天気情報の設定
+    // タイトルの設定
+    const weatherTitleEl = document.getElementById('weatherTitle');
+    if(weatherTitleEl) weatherTitleEl.textContent = APP_CONFIG.weather.areaName;
+
+    // iframe（埋め込み）の設定
+    const weatherContainer = document.getElementById('weatherIframeContainer');
+    if (weatherContainer && APP_CONFIG.weather.iframeUrl) {
+        // JS上で <iframe> タグを作る
+        const iframe = document.createElement('iframe');
+        iframe.src = APP_CONFIG.weather.iframeUrl;
+        iframe.title = "1時間毎の天気";
+        // コンテナに追加する
+        weatherContainer.appendChild(iframe);
+    }
+
+    // 外部リンクの設定
+    const weatherLinkTextEl = document.getElementById('weatherLinkText');
+    if(weatherLinkTextEl) weatherLinkTextEl.href = APP_CONFIG.weather.linkUrl;
+
+    // 6. 出典（クレジット）の設定
+    // HTMLを作る（リンク付きテキスト）
+    const sourceHtml = `${APP_CONFIG.source.text}<br>（<a href="${APP_CONFIG.source.url}" target="_blank" rel="noopener noreferrer" class="source-link">${APP_CONFIG.source.url}</a>）`;
+    // HTML内にある 'source-credit' というクラスが付いた箱を全て探して、中身を入れる
+    document.querySelectorAll('.source-credit').forEach(el => el.innerHTML = sourceHtml);
 }
 
 // ライブのお気に入り（星）切り替え処理
