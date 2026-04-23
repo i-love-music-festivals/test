@@ -17,12 +17,10 @@
 
 // --- 1. アプリケーション全体の設定 ---
 const APP_CONFIG = {
-    // 【基本情報】フェスの名前やURLなどを設定します
     festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
     pageTitle: "ARABAKI ROCK FEST.26",
     officialUrl: "https://arabaki.com/",
     
-    // 【システム設定】保存データの名前や時間の範囲を決めます
     storagePrefix: "arabaki_2026_", 
     startHour: 9, 
     endHour: 25,  
@@ -44,13 +42,10 @@ const APP_CONFIG = {
         url: "https://arabaki.com/area/"
     },
 
-    // --- アプリの「動作・機能」を制御するフラグ ---
     settings: {
-        // true で時間が被った場合、ステージ順序を優先して並べる
         priorityStageOrder: true
     },
 
-    // --- 画面に表示されるすべてのテキスト（HTMLを空箱にするため） ---
     ui: {
         officialLinkText: "<span class='small-text'>公式</span>HP",
         disclaimer: "※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。",
@@ -88,7 +83,6 @@ const stagesInfo = [
 ];
 
 // --- 3. データ作成用ヘルパー関数 ---
-// アーティスト情報を短く書くための専用関数です
 const e = (name, start, end, genre = "", options = {}) => ({ name, start, end, genre, ...options });
 
 function getFavId(dayKey, stageId, artistName) {
@@ -96,7 +90,7 @@ function getFavId(dayKey, stageId, artistName) {
     return `${dayKey}_${stageId}_${cleanName}`;
 }
 
-// --- 4. フードデータ一覧（省略：長いため変更なし） ---
+// --- 4. フードデータ一覧（中略なし） ---
 const foodList = [
     {
         name: "SPONSOR",
@@ -183,7 +177,7 @@ const foodList = [
             { name: "⑬コンフェッティ", menus: ["山形芋煮", "ローストチキンレッグ", "山形牛タコライス"], message: "山形のソウルフード芋煮を熱々でお届けします。音楽とともに一緒に盛り上がりましょう！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field13-confetti.png" },
             { name: "⑭きちみ製麺", menus: ["おくずかけうーめん", "特製鶏だしうーめん", "肉味噌うーめん"], message: "その空腹、最高の一杯で満たします。400年続く白石うーめんがARABAKIを熱く支えます！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png" },
             { name: "⑮TRAILER BAR HAKU", menus: ["のどぐろフリット", "甘えびフリット", "福井ソースカツ丼"], message: "石川県より、北陸の美味しいをお届けいたします！ドリンクも北陸由来で揃えております。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png" },
-            { name: "⑯PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
+            { name: "十六PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
             { name: "⑰Million Dollar Ice Cream Truck", menus: ["シナモンアップルパイ", "ブルーベリーチーズケーキ", "バナナスモア"], message: "神奈川県、米海軍横須賀基地のアメリカ人が絶賛する濃厚・手作りのアメリカンアイスクリーム。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field17-million-dollar-ice-cream-truck.png" },
             { name: "⑱ibiscafe船岡", menus: ["米粉チュロス", "チーズハットグ", "ふりふりポテト"], message: "今年アラバキに初参戦！サクッと、モチっとした食感の米粉チュロスをぜひお楽しみください！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field18-ibiscafe-funaoka.png" },
             { name: "⑲月美家", menus: ["大阪西成風ホルモン焼"], message: "特製ダレとにんにくがガツンと効いた大阪西成風ホルモン焼！ビール片手に極上のフェス飯を食らい尽くせ！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field19-tsukimiya.png" },
@@ -600,7 +594,6 @@ function setupEventListeners() {
             const favId = e.target.getAttribute('data-fav-id');
             if (favId) {
                 toggleFav(favId);
-                // ボタンと親ブロックの見た目を切り替え
                 const btn = e.target;
                 const block = btn.closest('.artist-block');
                 if (favorites[favId]) {
@@ -735,12 +728,14 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
 
     const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
     
+    // 【保護箇所】マイタイムテーブル用のステージバッジHTML（変更なし）
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
 
     if (artist.isSpecialLayout) {
         const displayTime = artist.displayTime || `${formatTimeDisplay(artist.start)}-`;
-        const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name" style="margin-right:4px;">${stage.name}</span>` : '';
-        return `<div class="${classes} artist-block-special" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
+        const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name inline-badge">${stage.name}</span>` : '';
+        // CSS変数でデータを渡し、高さをCSS側に計算させます
+        return `<div class="${classes} artist-block-special" style="--start-min: ${startMin}; --duration: ${duration}; background-color:${boxBgColor};">
                     ${inlineStageBadge}
                     <span class="artist-time">${displayTime}</span>
                     <span class="artist-name">${artist.name}</span>
@@ -752,7 +747,9 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
     const timeText = artist.hideEndTime ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
     const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
     
-    return `<div class="${classes}" style="top:${startMin*2}px; height:${duration*2}px; background-color:${boxBgColor};">
+    // 【保護箇所】stageBadgeHtmlは引き続き一番上（artist-topの上）に配置
+    // CSS変数でデータを渡し、高さをCSS側に計算させます
+    return `<div class="${classes}" style="--start-min: ${startMin}; --duration: ${duration}; background-color:${boxBgColor};">
                 ${stageBadgeHtml}
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
@@ -900,12 +897,13 @@ function updateCurrentTimeLine() {
         const maxMins = (APP_CONFIG.endHour - APP_CONFIG.startHour) * 60;
 
         if(currentMins >= 0 && currentMins <= maxMins) {
-            line.style.display = 'block';
-            line.style.top = `${currentMins * 2}px`; 
+            line.classList.add('is-visible');
+            // CSS変数に「今の分数」を渡すだけで済ませる
+            line.style.setProperty('--current-min', currentMins); 
             return;
         }
     }
-    line.style.display = 'none'; 
+    line.classList.remove('is-visible'); 
 }
 
 function generateFoodCard(shop, areaName, isDraggable = false) {
@@ -1264,10 +1262,8 @@ function showSearchResults(searchText) {
         return;
     }
 
-    // 検索結果に紐づくアーティストの総件数を取得
     const totalArtists = results.reduce((sum, item) => sum + item.artistsGroup.length, 0);
     
-    // アーティスト件数が1件の場合と複数件の場合で出し分ける
     if (totalArtists === 1) {
         const targetGroup = results[0].artistsGroup[0];
         const artist = targetGroup.originalArtist;
@@ -1275,7 +1271,6 @@ function showSearchResults(searchText) {
         const statusHtml = getArtistTimeStatusHtml(artist, dayDate);
         contentArea.innerHTML = statusHtml; 
     } else if (totalArtists > 1) {
-        // 複数の時間帯で演奏する場合のメッセージ
         const statusHtml = `<div class="search-time-status">複数時間帯が存在するためカウントダウン対象外</div>`;
         contentArea.innerHTML = statusHtml;
     }
@@ -1345,5 +1340,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 }, 100);
             }
         });
+    }
+    
+    // Service Workerの登録（オフライン対応を有効にするためのスイッチ）
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .catch(err => console.error('SW登録失敗:', err));
     }
 });
