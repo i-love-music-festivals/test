@@ -490,7 +490,9 @@ const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringif
 function applyAppConfig() {
     const ui = APP_CONFIG.ui;
     
-    if(document.getElementById('pageTitle')) document.getElementById('pageTitle').textContent = APP_CONFIG.pageTitle;
+// 一度変数に入れてから使うと、処理が速くなりコードも読みやすくなります
+const pageTitleEl = document.getElementById('pageTitle');
+    if (pageTitleEl) pageTitleEl.textContent = APP_CONFIG.pageTitle;
     if(document.getElementById('appTitle')) document.getElementById('appTitle').innerHTML = APP_CONFIG.festivalName;
     
     const officialLinkEl = document.getElementById('officialLink');
@@ -702,7 +704,7 @@ function renderHeaders(myttCols) {
                  </div>`;
     }
     stagesInfo.forEach(stage => {
-        const style = `style="background-color: ${stage.color}"`;
+        const style = `style="--stage-color: ${stage.color};"`;
         html += `<div class="stage-header">
                     <div class="stage-name" ${style}>${stage.name}</div>
                  </div>`;
@@ -749,7 +751,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
     
     // 【保護箇所】stageBadgeHtmlは引き続き一番上（artist-topの上）に配置
     // CSS変数でデータを渡し、高さをCSS側に計算させます
-    return `<div class="${classes}" style="--start-min: ${startMin}; --duration: ${duration}; background-color:${boxBgColor};">
+    return `<div class="${classes}" style="--start-min: ${startMin}; --duration: ${duration}; --artist-bg: ${boxBgColor};">
                 ${stageBadgeHtml}
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
