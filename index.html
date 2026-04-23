@@ -24,10 +24,9 @@
 </head>
     
 <body>
-    <div id="digitalClock">00:00:00</div>
+    <div id="digitalClock"></div>
     
-    <a href="#" target="_blank" rel="noopener noreferrer" id="officialLink">
-        </a>
+    <a href="#" target="_blank" rel="noopener noreferrer" id="officialLink"></a>
     
     <div class="app-container">
         
@@ -76,9 +75,9 @@
         <div id="mapSection" class="content-section">
             <div class="map-wrapper" id="mapWrapper"></div>
             <div class="map-controls">
-                <button class="zoom-btn" onclick="zoomMap(0.2)">＋</button>
-                <button class="zoom-btn" onclick="zoomMap(-0.2)">－</button>
-                <button class="zoom-btn zoom-btn-reset" onclick="resetZoom()">Reset</button>
+                <button class="zoom-btn" id="btnZoomIn" onclick="zoomMap(0.2)"></button>
+                <button class="zoom-btn" id="btnZoomOut" onclick="zoomMap(-0.2)"></button>
+                <button class="zoom-btn zoom-btn-reset" id="btnZoomReset" onclick="resetZoom()"></button>
             </div>
             <div class="source-credit" id="mapSourceCredit"></div>
         </div>
@@ -103,7 +102,7 @@
     <div id="searchModal" class="search-modal">
         <div class="search-modal-header">
             <h3 id="searchModalTitle"></h3>
-            <button id="searchModalClose" class="search-modal-close">×</button>
+            <button id="searchModalClose" class="search-modal-close"></button>
         </div>
         <div id="searchModalContent" class="search-modal-content"></div>
     </div>
