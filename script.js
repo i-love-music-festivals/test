@@ -44,7 +44,7 @@ const APP_CONFIG = {
     // --- 画面に表示されるすべてのテキスト（HTMLを空箱にするため） ---
     ui: {
         officialLinkText: "<span class='small-text'>公式</span>HP",
-        disclaimer: "※最新情報は公式HPで確認してください。",
+        disclaimer: "※各アーティストのジャンルはAIによる判定です。<br>※最新情報は公式HPで確認してください。",
         searchPlaceholder: "出演アーティストを検索（前方一致）...",
         searchEmptyMsg: "見つかりませんでした。",
         searchModalTitlePrefix: "「", 
