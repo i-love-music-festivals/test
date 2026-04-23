@@ -358,8 +358,8 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .food-area-toggle.food-area-fav { background-color: #fff0f5; border: 2px solid #ffb6c1; }
 .food-empty-msg { flex: 1; padding: 15px; color: #777; font-size: 13px; text-align: center; border: 2px dashed #e0e0e0; border-radius: 8px; }
 
+/* ここにあった .special-content のCSS指定は不要なため削除しました */
 .artist-block-special { flex-direction: row; align-items: center; flex-wrap: wrap; align-content: center; gap: 2px; padding: 2px 4px; }
-.artist-block-special .special-content { display: flex; align-items: center; flex-wrap: wrap; flex: 1; gap: 4px; }
 .artist-block-special .artist-time, .artist-block-special .artist-name { margin: 0; white-space: normal; }
 .artist-block-special .fav-btn { margin-left: auto; }
 

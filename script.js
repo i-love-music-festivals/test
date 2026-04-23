@@ -35,13 +35,13 @@ const APP_CONFIG = {
         url: "https://arabaki.com/area/"
     },
 
-    // --- 新規追加：アプリの「動作・機能」を制御するフラグ ---
+    // --- アプリの「動作・機能」を制御するフラグ ---
     settings: {
-        showGenre: false,           // trueにするとアーティストブロックにジャンルを表示する
+        // 使われていなかった showGenre 定義を削除しスッキリさせました
         priorityStageOrder: true    // trueにするとマイタイムテーブルで時間が被った際、ステージ順序を優先して並べる
     },
 
-    // --- 新規追加：画面に表示されるすべてのテキスト（HTMLを空箱にするため） ---
+    // --- 画面に表示されるすべてのテキスト（HTMLを空箱にするため） ---
     ui: {
         officialLinkText: "<span class='small-text'>公式</span>HP",
         disclaimer: "※最新情報は公式HPで確認してください。",
@@ -49,18 +49,17 @@ const APP_CONFIG = {
         searchEmptyMsg: "見つかりませんでした。",
         searchModalTitlePrefix: "「", 
         searchModalTitleSuffix: "」の出演情報",
-        searchModalClose: "×",       // モーダルを閉じるボタンの文字
+        searchModalClose: "×",       
         tabFood: "フード",
         tabMap: "マップ",
         tabWeather: "天気",
         tabMemo: "メモ",
-        mapZoomIn: "＋",             // マップ拡大ボタン
-        mapZoomOut: "－",            // マップ縮小ボタン
-        mapZoomReset: "Reset",       // マップリセットボタン
+        mapZoomIn: "＋",             
+        mapZoomOut: "－",            
+        mapZoomReset: "Reset",       
         foodHeader: "フードエリア一覧",
         foodFavListTitle: "★ 食べたいものリスト",
         foodEmptyMsg: "右上にある星マーク(★)を押すと、ここに追加されます。<br>カードはメニュー部分をドラッグして並べ替え可能です。",
-        // 修正点：URLのハードコードをやめ、{WEATHER_URL}というプレースホルダー（目印）に変更
         weatherOfflineMsg: "<p>現在オフラインです。<br>天気情報を取得するにはインターネットの接続が必要です。</p>",
         weatherNotice: "※サイト側のセキュリティ制限等でうまく表示されない場合は、<br><a href='{WEATHER_URL}' target='_blank' rel='noopener noreferrer' id='weatherLinkText'>こちらからウェザーニュースを開いて</a>ご確認ください。",
         memoHeader: "メモ",
@@ -80,6 +79,7 @@ const stagesInfo = [
 ];
 
 // --- 3. データ作成用ヘルパー関数 ---
+// アーティスト情報を短く書くための専用関数です
 const e = (name, start, end, genre = "", options = {}) => ({ name, start, end, genre, ...options });
 
 function getFavId(dayKey, stageId, artistName) {
@@ -483,7 +483,7 @@ let foodFavoritesOrder = JSON.parse(localStorage.getItem(FOOD_FAV_KEY)) || [];
 const saveFavorites = () => localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
 const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringify(foodFavoritesOrder));
 
-// --- 【修正】HTMLの空箱に文字やデータを流し込む関数 ---
+// --- HTMLの空箱に文字やデータを流し込む関数 ---
 function applyAppConfig() {
     const ui = APP_CONFIG.ui;
     
@@ -504,7 +504,6 @@ function applyAppConfig() {
     if(document.getElementById('btnMemo')) document.getElementById('btnMemo').textContent = ui.tabMemo;
     if(document.getElementById('foodHeader')) document.getElementById('foodHeader').textContent = ui.foodHeader;
     
-    // 修正点：{WEATHER_URL}という目印を、設定に書かれた実際のURLに置き換えてから流し込みます
     if(document.getElementById('weatherNotice')) {
         document.getElementById('weatherNotice').innerHTML = ui.weatherNotice.replace('{WEATHER_URL}', APP_CONFIG.weather.linkUrl);
     }
@@ -545,8 +544,7 @@ function applyAppConfig() {
     document.querySelectorAll('.source-credit').forEach(el => el.innerHTML = sourceHtml);
 }
 
-// --- 【新規追加】画面上のボタンにイベント（クリック時の動作）を一括で割り当てる関数 ---
-// これにより、HTMLから onclick を排除できます
+// --- 画面上のボタンにイベント（クリック時の動作）を一括で割り当てる関数 ---
 function setupEventListeners() {
     // 1. タブ切り替えボタン
     document.getElementById('btnDay1').addEventListener('click', () => switchTab('day1'));
@@ -565,7 +563,7 @@ function setupEventListeners() {
     const ttWrapper = document.getElementById('ttWrapper');
     if(ttWrapper) ttWrapper.addEventListener('scroll', syncScroll);
 
-    // 4. タイムテーブル内の「★ボタン」のクリック（イベントデリゲーション）
+    // 4. タイムテーブル内の「★ボタン」のクリック
     document.getElementById('gridContainer').addEventListener('click', (e) => {
         if (e.target.classList.contains('fav-btn')) {
             const favId = e.target.getAttribute('data-fav-id');
@@ -573,15 +571,13 @@ function setupEventListeners() {
         }
     });
 
-    // 5. フード画面の「エリア開閉」と「★ボタン」のクリック（イベントデリゲーション）
+    // 5. フード画面の「エリア開閉」と「★ボタン」のクリック
     document.getElementById('foodContainer').addEventListener('click', (e) => {
-        // エリア開閉のクリック
         const toggleEl = e.target.closest('.food-area-toggle');
         if (toggleEl) {
             toggleFoodArea(toggleEl);
             return;
         }
-        // ★ボタンのクリック
         if (e.target.classList.contains('food-fav-btn')) {
             const shopName = e.target.getAttribute('data-shop');
             const areaName = e.target.getAttribute('data-area');
@@ -589,7 +585,7 @@ function setupEventListeners() {
         }
     });
 
-    // 6. 検索結果モーダル内の「★ボタン」のクリック（イベントデリゲーション）
+    // 6. 検索結果モーダル内の「★ボタン」のクリック
     document.getElementById('searchModalContent').addEventListener('click', (e) => {
         if (e.target.classList.contains('fav-btn')) {
             const favId = e.target.getAttribute('data-fav-id');
@@ -891,7 +887,6 @@ function updateCurrentTimeLine() {
     line.style.display = 'none'; 
 }
 
-// --- 【修正】フード系も onclick を排除してデータ属性（data-shopなど）を持たせます ---
 function generateFoodCard(shop, areaName, isDraggable = false) {
     const menuItems = shop.menus.map(m => `<li>${m}</li>`).join('');
     const messageHtml = shop.message.replace(/\n/g, '<br>');
@@ -906,7 +901,6 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
     const classes = isDraggable ? "food-card draggable-card" : "food-card";
     const dragAttr = isDraggable ? `draggable="true" data-id="${id}"` : `data-id="${id}"`;
 
-    // 修正：ボタンから onclick を消して、data-shop と data-area を設定
     return `
     <div class="${classes}" ${dragAttr}>
         <div class="food-card-area-badge">${areaName}</div>
@@ -1249,13 +1243,20 @@ function showSearchResults(searchText) {
         return;
     }
 
+    // 検索結果に紐づくアーティストの総件数を取得
     const totalArtists = results.reduce((sum, item) => sum + item.artistsGroup.length, 0);
+    
+    // アーティスト件数が1件の場合と複数件の場合で出し分ける
     if (totalArtists === 1) {
         const targetGroup = results[0].artistsGroup[0];
         const artist = targetGroup.originalArtist;
         const dayDate = timetableData[targetGroup.dayKey].date;
         const statusHtml = getArtistTimeStatusHtml(artist, dayDate);
         contentArea.innerHTML = statusHtml; 
+    } else if (totalArtists > 1) {
+        // 複数の時間帯で演奏する場合のメッセージ
+        const statusHtml = `<div class="search-time-status">複数時間帯が存在するためカウントダウン対象外</div>`;
+        contentArea.innerHTML = statusHtml;
     }
 
     results.forEach(item => {
@@ -1300,7 +1301,7 @@ function toggleModalFav(btn) {
 // --- ページが読み込まれたときに最初に動く処理 ---
 window.addEventListener('DOMContentLoaded', () => {
     applyAppConfig();
-    setupEventListeners(); // ★ここで一括してイベントを登録します
+    setupEventListeners(); 
     setupSearch();
 
     const lastTab = localStorage.getItem(LAST_TAB_KEY) || 'day1';
