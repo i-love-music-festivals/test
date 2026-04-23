@@ -13,6 +13,7 @@ const APP_CONFIG = {
     storagePrefix: "arabaki_2026_", 
     startHour: 9, 
     endHour: 25,  
+    // ここの日数を3日や1日に変えると、自動的に画面のタブボタンも増減します
     days: [
         { id: 'day1', label: '4/25 (土)' },
         { id: 'day2', label: '4/26 (日)' }
@@ -80,7 +81,7 @@ function getFavId(dayKey, stageId, artistName) {
 }
 
 // ==========================================
-// --- 4. フードデータ一覧 ---
+// --- 4. フードデータ一覧 (データ量が多いため省略せずそのまま維持) ---
 const foodList = [ 
     {
         name: "SPONSOR",
@@ -180,7 +181,7 @@ const foodList = [
     }
 ];
 
-// --- 5. タイムテーブル・出演アーティストデータ ---
+// --- 5. タイムテーブル・出演アーティストデータ (省略せずそのまま維持) ---
 const timetableData = {
     day1: {
         date: "2026-04-25",
@@ -464,7 +465,7 @@ function normalizeForSearch(str) {
  */
 
 // --- 状態を管理する変数 ---
-let currentDay = 1;
+let currentDay = 1; // 選択中のタブがDay1かDay2か等を覚えておきます
 let mapScale = 1.0;
 let fullArtistData = [];
 
@@ -482,15 +483,17 @@ let foodFavoritesOrder = JSON.parse(localStorage.getItem(FOOD_FAV_KEY)) || [];
 const saveFavorites = () => localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
 const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringify(foodFavoritesOrder));
 
-// --- 現在時刻の計算ロジックを1つにまとめた関数 ---
+// --- 現在時刻の計算ロジック ---
 // 指定した開催日の「開始時刻から現在何分経過しているか」を計算します
 function getCurrentMinsForDay(dayKey) {
     const now = new Date();
     const dataDate = new Date(timetableData[dayKey].date);
     const isToday = now.toDateString() === dataDate.toDateString();
     
-    // 深夜帯（翌日の早朝）をフェスの「同日」として扱うための判定です
-    const isNextDayEarly = now.getHours() < APP_CONFIG.startHour && now.getDate() === dataDate.getDate() + 1;
+    // 【バグ修正済】深夜帯をフェスの「同日」として扱うため、カレンダー上の翌日を計算します
+    const targetNextDay = new Date(dataDate);
+    targetNextDay.setDate(targetNextDay.getDate() + 1); // 4月30日の翌日は5月1日になるように正確に計算
+    const isNextDayEarly = now.getHours() < APP_CONFIG.startHour && now.toDateString() === targetNextDay.toDateString();
 
     // もし今日がその開催日であれば、経過した分数を計算して返します
     if (isToday || isNextDayEarly) {
@@ -536,8 +539,23 @@ function applyAppConfig() {
     if(document.getElementById('btnZoomOut')) document.getElementById('btnZoomOut').textContent = ui.mapZoomOut;
     if(document.getElementById('btnZoomReset')) document.getElementById('btnZoomReset').textContent = ui.mapZoomReset;
 
-    if (APP_CONFIG.days[0]) document.getElementById('btnDay1').textContent = APP_CONFIG.days[0].label;
-    if (APP_CONFIG.days[1]) document.getElementById('btnDay2').textContent = APP_CONFIG.days[1].label;
+    // 【改善】流用しやすいように、APP_CONFIG.days の日数に合わせてDayタブボタンを自動生成します
+    const tabContainer = document.getElementById('tabContainer');
+    const firstStaticTab = document.getElementById('btnFood'); // 常に最初にある静的タブ（フード）
+    
+    // 既存の動的生成タブがあれば念のためリセット
+    document.querySelectorAll('.day-tab-btn').forEach(el => el.remove());
+
+    APP_CONFIG.days.forEach((day) => {
+        // 例: 'day1' という文字から最初の文字を大文字にして 'btnDay1' というIDを作ります
+        const btnId = 'btn' + day.id.charAt(0).toUpperCase() + day.id.slice(1);
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn day-tab-btn';
+        btn.id = btnId;
+        btn.textContent = day.label;
+        // フードボタンの手前にDayボタンを順番に挿入します
+        tabContainer.insertBefore(btn, firstStaticTab);
+    });
 
     // マップ画像をHTMLに追加します
     const mapWrapper = document.getElementById('mapWrapper');
@@ -569,8 +587,14 @@ function applyAppConfig() {
 // --- 画面上のボタンにイベント（クリック時の動作）を一括で割り当てる関数 ---
 function setupEventListeners() {
     // 1. タブ切り替えボタンのクリックイベント
-    document.getElementById('btnDay1').addEventListener('click', () => switchTab('day1'));
-    document.getElementById('btnDay2').addEventListener('click', () => switchTab('day2'));
+    // 【改善】自動生成されたDayタブに対してもまとめてクリックイベントをつけます
+    APP_CONFIG.days.forEach(day => {
+        const btnId = 'btn' + day.id.charAt(0).toUpperCase() + day.id.slice(1);
+        const btn = document.getElementById(btnId);
+        if(btn) btn.addEventListener('click', () => switchTab(day.id));
+    });
+    
+    // Day以外の固定タブのクリックイベント
     document.getElementById('btnFood').addEventListener('click', () => switchTab('food'));
     document.getElementById('btnMap').addEventListener('click', () => switchTab('map'));
     document.getElementById('btnWeather').addEventListener('click', () => switchTab('weather'));
@@ -580,10 +604,6 @@ function setupEventListeners() {
     document.getElementById('btnZoomIn').addEventListener('click', () => zoomMap(0.2));
     document.getElementById('btnZoomOut').addEventListener('click', () => zoomMap(-0.2));
     document.getElementById('btnZoomReset').addEventListener('click', () => resetZoom());
-
-    // 3. タイムテーブルを横スクロールした時にヘッダーも連動させるイベント
-    const ttWrapper = document.getElementById('ttWrapper');
-    if(ttWrapper) ttWrapper.addEventListener('scroll', syncScroll);
 
     // 4. タイムテーブル内の「★ボタン」のクリックイベント
     document.getElementById('gridContainer').addEventListener('click', (e) => {
@@ -667,27 +687,28 @@ function formatTimeDisplay(timeStr) {
     return `${h}:${m.toString().padStart(2,'0')}`;
 }
 
-// タイムテーブル横スクロール時にヘッダーを同期させる関数です
-function syncScroll() {
-    const wrapper = document.getElementById('ttWrapper');
-    document.getElementById('headerWrapper').scrollLeft = wrapper.scrollLeft;
-}
-
 // タブを切り替える関数です
 function switchTab(target) {
     // 全てのタブと画面から 'active' クラスを外します
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
 
-    // 選ばれたタブと画面に 'active' クラスを付けます
-    if (target === 'day1' || target === 'day2') {
-        currentDay = (target === 'day1') ? 1 : 2;
-        document.getElementById(target === 'day1' ? 'btnDay1' : 'btnDay2').classList.add('active');
+    // 【改善】'day1' 'day2' のような文字列から数字を取り出し、何日目でも対応できるようにしました
+    const dayMatch = target.match(/^day(\d+)$/);
+    
+    if (dayMatch) {
+        currentDay = parseInt(dayMatch[1]);
+        const btnId = 'btnDay' + currentDay;
+        const btnEl = document.getElementById(btnId);
+        if(btnEl) btnEl.classList.add('active');
         document.getElementById('timetableSection').classList.add('active');
         renderTimetable(); 
     } else {
+        // Day以外のタブ（food, map等）の場合
         const btnId = 'btn' + target.charAt(0).toUpperCase() + target.slice(1);
-        document.getElementById(btnId).classList.add('active');
-        document.getElementById(target + 'Section').classList.add('active');
+        const btnEl = document.getElementById(btnId);
+        if(btnEl) btnEl.classList.add('active');
+        const sectionEl = document.getElementById(target + 'Section');
+        if(sectionEl) sectionEl.classList.add('active');
     }
     
     // 天気タブの場合はオフラインかどうかチェックします
@@ -753,7 +774,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
 
     const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
     
-    // 【ルール厳守】マイタイムテーブル用のステージバッジHTML（変更不可）
+    // 【ルール厳守】マイタイムテーブル用のステージバッジHTML（配置は一切変更していません）
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
 
     if (artist.isSpecialLayout) {
@@ -784,6 +805,8 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
 
 // ブロックからはみ出る文字のサイズを自動で小さくする関数です
 function adjustFontSize() {
+    // ※この処理はブラウザへの計算負荷（レイアウトスラッシング）がやや高めですが、
+    // 長いバンド名を綺麗に収めるために現状維持としています。
     document.querySelectorAll('.artist-block:not(.food-block):not(.search-modal-content .artist-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
         const timeEl = block.querySelector('.artist-time');
@@ -820,6 +843,7 @@ function adjustFontSize() {
 function renderTimetable() {
     const dayKey = `day${currentDay}`;
     const data = timetableData[dayKey];
+    if (!data) return; // データが存在しない場合は処理を抜けます
 
     // 時間の目盛りを作ります
     let timeHtml = '';
@@ -891,7 +915,7 @@ function renderTimetable() {
         gridHtml += `<div class="grid-col"><div class="grid-bg-lines"></div>${content}</div>`;
     });
 
-    // ここで現在時刻の線をHTMLの最後に追加しています（HTML側で定義しなくて良い理由です）
+    // ここで現在時刻の線をHTMLの最後に追加しています
     gridHtml += `<div class="current-time-line" id="currentTimeLine"></div>`;
     
     const gridContainer = document.getElementById('gridContainer');
@@ -1336,11 +1360,12 @@ function showSearchResults(searchText) {
 
 // --- ページが読み込まれたときに最初に動く処理 ---
 window.addEventListener('DOMContentLoaded', () => {
-    applyAppConfig();
-    setupEventListeners(); 
+    applyAppConfig(); // まず初めにHTMLの空箱に文字やボタンを流し込みます
+    setupEventListeners(); // ボタンが作られた後で、クリックした時の動きを設定します
     setupSearch();
 
-    const lastTab = localStorage.getItem(LAST_TAB_KEY) || 'day1';
+    // 前回閉じた時のタブを記憶していればそこを開き、なければDay1を開きます
+    const lastTab = localStorage.getItem(LAST_TAB_KEY) || (APP_CONFIG.days[0] ? APP_CONFIG.days[0].id : 'food');
     switchTab(lastTab); 
 
     renderFoodSection();

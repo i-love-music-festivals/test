@@ -17,6 +17,7 @@
     <meta property="og:site_name" content="フェスタイムテーブル 非公式ガイド">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://i-love-music-festivals.github.io/arabaki2026/arabaki2026.png">
+    
     <link rel="apple-touch-icon" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
     <link rel="icon" type="image/png" href="https://i-love-music-festivals.github.io/arabaki2026/icon.png">
     
@@ -40,9 +41,7 @@
                 <ul id="searchSuggestList" class="suggest-list"></ul>
             </div>
 
-            <div class="tabs">
-                <button class="tab-btn" id="btnDay1"></button>
-                <button class="tab-btn" id="btnDay2"></button>
+            <div class="tabs" id="tabContainer">
                 <button class="tab-btn" id="btnFood"></button>
                 <button class="tab-btn" id="btnMap"></button>
                 <button class="tab-btn" id="btnWeather"></button>
@@ -51,25 +50,24 @@
         </header>
 
         <div id="timetableSection" class="content-section">
-            <div class="scroll-container">
+            <div class="scroll-container" id="ttScrollArea">
+                
                 <div class="stage-headers-wrapper" id="headerWrapper">
                     <div class="stage-header-empty"></div> <div class="stage-header-list" id="stageHeaders"></div> </div>
+                
                 <div class="timetable-wrapper" id="ttWrapper">
-                    <div class="time-col" id="timeCol"></div>
-                    <div id="gridContainer"></div>
-                </div>
+                    <div class="time-col" id="timeCol"></div> <div id="gridContainer"></div> </div>
+                
             </div>
         </div>
 
         <div id="foodSection" class="content-section">
             <h2 class="food-section-header" id="foodHeader"></h2>
-            <div id="foodContainer"></div>
-            <div class="source-credit" id="foodSourceCredit"></div>
+            <div id="foodContainer"></div> <div class="source-credit" id="foodSourceCredit"></div>
         </div>
 
         <div id="mapSection" class="content-section">
-            <div class="map-wrapper" id="mapWrapper"></div>
-            <div class="map-controls">
+            <div class="map-wrapper" id="mapWrapper"></div> <div class="map-controls">
                 <button class="zoom-btn" id="btnZoomIn"></button>
                 <button class="zoom-btn" id="btnZoomOut"></button>
                 <button class="zoom-btn zoom-btn-reset" id="btnZoomReset"></button>
@@ -80,8 +78,7 @@
         <div id="weatherSection" class="content-section">
             <div id="weatherOnlineContent" class="weather-content">
                 <h2 class="weather-section-header" id="weatherTitle"></h2>
-                <div class="iframe-container" id="weatherIframeContainer"></div>
-                <div class="weather-link-notice" id="weatherNotice"></div>
+                <div class="iframe-container" id="weatherIframeContainer"></div> <div class="weather-link-notice" id="weatherNotice"></div>
             </div>
             <div id="weatherOfflineContent" class="weather-offline-msg"></div>
         </div>
@@ -89,12 +86,10 @@
         <div id="memoSection" class="content-section">
             <h2 class="memo-section-header" id="memoHeader"></h2>
             <div class="memo-notice" id="memoNotice"></div>
-            <textarea id="memoTextArea"></textarea>
-        </div>
+            <textarea id="memoTextArea"></textarea> </div>
     </div>
 
-    <div id="searchModalOverlay" class="search-modal-overlay"></div>
-    <div id="searchModal" class="search-modal">
+    <div id="searchModalOverlay" class="search-modal-overlay"></div> <div id="searchModal" class="search-modal">
         <div class="search-modal-header">
             <h3 id="searchModalTitle"></h3>
             <button id="searchModalClose" class="search-modal-close"></button>
