@@ -209,6 +209,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     font-size: 11px; 
     overflow: hidden; 
     color: #fff;
+    /* JSから渡されたステージカラーを背景色にします */
     background-color: var(--artist-bg, #333); 
     box-shadow: 0 1px 3px rgba(0,0,0,0.2); 
     z-index: 1; 
@@ -216,6 +217,12 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     flex-direction: column; 
     border: 2px solid transparent; 
     transition: border-color 0.2s;
+}
+
+/* 【修正箇所】JS側で「is-light-bg」という意味が付与された要素は、CSSが透明度を計算します */
+/* color-mix は最新のCSS機能で、色同士を混ぜ合わせることができます */
+.artist-block.is-light-bg {
+    background-color: color-mix(in srgb, var(--artist-bg) 70%, transparent);
 }
 
 /* お気に入りに登録された時の金色の枠と光彩です */
@@ -307,7 +314,20 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
    ========================================== */
 #mapSection { background-color: #333; position: relative; overflow: auto; display: none; }
 #mapSection.active { display: block; }
-.map-wrapper { display: block; width: 100%; min-height: 100%; margin: 0 auto; text-align: center; padding: 20px; padding-bottom: 100px; box-sizing: border-box; transition: width 0.2s ease-out; }
+
+/* 【修正箇所】JSから受け取った変数を使ってCSS側で幅を計算します */
+.map-wrapper { 
+    display: block; 
+    width: calc(var(--map-scale, 1) * 100%); 
+    min-height: 100%; 
+    margin: 0 auto; 
+    text-align: center; 
+    padding: 20px; 
+    padding-bottom: 100px; 
+    box-sizing: border-box; 
+    transition: width 0.2s ease-out; 
+}
+
 .area-map-img { width: 100%; height: auto; display: block; margin: 0 auto 20px auto; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
 .map-controls { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 110; }
 .zoom-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: 2px solid white; font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }

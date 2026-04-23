@@ -81,7 +81,7 @@ function getFavId(dayKey, stageId, artistName) {
 }
 
 // ==========================================
-// --- 4. フードデータ一覧 (データ量が多いため省略せずそのまま維持) ---
+// --- 4. フードデータ一覧 ---
 const foodList = [ 
     {
         name: "SPONSOR",
@@ -168,7 +168,7 @@ const foodList = [
             { name: "⑬コンフェッティ", menus: ["山形芋煮", "ローストチキンレッグ", "山形牛タコライス"], message: "山形のソウルフード芋煮を熱々でお届けします。音楽とともに一緒に盛り上がりましょう！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field13-confetti.png" },
             { name: "⑭きちみ製麺", menus: ["おくずかけうーめん", "特製鶏だしうーめん", "肉味噌うーめん"], message: "その空腹、最高の一杯で満たします。400年続く白石うーめんがARABAKIを熱く支えます！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png" },
             { name: "⑮TRAILER BAR HAKU", menus: ["のどぐろフリット", "甘えびフリット", "福井ソースカツ丼"], message: "石川県より、北陸の美味しいをお届けいたします！ドリンクも北陸由来で揃えております。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png" },
-            { name: "⑯PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
+            { name: "十六PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
             { name: "⑰Million Dollar Ice Cream Truck", menus: ["シナモンアップルパイ", "ブルーベリーチーズケーキ", "バナナスモア"], message: "神奈川県、米海軍横須賀基地のアメリカ人が絶賛する濃厚・手作りのアメリカンアイスクリーム。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field17-million-dollar-ice-cream-truck.png" },
             { name: "⑱ibiscafe船岡", menus: ["米粉チュロス", "チーズハットグ", "ふりふりポテト"], message: "今年アラバキに初参戦！サクッと、モチっとした食感の米粉チュロスをぜひお楽しみください！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field18-ibiscafe-funaoka.png" },
             { name: "⑲月美家", menus: ["大阪西成風ホルモン焼"], message: "特製ダレとにんにくがガツンと効いた大阪西成風ホルモン焼！ビール片手に極上のフェス飯を食らい尽くせ！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field19-tsukimiya.png" },
@@ -181,7 +181,7 @@ const foodList = [
     }
 ];
 
-// --- 5. タイムテーブル・出演アーティストデータ (省略せずそのまま維持) ---
+// --- 5. タイムテーブル・出演アーティストデータ ---
 const timetableData = {
     day1: {
         date: "2026-04-25",
@@ -490,9 +490,9 @@ function getCurrentMinsForDay(dayKey) {
     const dataDate = new Date(timetableData[dayKey].date);
     const isToday = now.toDateString() === dataDate.toDateString();
     
-    // 【バグ修正済】深夜帯をフェスの「同日」として扱うため、カレンダー上の翌日を計算します
+    // 深夜帯をフェスの「同日」として扱うため、カレンダー上の翌日を計算します
     const targetNextDay = new Date(dataDate);
-    targetNextDay.setDate(targetNextDay.getDate() + 1); // 4月30日の翌日は5月1日になるように正確に計算
+    targetNextDay.setDate(targetNextDay.getDate() + 1); 
     const isNextDayEarly = now.getHours() < APP_CONFIG.startHour && now.toDateString() === targetNextDay.toDateString();
 
     // もし今日がその開催日であれば、経過した分数を計算して返します
@@ -539,21 +539,18 @@ function applyAppConfig() {
     if(document.getElementById('btnZoomOut')) document.getElementById('btnZoomOut').textContent = ui.mapZoomOut;
     if(document.getElementById('btnZoomReset')) document.getElementById('btnZoomReset').textContent = ui.mapZoomReset;
 
-    // 【改善】流用しやすいように、APP_CONFIG.days の日数に合わせてDayタブボタンを自動生成します
+    // 流用しやすいように、APP_CONFIG.days の日数に合わせてDayタブボタンを自動生成します
     const tabContainer = document.getElementById('tabContainer');
-    const firstStaticTab = document.getElementById('btnFood'); // 常に最初にある静的タブ（フード）
+    const firstStaticTab = document.getElementById('btnFood'); 
     
-    // 既存の動的生成タブがあれば念のためリセット
     document.querySelectorAll('.day-tab-btn').forEach(el => el.remove());
 
     APP_CONFIG.days.forEach((day) => {
-        // 例: 'day1' という文字から最初の文字を大文字にして 'btnDay1' というIDを作ります
         const btnId = 'btn' + day.id.charAt(0).toUpperCase() + day.id.slice(1);
         const btn = document.createElement('button');
         btn.className = 'tab-btn day-tab-btn';
         btn.id = btnId;
         btn.textContent = day.label;
-        // フードボタンの手前にDayボタンを順番に挿入します
         tabContainer.insertBefore(btn, firstStaticTab);
     });
 
@@ -587,14 +584,12 @@ function applyAppConfig() {
 // --- 画面上のボタンにイベント（クリック時の動作）を一括で割り当てる関数 ---
 function setupEventListeners() {
     // 1. タブ切り替えボタンのクリックイベント
-    // 【改善】自動生成されたDayタブに対してもまとめてクリックイベントをつけます
     APP_CONFIG.days.forEach(day => {
         const btnId = 'btn' + day.id.charAt(0).toUpperCase() + day.id.slice(1);
         const btn = document.getElementById(btnId);
         if(btn) btn.addEventListener('click', () => switchTab(day.id));
     });
     
-    // Day以外の固定タブのクリックイベント
     document.getElementById('btnFood').addEventListener('click', () => switchTab('food'));
     document.getElementById('btnMap').addEventListener('click', () => switchTab('map'));
     document.getElementById('btnWeather').addEventListener('click', () => switchTab('weather'));
@@ -605,7 +600,7 @@ function setupEventListeners() {
     document.getElementById('btnZoomOut').addEventListener('click', () => zoomMap(-0.2));
     document.getElementById('btnZoomReset').addEventListener('click', () => resetZoom());
 
-    // 4. タイムテーブル内の「★ボタン」のクリックイベント
+    // 3. タイムテーブル内の「★ボタン」のクリックイベント
     document.getElementById('gridContainer').addEventListener('click', (e) => {
         if (e.target.classList.contains('fav-btn')) {
             const favId = e.target.getAttribute('data-fav-id');
@@ -613,7 +608,7 @@ function setupEventListeners() {
         }
     });
 
-    // 5. フード画面の「エリア開閉」と「★ボタン」のクリックイベント
+    // 4. フード画面の「エリア開閉」と「★ボタン」のクリックイベント
     document.getElementById('foodContainer').addEventListener('click', (e) => {
         const toggleEl = e.target.closest('.food-area-toggle');
         if (toggleEl) {
@@ -626,7 +621,7 @@ function setupEventListeners() {
         }
     });
 
-    // 6. 検索結果モーダル内の「★ボタン」のクリックイベント
+    // 5. 検索結果モーダル内の「★ボタン」のクリックイベント
     document.getElementById('searchModalContent').addEventListener('click', (e) => {
         if (e.target.classList.contains('fav-btn')) {
             const favId = e.target.getAttribute('data-fav-id');
@@ -692,7 +687,6 @@ function switchTab(target) {
     // 全てのタブと画面から 'active' クラスを外します
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
 
-    // 【改善】'day1' 'day2' のような文字列から数字を取り出し、何日目でも対応できるようにしました
     const dayMatch = target.match(/^day(\d+)$/);
     
     if (dayMatch) {
@@ -703,7 +697,6 @@ function switchTab(target) {
         document.getElementById('timetableSection').classList.add('active');
         renderTimetable(); 
     } else {
-        // Day以外のタブ（food, map等）の場合
         const btnId = 'btn' + target.charAt(0).toUpperCase() + target.slice(1);
         const btnEl = document.getElementById(btnId);
         if(btnEl) btnEl.classList.add('active');
@@ -747,6 +740,7 @@ function renderHeaders(myttCols) {
                  </div>`;
     }
     stagesInfo.forEach(stage => {
+        // 色情報はCSSの変数として渡します
         const style = `style="--stage-color: ${stage.color};"`;
         html += `<div class="stage-header">
                     <div class="stage-name" ${style}>${stage.name}</div>
@@ -764,15 +758,14 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
     const favId = getFavId(dayKey, stage.id, artist.name);
     const isFav = favorites[favId];
     
-    const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
-
     // 現在時刻がこのアーティストの演奏時間内かどうか判定します
     let isPlaying = false;
     if (currentMins >= startMin && currentMins < endMin) {
         isPlaying = true;
     }
 
-    const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing'].filter(Boolean).join(' ');
+    // 【修正箇所】色を薄くする（is-light-bg）などの「意味」だけをCSSのクラスとして渡します
+    const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing', artist.isLightBg && 'is-light-bg'].filter(Boolean).join(' ');
     
     // 【ルール厳守】マイタイムテーブル用のステージバッジHTML（配置は一切変更していません）
     const stageBadgeHtml = isMyTT ? `<div class="mytt-stage-name">${stage.name}</div>` : '';
@@ -780,7 +773,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
     if (artist.isSpecialLayout) {
         const displayTime = artist.displayTime || `${formatTimeDisplay(artist.start)}-`;
         const inlineStageBadge = isMyTT ? `<span class="mytt-stage-name inline-badge">${stage.name}</span>` : '';
-        return `<div class="${classes} artist-block-special" style="--start-min: ${startMin}; --duration: ${duration}; --artist-bg: ${boxBgColor};">
+        return `<div class="${classes} artist-block-special" style="--start-min: ${startMin}; --duration: ${duration}; --artist-bg: ${stage.color};">
                     ${inlineStageBadge}
                     <span class="artist-time">${displayTime}</span>
                     <span class="artist-name">${artist.name}</span>
@@ -792,7 +785,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
     const timeText = artist.hideEndTime ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
     const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
     
-    return `<div class="${classes}" style="--start-min: ${startMin}; --duration: ${duration}; --artist-bg: ${boxBgColor};">
+    return `<div class="${classes}" style="--start-min: ${startMin}; --duration: ${duration}; --artist-bg: ${stage.color};">
                 ${stageBadgeHtml}
                 <div class="artist-top">
                     <span class="artist-time">${timeText}</span>
@@ -1078,11 +1071,12 @@ function updateFoodFavoritesOrder() {
 // マップの拡大縮小を行う関数です
 function zoomMap(delta) {
     mapScale = Math.min(Math.max(0.5, mapScale + delta), 3.0);
-    document.getElementById('mapWrapper').style.width = `${mapScale * 100}%`;
+    // 【修正箇所】JSは現在の倍率をCSSに渡すだけにします
+    document.getElementById('mapWrapper').style.setProperty('--map-scale', mapScale);
 }
 function resetZoom() {
     mapScale = 1.0;
-    document.getElementById('mapWrapper').style.width = `100%`;
+    document.getElementById('mapWrapper').style.setProperty('--map-scale', mapScale);
 }
 
 // 画面右上のデジタル時計を更新する関数です
