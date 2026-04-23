@@ -37,8 +37,8 @@ const APP_CONFIG = {
 
     // --- アプリの「動作・機能」を制御するフラグ ---
     settings: {
-        // 使われていなかった showGenre 定義を削除しスッキリさせました
-        priorityStageOrder: true    // trueにするとマイタイムテーブルで時間が被った際、ステージ順序を優先して並べる
+        // true で時間が被った場合、ステージ順序を優先して並べる
+        priorityStageOrder: true
     },
 
     // --- 画面に表示されるすべてのテキスト（HTMLを空箱にするため） ---
@@ -87,7 +87,7 @@ function getFavId(dayKey, stageId, artistName) {
     return `${dayKey}_${stageId}_${cleanName}`;
 }
 
-// --- 4. フードデータ一覧 ---
+// --- 4. フードデータ一覧（省略：長いため変更なし） ---
 const foodList = [
     {
         name: "SPONSOR",
@@ -591,7 +591,16 @@ function setupEventListeners() {
             const favId = e.target.getAttribute('data-fav-id');
             if (favId) {
                 toggleFav(favId);
-                toggleModalFav(e.target);
+                // ボタンと親ブロックの見た目を切り替え
+                const btn = e.target;
+                const block = btn.closest('.artist-block');
+                if (favorites[favId]) {
+                    btn.classList.add('active');
+                    block.classList.add('favorited');
+                } else {
+                    btn.classList.remove('active');
+                    block.classList.remove('favorited');
+                }
             }
         }
     });
@@ -624,6 +633,9 @@ function toggleFoodArea(element) {
     if(content) content.classList.toggle('open');
 }
 
+/**
+ * "HH:MM" 形式の時刻を、タイムテーブル上の表示位置（分単位）に変換します。
+ */
 function timeToMins(timeStr) {
     const [h, m] = timeStr.split(':').map(Number);
     const adjustedH = h < APP_CONFIG.startHour ? h + 24 : h;
@@ -1286,16 +1298,6 @@ function showSearchResults(searchText) {
 
     document.getElementById('searchModalOverlay').style.display = 'block';
     document.getElementById('searchModal').style.display = 'flex';
-}
-
-function toggleModalFav(btn) {
-    if (btn.classList.contains('active')) {
-        btn.classList.remove('active');
-        btn.closest('.artist-block').classList.remove('favorited');
-    } else {
-        btn.classList.add('active');
-        btn.closest('.artist-block').classList.add('favorited');
-    }
 }
 
 // --- ページが読み込まれたときに最初に動く処理 ---
