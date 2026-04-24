@@ -228,8 +228,8 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 /* お気に入りに登録された時の金色の枠と光彩です */
 .artist-block.favorited { 
     border: 2px solid var(--color-fav);
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.8); 
-    z-index: 2;
+    /* どんな色が来ても、自動で「80%の濃さの影」を作ります */
+    box-shadow: 0 0 8px color-mix(in srgb, var(--color-fav) 80%, transparent);
 }
 
 .artist-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; flex-shrink: 0; }
@@ -263,10 +263,19 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 
 .current-time-line.is-visible { display: block; }
 
-/* ライブ中のブロックをチカチカさせるアニメーション */
+/* ライブ中のアニメーション */
 @keyframes pulse-border {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); border-color: var(--color-playing); }
-    70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); border-color: #ff6b6b; }
+    0%, 100% {
+        /* 変数(--color-playing)の色を使って70%不透明の影を作ります */
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-playing) 70%, transparent);
+        border-color: var(--color-playing);
+    }
+    70% {
+        /* 変数の色を0%（完全な透明）まで広げて消します */
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-playing) 0%, transparent);
+        /* 枠線も変数の色に少し白を混ぜて明るく見せます */
+        border-color: color-mix(in srgb, var(--color-playing) 70%, white);
+    }
 }
 
 .artist-block.playing { border: 3px solid var(--color-playing); animation: pulse-border 1.5s infinite; z-index: 3; }
