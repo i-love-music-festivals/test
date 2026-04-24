@@ -5,22 +5,21 @@
    フェスごとにここの色を変えるだけで全体の雰囲気が変わります。
    ========================================== */
 :root {
-    /* フェスのテーマカラー群 */
     --color-food: #E67E22;
     --bg-color: #ffffff;
     --grid-border: #e0e0e0;
     --text-color: #333;
-    --color-playing: #ff0000; /* 現在ライブ中の赤色 */
+    --color-playing: #ff0000;
     
-    /* 各タブ・セクションごとのイメージカラー */
-    --color-fav: #FFD700;     /* お気に入りの金色 */
+    /* 各セクションのテーマカラー */
+    --color-fav: #FFD700;
     --color-weather: #0077B6;
     --color-memo: #27ae60;
     
     /* タイムテーブルのマス目のサイズ設定 */
-    --time-width: 40px; /* 左端の「時間」の幅 */
-    --col-width: 120px; /* ステージ1列の幅 */
-    --px-per-min: 2;    /* 1分間を何ピクセルで表現するか（大きいほど縦に長くなる） */
+    --time-width: 40px;
+    --col-width: 120px;
+    --px-per-min: 2; /* 1分あたり何ピクセルにするか */
 }
 
 /* ==========================================
@@ -29,18 +28,17 @@
 body {
     margin: 0;
     padding: 0;
-    /* OS標準の読みやすいフォントを指定 */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow: hidden; /* ページ全体はスクロールさせず、各画面の内側だけでスクロールさせます */
+    overflow: hidden; /* 全体はスクロールさせず、各画面内だけでスクロールさせます */
 }
 
-/* アプリ全体の枠組み（スマホの画面ピッタリに合わせる） */
+/* アプリ全体の枠。画面の高さ100%に固定します */
 .app-container {
     display: flex;
-    flex-direction: column; /* 縦に並べる */
-    height: 100dvh;         /* スマホのブラウザバーを除いた真の100%の高さ */
+    flex-direction: column;
+    height: 100dvh; 
 }
 
 /* ==========================================
@@ -51,22 +49,15 @@ header {
     color: white;
     padding: 10px;
     text-align: center;
-    flex-shrink: 0; /* 画面が狭くなってもヘッダーは縮ませない */
-    z-index: 100;   /* 他の要素より上に表示する */
+    flex-shrink: 0; /* 縮まないように固定 */
+    z-index: 100;
 }
 
 h1 { font-size: 16px; margin: 0 0 10px 0; }
 .disclaimer { font-size: 12px; margin-bottom: 10px; color: #ccc; }
+.tabs { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; /* タブが増えたら折り返す */ }
 
-/* タブボタンを横に並べる枠 */
-.tabs { 
-    display: flex; 
-    justify-content: center; /* 中央寄せ */
-    gap: 5px;                /* ボタン同士の隙間 */
-    flex-wrap: wrap;         /* タブが増えたら自動で次の行に折り返す */
-}
-
-/* タブボタンの基本デザイン */
+/* タブの基本デザイン */
 .tab-btn {
     background-color: #333;
     color: white;
@@ -75,91 +66,80 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     border-radius: 4px;
     font-size: 13px;
     cursor: pointer;
-    white-space: nowrap; /* 文字が途中で改行されないようにする */
-    transition: background-color 0.2s, font-weight 0.2s; /* 色が変わる時にフワッとさせる */
+    white-space: nowrap; 
+    transition: background-color 0.2s, font-weight 0.2s; 
 }
 
-/* 選択されている（表示中の）タブの色 */
-.tab-btn.active { 
-    background-color: #D81B60; 
-    font-weight: bold; 
-}
+/* 選択されているタブの色を変えます */
+.tab-btn.active { background-color: #D81B60; font-weight: bold; }
 
 /* ==========================================
-   コンテンツエリア（タブで切り替わる各画面）
+   コンテンツエリア（タブで切り替わる画面）
    ========================================== */
-/* 全ての画面は基本「非表示(none)」にしておく */
-.content-section { 
-    display: none; 
-    flex-grow: 1; /* 余った高さをすべて使い切る */
-    overflow: hidden; 
-}
-/* JSで「active」というクラスが付けられた画面だけを表示する */
-.content-section.active { 
-    display: flex; 
-    flex-direction: column; 
-}
+/* 基本は非表示にしておきます */
+.content-section { display: none; flex-grow: 1; overflow: hidden; }
+/* activeクラスがついた画面だけ表示します */
+.content-section.active { display: flex; flex-direction: column; }
 
-/* タイムテーブル専用のスクロールエリア */
+/* タイムテーブル用の縦横スクロールエリア */
 .scroll-container { 
     display: flex; 
     flex-direction: column; 
     flex-grow: 1; 
-    overflow: auto; /* ここで縦横のスクロールを許可する */
+    overflow: auto; /* CSS単体で縦横スクロールを許可 */
 }
 
 /* ==========================================
-   タイムテーブル部分（ヘッダー・ステージ名）
+   タイムテーブル部分（ヘッダー）
    ========================================== */
 .stage-headers-wrapper {
     display: flex;
-    position: sticky; /* スクロールしても画面の上部に張り付く設定 */
+    position: sticky; /* スクロールしても上に張り付く設定 */
     top: 0;
-    z-index: 20;      /* アーティストの箱（z-index: 1）よりも上に表示して隠れないようにする */
+    z-index: 20; /* グリッドより手前（上）に表示するための順位 */
     background: #f9f9f9;
     border-bottom: 2px solid #333;
 }
 
-/* 左上の空白部分（時間軸の真上） */
+/* 左上の空白部分（時間が表示される列の真上）です */
 .stage-header-empty {
     width: var(--time-width);
     flex-shrink: 0;
     background: #fff;
     border-right: 1px solid var(--grid-border);
-    position: sticky; /* 左側にも張り付く設定（二重張り付き） */
+    position: sticky; /* 左端にも上に張り付く設定 */
     left: 0;
-    z-index: 21;      /* ヘッダーの中でも一番上に表示する */
+    z-index: 21; /* ヘッダーリストよりもさらに手前に表示 */
 }
 
 .stage-header-list { display: flex; }
 
-/* 1つのステージの名前が入る枠 */
 .stage-header {
     width: var(--col-width);
     flex-shrink: 0;
     text-align: center;
     padding: 10px 5px;
     border-right: 1px solid var(--grid-border);
-    box-sizing: border-box; /* paddingを含めて幅を計算する */
+    box-sizing: border-box;
 }
 
-/* マイタイムテーブルのカラムは、JSで計算した列数（--mytt-cols）に応じて幅が広がる */
+/* マイタイムテーブルのカラムは、JSから渡された変数を使って幅を変動させます */
 .stage-header.mytt { 
     width: calc(var(--col-width) * var(--mytt-cols, 1)); 
     min-width: var(--col-width); 
     background: #ddd; 
 }
 
-/* ステージ名のカラフルなバッジ */
+/* ステージ名のバッジ */
 .stage-name {
     font-weight: bold;
     font-size: 14px; 
     margin-bottom: 5px; 
     color: #fff;
-    background-color: var(--stage-color, #333); /* JSから渡された色がここに入る */
+    background-color: var(--stage-color, #333); /* JSから渡された色を適用 */
     padding: 4px; 
     border-radius: 4px; 
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* 文字を見やすくするための黒い影 */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
     display: block; 
 }
 
@@ -170,7 +150,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
    ========================================== */
 .timetable-wrapper { 
     display: flex; 
-    position: relative; /* 子要素の絶対配置（absolute）の基準点にする */
+    position: relative; /* スクロールは親のscroll-containerに任せます */
 }
 
 /* 左端の「時間」が表示される列 */
@@ -179,14 +159,13 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     flex-shrink: 0;
     background: #fff;
     border-right: 1px solid var(--grid-border);
-    position: sticky; /* 横スクロールした時に左端に張り付く */
+    position: sticky; /* 左端に張り付く設定 */
     left: 0;
-    z-index: 10;
+    z-index: 10; /* アーティストブロックより上に表示 */
 }
 
-/* 時間の1枠（1時間分）の高さ設定 */
+/* 時間の1枠（1時間分）の高さ */
 .time-slot {
-    /* 60分 × 1分あたりのピクセル数 = 1時間分の高さ */
     height: calc(60 * var(--px-per-min) * 1px);
     box-sizing: border-box;
     border-bottom: 1px solid var(--grid-border);
@@ -196,33 +175,21 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     position: relative;
 }
 
-/* 「12:00」などの文字の位置微調整 */
-.time-slot span { 
-    position: absolute; 
-    top: -8px; 
-    left: 5px; 
-    background: #fff; 
-    padding: 0 2px; 
-}
+.time-slot span { position: absolute; top: -8px; left: 5px; background: #fff; padding: 0 2px; }
 
 /* アーティストブロックが配置される基盤 */
 #gridContainer { display: flex; position: relative; }
 
-/* 1つのステージの縦列（点線で区切る） */
-.grid-col { 
-    width: var(--col-width); 
-    flex-shrink: 0; 
-    border-right: 1px dashed var(--grid-border); 
-    position: relative; 
-}
+/* 1つのステージの縦列 */
+.grid-col { width: var(--col-width); flex-shrink: 0; border-right: 1px dashed var(--grid-border); position: relative; }
 .grid-col.mytt { background-color: rgba(238, 238, 238, 0.9); }
 
-/* 背景の横線（1時間ごとの目盛り）をCSSのグラデーション機能で描く */
+/* 背景の横線（1時間ごとの目盛り）を描画します */
 .grid-bg-lines {
     position: absolute;
-    inset: 0; /* 上下左右すべて0（全体に広げる） */
-    pointer-events: none; /* クリックをすり抜けさせる */
-    background-size: 100% calc(60 * var(--px-per-min) * 1px); /* 1時間ごとに繰り返す */
+    inset: 0; 
+    pointer-events: none; 
+    background-size: 100% calc(60 * var(--px-per-min) * 1px);
     background-image: linear-gradient(to bottom, var(--grid-border) 1px, transparent 1px);
     z-index: 0;
 }
@@ -232,9 +199,8 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
    ========================================== */
 .artist-block {
     position: absolute; 
-    /* JSから受け取った「分(--start-min)」をもとに上からの位置を決める */
+    /* JSから受け取った「分(--start-min / --duration)」をもとに、CSS側で位置と高さを計算します */
     top: calc(var(--start-min) * var(--px-per-min) * 1px);
-    /* JSから受け取った「演奏時間(--duration)」をもとに高さを決める */
     height: calc(var(--duration) * var(--px-per-min) * 1px);
     left: 2px; right: 2px; 
     border-radius: 4px; 
@@ -243,7 +209,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     font-size: 11px; 
     overflow: hidden; 
     color: #fff;
-    /* JSから渡されたステージカラーを背景色にする */
+    /* JSから渡されたステージカラーを背景色にします */
     background-color: var(--artist-bg, #333); 
     box-shadow: 0 1px 3px rgba(0,0,0,0.2); 
     z-index: 1; 
@@ -253,58 +219,41 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     transition: border-color 0.2s;
 }
 
-/* プロレス等で「背景を薄くする（is-light-bg）」指定がある場合 */
-/* color-mixを使って、元の背景色を70%に薄める処理をCSSに任せます */
+/* JS側で「is-light-bg」という意味が付与された要素は、CSSが透明度を計算します */
+/* color-mix は最新のCSS機能で、色同士を混ぜ合わせることができます */
 .artist-block.is-light-bg {
     background-color: color-mix(in srgb, var(--artist-bg) 70%, transparent);
 }
 
-/* お気に入りに登録された時の金色の枠と光彩 */
+/* お気に入りに登録された時の金色の枠と光彩です */
 .artist-block.favorited { 
     border: 2px solid var(--color-fav);
-    /* 【修正ポイント】ハードコーディングを廃止。color-mixを使ってテーマカラーの80%の光彩を自動生成します */
-    box-shadow: 0 0 8px color-mix(in srgb, var(--color-fav) 80%, transparent);
-    z-index: 2; /* 通常のブロックより少し手前に表示 */
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.8); 
+    z-index: 2;
 }
 
-/* アーティストブロック内の文字配置 */
 .artist-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; flex-shrink: 0; }
 .artist-time { font-weight: bold; font-size: 10px; }
 .artist-name { font-weight: 800; font-size: 13px; line-height: 1.1; margin-bottom: 2px; word-break: normal; overflow-wrap: break-word; display: block; }
 .artist-meta { font-size: 9px; opacity: 0.9; flex-shrink: 0; }
 
-/* お気に入り（★）ボタンのスタイル */
-.fav-btn { 
-    background: none; 
-    border: none; 
-    color: white; 
-    font-size: 16px; 
-    cursor: pointer; 
-    padding: 0; 
-    line-height: 1; 
-    text-shadow: 0 0 2px rgba(0,0,0,0.5); 
-}
-/* ★が押された時の色（金色） */
-.fav-btn.active { 
-    color: var(--color-fav); 
-    text-shadow: 0 0 3px rgba(0,0,0,0.8); 
-}
+/* お気に入り（★）ボタン */
+.fav-btn { background: none; border: none; color: white; font-size: 16px; cursor: pointer; padding: 0; line-height: 1; text-shadow: 0 0 2px rgba(0,0,0,0.5); }
+.fav-btn.active { color: var(--color-fav); text-shadow: 0 0 3px rgba(0,0,0,0.8); }
 
 /* ==========================================
    現在時刻ラインとライブ中のアニメーション
    ========================================== */
 .current-time-line { 
     position: absolute; left: 0; right: 0; height: 2px; 
-    /* JSから受け取った「今の分数」をもとに、赤い線の縦位置を決める */
+    /* JSから「今の分数」を受け取って位置を計算します */
     top: calc(var(--current-min) * var(--px-per-min) * 1px);
     background-color: var(--color-playing); 
-    z-index: 10; 
-    pointer-events: none; 
-    display: none; 
+    z-index: 10; pointer-events: none; display: none; 
     box-shadow: 0 0 5px var(--color-playing);
 }
 
-/* 赤い線の左端にある丸いポッチ */
+/* 赤い線の左端の丸いポッチ */
 .current-time-line::before { 
     content: ''; position: absolute; left: -4px; top: -4px; 
     width: 10px; height: 10px; 
@@ -312,29 +261,15 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     border-radius: 50%; 
 }
 
-/* JSからis-visibleが付けられた時だけ線を表示する */
 .current-time-line.is-visible { display: block; }
 
 /* ライブ中のブロックをチカチカさせるアニメーション */
 @keyframes pulse-border {
-    0%, 100% { 
-        /* 【修正ポイント】ベタ塗りの色を廃止。--color-playingの色を使って透明度を自動計算します */
-        box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-playing) 70%, transparent); 
-        border-color: var(--color-playing); 
-    }
-    70% { 
-        /* 影を6pxに広げつつ、透明にフェードアウトさせます */
-        box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-playing) 0%, transparent); 
-        /* 枠線は少し白を混ぜて明るく見せます */
-        border-color: color-mix(in srgb, var(--color-playing) 70%, white); 
-    }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); border-color: var(--color-playing); }
+    70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); border-color: #ff6b6b; }
 }
 
-.artist-block.playing { 
-    border: 3px solid var(--color-playing); 
-    animation: pulse-border 1.5s infinite; /* アニメーションを無限ループさせる */
-    z-index: 3; 
-}
+.artist-block.playing { border: 3px solid var(--color-playing); animation: pulse-border 1.5s infinite; z-index: 3; }
 
 /* ==========================================
    フードセクション
@@ -342,35 +277,30 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #foodSection { overflow-y: auto; padding: 15px; background-color: var(--bg-color); }
 .food-section-header { font-size: 16px; color: var(--color-food); border-bottom: 2px solid var(--color-food); padding-bottom: 5px; margin-top: 0; margin-bottom: 15px; }
 
-/* エリアを開閉するアコーディオンバー */
+/* アコーディオン（開閉）バーの設定です */
 .food-area-toggle {
     background-color: #f7f7f7; color: #333; padding: 12px 15px; margin-bottom: 10px; border-radius: 8px; font-weight: bold; font-size: 15px;
     cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background-color 0.2s; border: 1px solid #e0e0e0;
 }
 .food-area-toggle:hover { background-color: #eee; }
-/* アコーディオンが開いている時は「▶」を90度回転させて「▼」にする */
 .food-area-toggle.open .toggle-icon { transform: rotate(90deg); }
 .toggle-icon { transition: transform 0.2s; font-size: 12px; color: #888; }
 
-/* フードカードが横に並ぶエリア */
 .food-area-content { display: none; gap: 15px; margin-bottom: 20px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 10px; }
-.food-area-content.open { display: flex; } /* アコーディオンが開いたら表示 */
+.food-area-content.open { display: flex; }
 
-/* フードカード単体のデザイン */
+/* フードカード単体の設定です */
 .food-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.2s; position: relative; min-width: 190px; width: 190px; flex-shrink: 0; }
 .food-card-area-badge { position: absolute; top: 0; left: 0; background: rgba(230, 126, 34, 0.9); color: #fff; padding: 4px 8px; font-size: 10px; font-weight: bold; border-bottom-right-radius: 8px; z-index: 5; pointer-events: none; }
 .food-card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); transform: translateY(-2px); }
 
-/* フードのお気に入り（★）ボタン */
 .food-fav-btn { position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.5); border: 2px solid transparent; border-radius: 50%; width: 32px; height: 32px; color: white; font-size: 18px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s, color 0.2s; padding: 0; }
 .food-fav-btn:hover { background: rgba(0, 0, 0, 0.7); }
 .food-fav-btn.active { color: var(--color-fav); text-shadow: 0 0 5px rgba(255, 215, 0, 0.8); }
 
-/* ドラッグ＆ドロップ関連のクラス */
 .draggable-card { cursor: grab; }
 .draggable-card.dragging { opacity: 0.5; cursor: grabbing; box-shadow: 0 0 10px rgba(0,0,0,0.3); }
 
-/* フード画像とテキストの配置 */
 .food-card-img-wrapper { width: 100%; height: 140px; background-color: #ffffff; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; border-bottom: 1px solid #e0e0e0; overflow: hidden; }
 .food-card-img { width: 100%; height: 100%; object-fit: cover; }
 .food-card-body { padding: 5px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -385,10 +315,8 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #mapSection { background-color: #333; position: relative; overflow: auto; display: none; }
 #mapSection.active { display: block; }
 
-/* マップの拡大縮小を適用するラッパー */
 .map-wrapper { 
     display: block; 
-    /* JSから受け取った「倍率(--map-scale)」を反映する */
     width: calc(var(--map-scale, 1) * 100%); 
     min-height: 100%; 
     margin: 0 auto; 
@@ -403,7 +331,6 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .map-controls { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 110; }
 .zoom-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.7); color: white; border: 2px solid white; font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-/* デジタル時計と公式リンク */
 #digitalClock { position: fixed; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.7); color: #FFB100; padding: 5px 5px; border-radius: 5px; font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: bold; z-index: 1000; pointer-events: none; border: 1px solid #FFB100; box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
 #officialLink { position: fixed; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.7); color: #FFB100; padding: 5px 10px; border-radius: 5px; font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: bold; z-index: 1000; border: 1px solid #FFB100; box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); text-decoration: none; display: inline-block; }
 #lastUpdated { color: #ccc; font-size: 11px; margin-bottom: 10px; display: block; }
@@ -415,18 +342,15 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #weatherSection { background-color: var(--bg-color); overflow: hidden; padding: 0; }
 .weather-content { display: flex; flex-direction: column; height: 100%; gap: 0; }
 .weather-section-header { font-size: 16px; color: var(--color-weather); border-bottom: 2px solid var(--color-weather); padding: 15px 15px 5px 15px; margin: 0; }
-
-/* 天気のWebページを埋め込む枠（読み込み中の文字を背景に仕込んでおく） */
 .iframe-container { width: 100%; flex-grow: 1; border: none; position: relative; background: #f9f9f9 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="14" text-anchor="middle" dominant-baseline="middle" fill="%23999">Now Loading...</text></svg>') no-repeat center center; }
 .iframe-container iframe { width: 100%; height: 100%; border: none; display: block; }
-
 .weather-link-notice { font-size: 11px; text-align: center; color: #666; padding: 10px 5px; line-height: 1.4; background-color: #fff; flex-shrink: 0; }
 .weather-link-notice a { color: var(--color-weather); font-weight: bold; }
 
-/* オフライン状態の場合の表示切替（JSが .is-offline を付けた時に発動） */
+/* オフライン状態の場合の表示切替です */
 #weatherOfflineContent { display: none; }
-#weatherSection.is-offline #weatherOnlineContent { display: none; } /* オンライン画面を隠す */
-#weatherSection.is-offline #weatherOfflineContent { display: flex; } /* オフライン画面を出す */
+#weatherSection.is-offline #weatherOnlineContent { display: none; }
+#weatherSection.is-offline #weatherOfflineContent { display: flex; }
 .weather-offline-msg { flex-grow: 1; display: flex; justify-content: center; align-items: center; text-align: center; color: #888; padding: 20px; }
 
 /* ==========================================
@@ -436,8 +360,6 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #memoSection.active { display: flex; }
 .memo-section-header { font-size: 16px; color: var(--color-memo); border-bottom: 2px solid var(--color-memo); padding-bottom: 5px; margin-top: 0; margin-bottom: 15px; }
 .memo-notice { font-size: 12px; color: #d35400; background-color: #fdf2e9; padding: 10px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #d35400; line-height: 1.4; flex-shrink: 0; }
-
-/* メモ入力欄 */
 #memoTextArea { flex-grow: 1; width: 100%; box-sizing: border-box; padding: 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 8px; resize: none; font-family: inherit; min-height: 300px; }
 #memoTextArea:focus { outline: none; border-color: var(--color-memo); box-shadow: 0 0 5px rgba(39, 174, 96, 0.3); }
 
@@ -447,15 +369,13 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .search-container { margin: 10px 15px; position: relative; display: flex; justify-content: center; }
 #artistSearchInput { width: 100%; padding: 10px 20px; border: none; border-radius: 25px; font-size: 14px; outline: none; background-color: #f1f3f4; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); transition: background-color 0.2s, box-shadow 0.2s; color: #333; }
 #artistSearchInput:focus { background-color: #ffffff; box-shadow: 0 1px 6px rgba(0,0,0,0.2); }
-
-/* 検索候補リスト（ドロップダウン） */
 .suggest-list { position: absolute; top: 100%; left: 0; right: 0; margin: 5px auto 0; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); list-style: none; padding: 0; max-height: 250px; overflow-y: auto; z-index: 200; display: none; text-align: left; }
 .suggest-list li { padding: 12px 20px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f0f0f0; color: #333; }
 .suggest-list li:last-child { border-bottom: none; }
 .suggest-list li:hover { background-color: #f8f9fa; }
 .search-empty-msg { padding: 15px; text-align: center; color: #666; }
 
-/* 検索結果ポップアップの背景（黒半透明）と本体 */
+/* 検索結果ポップアップの背景と本体 */
 .search-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: none; }
 .search-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; background: #fff; border-radius: 16px; z-index: 1001; display: none; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-height: 80vh; overflow: hidden; }
 .search-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #eee; }
@@ -463,7 +383,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .search-modal-close { background: none; border: none; font-size: 26px; cursor: pointer; color: #999; padding: 0; line-height: 1; }
 .search-modal-content { padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: #f9f9f9; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; flex: 1; max-height: calc(80vh - 60px); }
 
-/* モーダル内に表示されるアーティストカード（タイムテーブルのブロックとは違う見た目にする） */
+/* モーダル内に表示されるアーティストカード */
 .search-modal-content .artist-block { position: relative; top: auto; left: auto; right: auto; height: auto; min-height: 80px; margin-bottom: 8px; padding: 12px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; border-radius: 8px; }
 .search-modal-content .artist-block:last-child { margin-bottom: 0; }
 .search-modal-content .artist-block:not(:last-child) { border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
@@ -495,7 +415,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .guest-item { display: inline-block; margin-right: 4px; white-space: nowrap; }
 .search-modal-content .guest-info { font-size: 14px; margin-top: 4px; line-height: 1.4; }
 
-/* マイタイムテーブルの「ステージ名が一番上に来る」レイアウトの厳格な維持 */
+/* マイタイムテーブルのステージ名位置（ルールにより変更禁止のため一切触っていません） */
 .mytt-stage-name { font-size: 8px; background: rgba(0, 0, 0, 0.5); padding: 2px 6px; border-radius: 8px; color: #fff; font-weight: bold; display: inline-block; margin-bottom: 2px; white-space: nowrap; align-self: flex-start; flex-shrink: 0; }
 .mytt-stage-name.inline-badge { margin-right: 4px; }
 
@@ -507,16 +427,10 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .source-link:hover { text-decoration: underline; }
 
 .zoom-btn-reset { font-size: 12px; }
-
-/* 【修正ポイント】お気に入りフードリストの背景色にも color-mix を使い、テーマカラー（var(--color-fav)等）に追従させます */
-.food-area-toggle.food-area-fav { 
-    background-color: color-mix(in srgb, var(--color-fav) 15%, transparent); 
-    border: 2px solid color-mix(in srgb, var(--color-fav) 40%, transparent); 
-}
-
+.food-area-toggle.food-area-fav { background-color: #fff0f5; border: 2px solid #ffb6c1; }
 .food-empty-msg { flex: 1; padding: 15px; color: #777; font-size: 13px; text-align: center; border: 2px dashed #e0e0e0; border-radius: 8px; }
 
-/* トークショーなど時間が短いイベントの特別レイアウト（横並びにする） */
+/* トークショーなど時間が短いイベントの特別レイアウト */
 .artist-block-special { 
     flex-direction: row; 
     align-items: center; 
@@ -528,7 +442,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .artist-block-special .artist-time, .artist-block-special .artist-name { margin: 0; white-space: normal; }
 .artist-block-special .fav-btn { margin-left: auto; }
 
-/* 文字が枠をはみ出した時に発動する「ギュッと詰める」コンパクトモード */
+/* 文字がはみ出した時に発動するコンパクトレイアウト */
 .compact-mode { padding: 2px !important; }
 .compact-mode .artist-top { margin-bottom: 0px !important; }
 .compact-mode .mytt-stage-name { margin-bottom: 0px !important; padding: 1px 4px !important; }

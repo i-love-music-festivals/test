@@ -11,8 +11,8 @@ const APP_CONFIG = {
     festivalName: "ARABAKI ROCK FEST.26<br>非公式アプリ",
     officialUrl: "https://arabaki.com/",
     storagePrefix: "arabaki_2026_", 
-    startHour: 9,  // タイムテーブルの開始時間
-    endHour: 25,   // タイムテーブルの終了時間（深夜1時）
+    startHour: 9, 
+    endHour: 25,  
     // ここの日数を3日や1日に変えると、自動的に画面のタブボタンも増減します
     days: [
         { id: 'day1', label: '4/25 (土)' },
@@ -32,7 +32,7 @@ const APP_CONFIG = {
         url: "https://arabaki.com/area/"
     },
     settings: {
-        priorityStageOrder: true // マイタイムテーブルをステージ順で並べるかどうか
+        priorityStageOrder: true
     },
     ui: {
         officialLinkText: "<span class='small-text'>公式</span>HP",
@@ -71,10 +71,10 @@ const stagesInfo = [
 ];
 
 // --- 3. データ作成用ヘルパー関数 ---
-// タイムテーブルのデータを短く書くための補助関数（不要なパラメータは省略可能）
+// タイムテーブルのデータを短く書くための補助関数です
 const e = (name, start, end, genre = "", options = {}) => ({ name, start, end, genre, ...options });
 
-// お気に入り保存用のIDを作る関数（記号や改行を消してクリーンなIDにする）
+// お気に入り保存用のIDを作る関数です
 function getFavId(dayKey, stageId, artistName) {
     const cleanName = artistName.replace(/<[^>]*>/g, '').replace(/[^a-zA-Z0-9ぁ-んァ-ヶー一-龠]/g, '');
     return `${dayKey}_${stageId}_${cleanName}`;
@@ -169,20 +169,19 @@ const foodList = [
             { name: "⑭きちみ製麺", menus: ["おくずかけうーめん", "特製鶏だしうーめん", "肉味噌うーめん"], message: "その空腹、最高の一杯で満たします。400年続く白石うーめんがARABAKIを熱く支えます！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png" },
             { name: "⑮TRAILER BAR HAKU", menus: ["のどぐろフリット", "甘えびフリット", "福井ソースカツ丼"], message: "石川県より、北陸の美味しいをお届けいたします！ドリンクも北陸由来で揃えております。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png" },
             { name: "⑯PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
-            { name: "⑯Million Dollar Ice Cream Truck", menus: ["シナモンアップルパイ", "ブルーベリーチーズケーキ", "バナナスモア"], message: "神奈川県、米海軍横須賀基地のアメリカ人が絶賛する濃厚・手作りのアメリカンアイスクリーム。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field17-million-dollar-ice-cream-truck.png" },
-            { name: "⑰ibiscafe船岡", menus: ["米粉チュロス", "チーズハットグ", "ふりふりポテト"], message: "今年アラバキに初参戦！サクッと、モチっとした食感の米粉チュロスをぜひお楽しみください！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field18-ibiscafe-funaoka.png" },
-            { name: "⑱月美家", menus: ["大阪西成風ホルモン焼"], message: "特製ダレとにんにくがガツンと効いた大阪西成風ホルモン焼！ビール片手に極上のフェス飯を食らい尽くせ！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field19-tsukimiya.png" },
-            { name: "⑲京都ぽーく亭", menus: ["京都ぽーくの塩豚丼", "京だし仕立てのまぜそば", "永田茶園の３種のラテ"], message: "京都唯一のブランド豚【京都ぽーく豚】の専門店です。オーガニック茶葉のラテもご用意。どうぞおこしやす～", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field20-kyoto-pork-tei.png" },
-            { name: "⑳KIYOSHI'S KITCHEN", menus: ["アンガス牛ステーキ丼", "豚バラとトマトの欧風カレー", "牛ステーキと欧風カレーのあい盛り"], message: "ASIAN KUNG-FU GENERATION伊地知潔監修。大好評ステーキ丼に特製欧風カレーをぜひ", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field21-kiyoshis-kitchen.png" },
-            { name: "㉑鶏小屋", menus: ["濃厚鶏そば", "若鶏の香味焼きごはん", "生搾りシークワーサーソーダ"], message: "骨の髄まで炊き出した極上濃厚スープ他、全て妥協なし！フェス界究極の鶏白湯ラーメン！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field22-torigoya.png" },
-            { name: "㉒あいづ酒まつり", menus: ["写楽VS飛露喜", "クレープ　ロックンロールスペシャル"], message: "北会津町・関さん（78）の苺「さちのか」。甘さ広がる味わいを、会津の地酒とともに。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field23-aizu-sake-matsuri.png" },
-            { name: "㉓リトルジュースバー", menus: ["いちごけずり®", "ホットフルーツティー", "マンゴーいちごけずり"], message: "ただいまARABAKI！今年も定番のいちごけずりとホットフルーツティーをご用意！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field24-little-juice-bar.png" }
+            { name: "⑰Million Dollar Ice Cream Truck", menus: ["シナモンアップルパイ", "ブルーベリーチーズケーキ", "バナナスモア"], message: "神奈川県、米海軍横須賀基地のアメリカ人が絶賛する濃厚・手作りのアメリカンアイスクリーム。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field17-million-dollar-ice-cream-truck.png" },
+            { name: "⑱ibiscafe船岡", menus: ["米粉チュロス", "チーズハットグ", "ふりふりポテト"], message: "今年アラバキに初参戦！サクッと、モチっとした食感の米粉チュロスをぜひお楽しみください！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field18-ibiscafe-funaoka.png" },
+            { name: "⑲月美家", menus: ["大阪西成風ホルモン焼"], message: "特製ダレとにんにくがガツンと効いた大阪西成風ホルモン焼！ビール片手に極上のフェス飯を食らい尽くせ！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field19-tsukimiya.png" },
+            { name: "⑳京都ぽーく亭", menus: ["京都ぽーくの塩豚丼", "京だし仕立てのまぜそば", "永田茶園の３種のラテ"], message: "京都唯一のブランド豚【京都ぽーく豚】の専門店です。オーガニック茶葉のラテもご用意。どうぞおこしやす～", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field20-kyoto-pork-tei.png" },
+            { name: "㉑KIYOSHI'S KITCHEN", menus: ["アンガス牛ステーキ丼", "豚バラとトマトの欧風カレー", "牛ステーキと欧風カレーのあい盛り"], message: "ASIAN KUNG-FU GENERATION伊地知潔監修。大好評ステーキ丼に特製欧風カレーをぜひ", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field21-kiyoshis-kitchen.png" },
+            { name: "㉒鶏小屋", menus: ["濃厚鶏そば", "若鶏の香味焼きごはん", "生搾りシークワーサーソーダ"], message: "骨の髄まで炊き出した極上濃厚スープ他、全て妥協なし！フェス界究極の鶏白湯ラーメン！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field22-torigoya.png" },
+            { name: "㉓あいづ酒まつり", menus: ["写楽VS飛露喜", "クレープ　ロックンロールスペシャル"], message: "北会津町・関さん（78）の苺「さちのか」。甘さ広がる味わいを、会津の地酒とともに。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field23-aizu-sake-matsuri.png" },
+            { name: "㉔リトルジュースバー", menus: ["いちごけずり®", "ホットフルーツティー", "マンゴーいちごけずり"], message: "ただいまARABAKI！今年も定番のいちごけずりとホットフルーツティーをご用意！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field24-little-juice-bar.png" }
         ]
     }
 ];
 
 // --- 5. タイムテーブル・出演アーティストデータ ---
-// データ側のJSに意味付けの属性（isLightBgなど）を持たせ、CSSが解釈するルールです。
 const timetableData = {
     day1: {
         date: "2026-04-25",
@@ -448,7 +447,7 @@ const artistYomiDict = {
     "SHISHAMO": "ししゃも"
 };
 
-// 検索時の揺れを吸収するため、文字を平仮名や小文字に統一する関数
+// 検索時の揺れを吸収するため、文字を平仮名や小文字に統一する関数です
 function normalizeForSearch(str) {
     if (!str) return "";
     let normalized = str.replace(/[\u30a1-\u30f6]/g, function(match) {
@@ -467,10 +466,10 @@ function normalizeForSearch(str) {
 
 // --- 状態を管理する変数 ---
 let currentDay = 1; // 選択中のタブがDay1かDay2か等を覚えておきます
-let mapScale = 1.0; // マップの拡大倍率
-let fullArtistData = []; // 検索用に加工したアーティストのリスト
+let mapScale = 1.0;
+let fullArtistData = [];
 
-// ブラウザにデータを保存するための「引き出しの名前（キー名）」
+// ブラウザにデータを保存するための「引き出しの名前（キー名）」です
 const FAV_KEY = APP_CONFIG.storagePrefix + 'favs';
 const FOOD_FAV_KEY = APP_CONFIG.storagePrefix + 'food_favs';
 const LAST_TAB_KEY = APP_CONFIG.storagePrefix + 'last_tab';
@@ -478,10 +477,9 @@ const MEMO_KEY = APP_CONFIG.storagePrefix + 'memo';
 
 // 保存されているお気に入りデータを読み込みます
 let favorites = JSON.parse(localStorage.getItem(FAV_KEY)) || {};
-// 【修正ポイント】不要なオブジェクト（辞書型）をやめ、単なる文字列（ID）の配列として読み込みます
 let foodFavoritesOrder = JSON.parse(localStorage.getItem(FOOD_FAV_KEY)) || [];
 
-// お気に入りデータをブラウザに保存する関数
+// お気に入りデータをブラウザに保存する関数です
 const saveFavorites = () => localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
 const saveFoodFavorites = () => localStorage.setItem(FOOD_FAV_KEY, JSON.stringify(foodFavoritesOrder));
 
@@ -553,7 +551,6 @@ function applyAppConfig() {
         btn.className = 'tab-btn day-tab-btn';
         btn.id = btnId;
         btn.textContent = day.label;
-        // 「フード」タブの前に挿入します
         tabContainer.insertBefore(btn, firstStaticTab);
     });
 
@@ -632,7 +629,6 @@ function setupEventListeners() {
                 toggleFav(favId);
                 const btn = e.target;
                 const block = btn.closest('.artist-block');
-                // モーダル内の表示を手動で同期させます
                 if (favorites[favId]) {
                     btn.classList.add('active');
                     block.classList.add('favorited');
@@ -645,27 +641,27 @@ function setupEventListeners() {
     });
 }
 
-// タイムテーブルのお気に入り状態を切り替える関数
+// タイムテーブルのお気に入り状態を切り替える関数です
 function toggleFav(id) {
     favorites[id] ? delete favorites[id] : favorites[id] = true;
     saveFavorites();
-    renderTimetable(); // 状態が変わったので再描画します
+    renderTimetable(); 
 }
 
-// フードのお気に入り状態を切り替える関数
+// フードのお気に入り状態を切り替える関数です
 function toggleFoodFav(id) {
-    // 【修正ポイント】不要なオブジェクト定義をやめ、シンプルな文字列（ID）のリストとして管理します
-    const index = foodFavoritesOrder.indexOf(id);
+    const index = foodFavoritesOrder.findIndex(item => item.id === id);
     if (index > -1) {
-        foodFavoritesOrder.splice(index, 1); // 既に登録されていれば削除
+        foodFavoritesOrder.splice(index, 1); 
     } else {
-        foodFavoritesOrder.push(id); // 新規ならID文字列を追加するだけ
+        const [areaName, shopName] = id.split("::");
+        foodFavoritesOrder.push({ id: id, shopName: shopName, areaName: areaName }); 
     }
     saveFoodFavorites();
-    renderFoodSection(); // 状態が変わったので再描画します
+    renderFoodSection(); 
 }
 
-// フードのエリア（アコーディオン）を開閉する関数
+// フードのエリア（アコーディオン）を開閉する関数です
 function toggleFoodArea(element) {
     element.classList.toggle('open');
     const content = element.nextElementSibling;
@@ -679,14 +675,14 @@ function timeToMins(timeStr) {
     return (adjustedH - APP_CONFIG.startHour) * 60 + m;
 }
 
-// "HH:MM" を "H:MM" に整えて表示するための関数
+// "HH:MM" を "H:MM" に整えて表示するための関数です
 function formatTimeDisplay(timeStr) {
     let [h, m] = timeStr.split(':').map(Number);
     if(h >= 24) h -= 24;
     return `${h}:${m.toString().padStart(2,'0')}`;
 }
 
-// タブを切り替える関数
+// タブを切り替える関数です
 function switchTab(target) {
     // 全てのタブと画面から 'active' クラスを外します
     document.querySelectorAll('.tab-btn, .content-section').forEach(el => el.classList.remove('active'));
@@ -717,11 +713,11 @@ function switchTab(target) {
         }
     }
     
-    // 次回開いた時のために最後に開いたタブを記憶しておきます
+    // 次回開いた時のために最後に開いたタブを記憶します
     localStorage.setItem(LAST_TAB_KEY, target);
 }
 
-// ネットに繋がっているか確認する関数（天気用）
+// ネットに繋がっているか確認する関数です（天気用）
 function checkWeatherOnlineStatus() {
     const weatherSection = document.getElementById('weatherSection');
     if (weatherSection) {
@@ -735,7 +731,7 @@ function checkWeatherOnlineStatus() {
 window.addEventListener('online', checkWeatherOnlineStatus);
 window.addEventListener('offline', checkWeatherOnlineStatus);
 
-// タイムテーブルのステージ名（ヘッダー）を描画する関数
+// タイムテーブルのステージ名（ヘッダー）を描画する関数です
 function renderHeaders(myttCols) {
     let html = '';
     if(myttCols > 0) {
@@ -744,7 +740,7 @@ function renderHeaders(myttCols) {
                  </div>`;
     }
     stagesInfo.forEach(stage => {
-        // 色情報はCSSの変数として渡し、CSS側で見た目を作らせます
+        // 色情報はCSSの変数として渡します
         const style = `style="--stage-color: ${stage.color};"`;
         html += `<div class="stage-header">
                     <div class="stage-name" ${style}>${stage.name}</div>
@@ -753,7 +749,7 @@ function renderHeaders(myttCols) {
     document.getElementById('stageHeaders').innerHTML = html;
 }
 
-// 1つのアーティストのブロック（四角い箱）のHTMLを作る関数
+// 1つのアーティストのブロック（四角い箱）のHTMLを作る関数です
 function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) {
     const startMin = timeToMins(artist.start);
     const endMin = timeToMins(artist.end);
@@ -789,7 +785,6 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
     const timeText = artist.hideEndTime ? `${formatTimeDisplay(artist.start)}-` : `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}`;
     const metaHtml = displayGenre ? `<div class="artist-meta">${displayGenre}</div>` : '';
     
-    // 分や時間をCSSの変数（--start-minなど）として渡し、配置はCSSに任せます
     return `<div class="${classes}" style="--start-min: ${startMin}; --duration: ${duration}; --artist-bg: ${stage.color};">
                 ${stageBadgeHtml}
                 <div class="artist-top">
@@ -801,10 +796,10 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
             </div>`;
 }
 
-// ブロックからはみ出る文字のサイズを自動で小さくする関数
+// ブロックからはみ出る文字のサイズを自動で小さくする関数です
 function adjustFontSize() {
     // ※この処理はブラウザへの計算負荷（レイアウトスラッシング）がやや高めですが、
-    // 長いバンド名を綺麗に収めるための例外処理としてJSからスタイルを当てています。
+    // 長いバンド名を綺麗に収めるために現状維持としています。
     document.querySelectorAll('.artist-block:not(.food-block):not(.search-modal-content .artist-block)').forEach(block => {
         const nameEl = block.querySelector('.artist-name');
         const timeEl = block.querySelector('.artist-time');
@@ -813,9 +808,9 @@ function adjustFontSize() {
 
         if (!nameEl) return;
 
-        // 【修正ポイント】バンド名が存在しないことはデータ上あり得ないため、不要な判定式を削除しました
-        let fontSize = isRow ? 11 : 13;
-        const targetEl = nameEl;
+        const isRow = block.classList.contains('artist-block-special');
+        let fontSize = isRow ? 11 : (nameEl.innerText === "" ? 11 : 13);
+        const targetEl = (isRow || nameEl.innerText !== "") ? nameEl : timeEl;
 
         targetEl.style.fontSize = fontSize + 'px';
         
@@ -837,11 +832,11 @@ function adjustFontSize() {
     });
 }
 
-// タイムテーブル全体を描画する関数
+// タイムテーブル全体を描画する関数です
 function renderTimetable() {
     const dayKey = `day${currentDay}`;
     const data = timetableData[dayKey];
-    if (!data) return; 
+    if (!data) return; // データが存在しない場合は処理を抜けます
 
     // 時間の目盛りを作ります
     let timeHtml = '';
@@ -926,7 +921,7 @@ function renderTimetable() {
     adjustFontSize(); 
 }
 
-// 現在時刻の赤い横線を正しい位置に動かす関数
+// 現在時刻の赤い横線を正しい位置に動かす関数です
 function updateCurrentTimeLine() {
     const line = document.getElementById('currentTimeLine');
     if(!line) return;
@@ -945,7 +940,7 @@ function updateCurrentTimeLine() {
     line.classList.remove('is-visible'); 
 }
 
-// 1つのフード店舗のカード（HTML）を作る関数
+// 1つのフード店舗のカード（HTML）を作る関数です
 function generateFoodCard(shop, areaName, isDraggable = false) {
     const menuItems = shop.menus.map(m => `<li>${m}</li>`).join('');
     const messageHtml = shop.message.replace(/\n/g, '<br>');
@@ -953,8 +948,7 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
     const imgHtml = imgSrc ? `<img src="${imgSrc}" class="food-card-img" alt="${shop.name}">` : `<span>NO IMAGE</span>`;
         
     const id = areaName + "::" + shop.name;
-    // 【修正ポイント】オブジェクト配列から文字列の配列にしたため、includesでシンプルに判定できます
-    const isFav = foodFavoritesOrder.includes(id);
+    const isFav = foodFavoritesOrder.some(item => item.id === id);
     const safeId = id.replace(/"/g, '&quot;');
     
     const classes = isDraggable ? "food-card draggable-card" : "food-card";
@@ -973,7 +967,7 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
     </div>`;
 }
 
-// フード一覧画面全体を描画する関数
+// フード一覧画面全体を描画する関数です
 function renderFoodSection() {
     let html = '';
     const ui = APP_CONFIG.ui;
@@ -989,17 +983,15 @@ function renderFoodSection() {
     if (foodFavoritesOrder.length === 0) {
         html += `<div class="food-empty-msg">${ui.foodEmptyMsg}</div>`;
     } else {
-        // 【修正ポイント】単なるIDのリストになったため、ループ処理がスッキリしました
-        foodFavoritesOrder.forEach(favId => {
-            const [areaName, shopName] = favId.split("::");
+        foodFavoritesOrder.forEach(favItem => {
             let shopData = null;
             foodList.forEach(area => {
-                if(area.name === areaName) {
-                    const found = area.menu.find(s => s.name === shopName);
+                if(area.name === favItem.areaName) {
+                    const found = area.menu.find(s => s.name === favItem.shopName);
                     if(found) shopData = found;
                 }
             });
-            if (shopData) html += generateFoodCard(shopData, areaName, true); 
+            if (shopData) html += generateFoodCard(shopData, favItem.areaName, true); 
         });
     }
     html += `</div>`;
@@ -1020,7 +1012,7 @@ function renderFoodSection() {
     setupDragAndDrop(); 
 }
 
-// フードのお気に入りをドラッグして並べ替えるための準備
+// フードのお気に入りをドラッグして並べ替えるための準備です
 function setupDragAndDrop() {
     const container = document.getElementById('foodFavoritesList');
     if (!container) return;
@@ -1036,8 +1028,7 @@ function setupDragAndDrop() {
     
     container.addEventListener('dragover', e => {
         e.preventDefault(); 
-        // 【修正ポイント】不要なy引数を渡さないようにしました
-        const afterElement = getDragAfterElement(container, e.clientX);
+        const afterElement = getDragAfterElement(container, e.clientX, e.clientY);
         const draggable = document.querySelector('.dragging');
         if (!draggable) return;
         
@@ -1049,9 +1040,8 @@ function setupDragAndDrop() {
     });
 }
 
-// ドラッグ中、どのカードの下に挿入すべきかを計算する関数
-// 【修正ポイント】横スクロールのUIであるため、y座標（縦の位置）は不要です。x座標だけで計算します。
-function getDragAfterElement(container, x) {
+// ドラッグ中、どのカードの下に挿入すべきかを計算する関数です
+function getDragAfterElement(container, x, y) {
     const draggableElements = [...container.querySelectorAll('.draggable-card:not(.dragging)')];
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
@@ -1064,26 +1054,24 @@ function getDragAfterElement(container, x) {
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
-// ドラッグで並び替えた後の新しい順番を保存する関数
+// ドラッグで並び替えた後の新しい順番を保存する関数です
 function updateFoodFavoritesOrder() {
     const container = document.getElementById('foodFavoritesList');
     const cards = container.querySelectorAll('.draggable-card');
     const newOrder = [];
     cards.forEach(card => {
         const id = card.getAttribute('data-id');
-        // 【修正ポイント】文字列ベースにしたため、includesでシンプルに判定してそのまま格納します
-        if (foodFavoritesOrder.includes(id)) {
-            newOrder.push(id);
-        }
+        const favItem = foodFavoritesOrder.find(item => item.id === id);
+        if (favItem) newOrder.push(favItem);
     });
     foodFavoritesOrder = newOrder;
     saveFoodFavorites();
 }
 
-// マップの拡大縮小を行う関数
+// マップの拡大縮小を行う関数です
 function zoomMap(delta) {
     mapScale = Math.min(Math.max(0.5, mapScale + delta), 3.0);
-    // JSは現在の倍率をCSSに渡すだけに留め、見た目の変更はCSSに任せます
+    // JSは現在の倍率をCSSに渡すだけにします
     document.getElementById('mapWrapper').style.setProperty('--map-scale', mapScale);
 }
 function resetZoom() {
@@ -1091,7 +1079,7 @@ function resetZoom() {
     document.getElementById('mapWrapper').style.setProperty('--map-scale', mapScale);
 }
 
-// 画面右上のデジタル時計を更新する関数
+// 画面右上のデジタル時計を更新する関数です
 function updateClock() {
     const now = new Date();
     const h = String(now.getHours()).padStart(2, '0');
@@ -1101,7 +1089,7 @@ function updateClock() {
     if (clockElement) clockElement.textContent = `${h}:${m}:${s}`;
 }
 
-// このファイルの最終更新日時を表示する関数
+// このファイルの最終更新日時を表示する関数です
 function displayLastModified() {
     const lastMod = new Date(document.lastModified);
     const y = lastMod.getFullYear();
@@ -1117,12 +1105,11 @@ function displayLastModified() {
 
 // ---------------- 以下、検索機能系の処理 ----------------
 
-// 検索を高速に行うため、事前にデータを整理してリストアップする関数
+// 検索を高速に行うため、事前にデータを整理してリストアップする関数です
 function buildArtistSearchData() {
     const baseNameMap = new Map(); 
     fullArtistData = [];
 
-    // バンド名の後ろについた「(アコースティックセット)」などを取り除く関数
     function getBaseName(name) {
         return name.replace(/([ぁ-んァ-ヶ一-龥]|\))(\d+)$/, '$1');
     }
@@ -1165,7 +1152,6 @@ function buildArtistSearchData() {
         });
     });
 
-    // あいうえお順に並べ替えます
     fullArtistData.sort((a, b) => {
         const yomiA = artistYomiDict[a.searchName] || a.searchName;
         const yomiB = artistYomiDict[b.searchName] || b.searchName;
@@ -1173,7 +1159,7 @@ function buildArtistSearchData() {
     });
 }
 
-// 検索ボックスに文字が入力された時の動きを設定する関数
+// 検索ボックスに文字が入力された時の動きを設定する関数です
 function setupSearch() {
     buildArtistSearchData();
     const searchInput = document.getElementById('artistSearchInput');
@@ -1224,7 +1210,7 @@ function setupSearch() {
     modalOverlay.addEventListener('click', closeSearchModal);
 }
 
-// 検索結果のポップアップを閉じる関数
+// 検索結果のポップアップを閉じる関数です
 function closeSearchModal() {
     document.getElementById('searchModal').style.display = 'none';
     document.getElementById('searchModalOverlay').style.display = 'none';
@@ -1235,7 +1221,7 @@ function closeSearchModal() {
     suggestList.innerHTML = '';
 }
 
-// 分を「〇時間〇分」という文字に変換する関数
+// 分を「〇時間〇分」という文字に変換する関数です
 function formatDiffTime(mins) {
     if (mins >= 60) {
         const h = Math.floor(mins / 60);
@@ -1246,7 +1232,7 @@ function formatDiffTime(mins) {
     }
 }
 
-// 「演奏開始まであと何分」を計算してHTMLを作る関数
+// 「演奏開始まであと何分」を計算してHTMLを作る関数です
 function getArtistTimeStatusHtml(artist, dayDateStr) {
     if (!artist.start) return "";
     const now = new Date();
@@ -1297,7 +1283,7 @@ function getArtistTimeStatusHtml(artist, dayDateStr) {
     }
 }
 
-// 検索結果のポップアップ画面を作る関数
+// 検索結果のポップアップ画面を作る関数です
 function showSearchResults(searchText) {
     const query = normalizeForSearch(searchText.trim());
     if (!query) return;
@@ -1374,7 +1360,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setupEventListeners(); // ボタンが作られた後で、クリックした時の動きを設定します
     setupSearch();
 
-    // 前回閉じた時のタブを記憶していればそこを開き、なければ最初のタブを開きます
+    // 前回閉じた時のタブを記憶していればそこを開き、なければDay1を開きます
     const lastTab = localStorage.getItem(LAST_TAB_KEY) || (APP_CONFIG.days[0] ? APP_CONFIG.days[0].id : 'food');
     switchTab(lastTab); 
 
@@ -1406,7 +1392,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // オフラインでも動くようにする「Service Worker」を登録します
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
             .catch(err => console.error('SW登録失敗:', err));
