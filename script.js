@@ -764,7 +764,7 @@ function getArtistHtml(artist, stage, dayKey, isMyTT = false, currentMins = -1) 
         isPlaying = true;
     }
 
-    // 【修正箇所】色を薄くする（is-light-bg）などの「意味」だけをCSSのクラスとして渡します
+    // 色を薄くする（is-light-bg）などの「意味」だけをCSSのクラスとして渡します
     const classes = ['artist-block', isFav && 'favorited', isPlaying && 'playing', artist.isLightBg && 'is-light-bg'].filter(Boolean).join(' ');
     
     // 【ルール厳守】マイタイムテーブル用のステージバッジHTML（配置は一切変更していません）
@@ -1071,7 +1071,7 @@ function updateFoodFavoritesOrder() {
 // マップの拡大縮小を行う関数です
 function zoomMap(delta) {
     mapScale = Math.min(Math.max(0.5, mapScale + delta), 3.0);
-    // 【修正箇所】JSは現在の倍率をCSSに渡すだけにします
+    // JSは現在の倍率をCSSに渡すだけにします
     document.getElementById('mapWrapper').style.setProperty('--map-scale', mapScale);
 }
 function resetZoom() {
@@ -1331,12 +1331,14 @@ function showSearchResults(searchText) {
             
             const favId = getFavId(dayKey, stage.id, artist.name);
             const isFav = favorites[favId];
-            const boxBgColor = artist.isLightBg ? `${stage.color}b3` : stage.color;
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
+            // JSは「背景を薄くする意味（is-light-bg）」をクラスとして渡すだけに留め、見た目はCSSに任せます。
+            const classes = ['artist-block', isFav ? 'favorited' : '', artist.isLightBg ? 'is-light-bg' : ''].filter(Boolean).join(' ');
+
             const html = `
-                <div class="artist-block ${isFav ? 'favorited' : ''}" style="background-color:${boxBgColor};">
+                <div class="${classes}" style="--artist-bg: ${stage.color};">
                     <div class="artist-top">
                         <span class="artist-time">${dayLabel} ${timeText} <span class="artist-stage-name">${stage.name}</span></span>
                         <button class="fav-btn ${isFav ? 'active' : ''}" data-fav-id="${favId}">★</button>

@@ -219,7 +219,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     transition: border-color 0.2s;
 }
 
-/* 【修正箇所】JS側で「is-light-bg」という意味が付与された要素は、CSSが透明度を計算します */
+/* JS側で「is-light-bg」という意味が付与された要素は、CSSが透明度を計算します */
 /* color-mix は最新のCSS機能で、色同士を混ぜ合わせることができます */
 .artist-block.is-light-bg {
     background-color: color-mix(in srgb, var(--artist-bg) 70%, transparent);
@@ -315,7 +315,6 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #mapSection { background-color: #333; position: relative; overflow: auto; display: none; }
 #mapSection.active { display: block; }
 
-/* 【修正箇所】JSから受け取った変数を使ってCSS側で幅を計算します */
 .map-wrapper { 
     display: block; 
     width: calc(var(--map-scale, 1) * 100%); 
@@ -433,7 +432,6 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 
 /* トークショーなど時間が短いイベントの特別レイアウト */
 .artist-block-special { 
-    background-color: var(--artist-bg);
     flex-direction: row; 
     align-items: center; 
     flex-wrap: wrap; 
