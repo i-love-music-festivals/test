@@ -503,6 +503,34 @@ function getCurrentMinsForDay(dayKey) {
     return -1; 
 }
 
+// --- 指定した日の現在時刻の1時間前に自動スクロールする関数 ---
+function scrollToCurrentTime(dayKey) {
+    // スクロールさせる対象のエリア（HTMLの id="ttScrollArea"）を取得します
+    const scrollArea = document.getElementById('ttScrollArea');
+    if (!scrollArea) return; // エリアが見つからなければ処理を中止します
+
+    // 現在時刻がその日の開始時刻から何分経過しているかを計算します
+    const currentMins = getCurrentMinsForDay(dayKey);
+
+    // 該当日ではない（currentMins が -1）場合、一番上（0）に戻して処理を終わります
+    if (currentMins < 0) {
+        scrollArea.scrollTop = 0;
+        return;
+    }
+
+    // 1時間前（60分前）の分数を計算します。
+    // マイナスにならないように Math.max(0, ...) を使い、最低でも0（一番上）になるようにします
+    const targetMins = Math.max(0, currentMins - 60);
+
+    // CSSの変数（--px-per-min）を取得して、1分あたり何ピクセルで描画されているか調べます
+    const rootStyles = getComputedStyle(document.documentElement);
+    // 変数が見つからない場合は予備として '2' を使います
+    const pxPerMin = parseFloat(rootStyles.getPropertyValue('--px-per-min')) || 2;
+
+    // 分数をピクセルに変換して、上からのスクロール位置（scrollTop）に設定します
+    scrollArea.scrollTop = targetMins * pxPerMin;
+}
+
 // --- HTMLの空箱に文字やデータを流し込む関数 ---
 function applyAppConfig() {
     const ui = APP_CONFIG.ui;
@@ -695,7 +723,16 @@ function switchTab(target) {
         const btnEl = document.getElementById(btnId);
         if(btnEl) btnEl.classList.add('active');
         document.getElementById('timetableSection').classList.add('active');
+        
+        // タイムテーブルを描画します
         renderTimetable(); 
+        
+        // ★追加：タイムテーブルを描画した直後に、現在時刻の1時間前に自動スクロールさせます
+        // 画面の描画が完了してから確実にスクロールさせるため、setTimeoutで少しだけ時間差（10ミリ秒）を設けます
+        setTimeout(() => {
+            scrollToCurrentTime(`day${currentDay}`);
+        }, 10);
+        
     } else {
         const btnId = 'btn' + target.charAt(0).toUpperCase() + target.slice(1);
         const btnEl = document.getElementById(btnId);
@@ -809,8 +846,8 @@ function adjustFontSize() {
         if (!nameEl) return;
 
         const isRow = block.classList.contains('artist-block-special');
-        let fontSize = isRow ? 11 : (nameEl.innerText === "" ? 11 : 13);
-        const targetEl = (isRow || nameEl.innerText !== "") ? nameEl : timeEl;
+        let fontSize = isRow ? 11 : 13;
+        const targetEl = nameEl; // 常にバンド名の文字サイズを調整する
 
         targetEl.style.fontSize = fontSize + 'px';
         
@@ -1041,7 +1078,7 @@ function setupDragAndDrop() {
 }
 
 // ドラッグ中、どのカードの下に挿入すべきかを計算する関数です
-function getDragAfterElement(container, x, y) {
+function getDragAfterElement(container, x) { // xだけでOK
     const draggableElements = [...container.querySelectorAll('.draggable-card:not(.dragging)')];
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
