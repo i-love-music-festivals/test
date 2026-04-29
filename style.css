@@ -455,3 +455,20 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .compact-mode { padding: 2px !important; }
 .compact-mode .artist-top { margin-bottom: 0px !important; }
 .compact-mode .mytt-stage-name { margin-bottom: 0px !important; padding: 1px 4px !important; }
+
+/* ==========================================
+   【追加】検索結果モーダルの公式HPリンク
+   ========================================== */
+/* <a>タグの骨組みに対して、見た目を整えます */
+.search-modal-content .artist-official-link {
+    color: inherit; /* 文字色を親（この場合は白）と同じにします */
+    text-decoration: none; /* <a>タグ特有の青い下線を消します */
+    display: block; /* 文字だけでなく、横幅いっぱいをクリックできるようにします */
+    cursor: pointer; /* マウスを乗せた時に「指マーク」にします */
+}
+
+/* URLが存在するリンクの上にマウスが乗った時だけの「見た目」の変化です */
+.search-modal-content .artist-official-link:not(.no-link):hover {
+    text-decoration: underline; /* リンクだと分かりやすくするため下線を出します */
+    opacity: 0.8; /* 少しだけ色を薄くして、押せる反応を示します */
+}

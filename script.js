@@ -168,7 +168,7 @@ const foodList = [
             { name: "⑬コンフェッティ", menus: ["山形芋煮", "ローストチキンレッグ", "山形牛タコライス"], message: "山形のソウルフード芋煮を熱々でお届けします。音楽とともに一緒に盛り上がりましょう！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field13-confetti.png" },
             { name: "⑭きちみ製麺", menus: ["おくずかけうーめん", "特製鶏だしうーめん", "肉味噌うーめん"], message: "その空腹、最高の一杯で満たします。400年続く白石うーめんがARABAKIを熱く支えます！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png" },
             { name: "⑮TRAILER BAR HAKU", menus: ["のどぐろフリット", "甘えびフリット", "福井ソースカツ丼"], message: "石川県より、北陸の美味しいをお届けいたします！ドリンクも北陸由来で揃えております。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png" },
-            { name: "⑯PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
+            { name: "十六PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
             { name: "⑰Million Dollar Ice Cream Truck", menus: ["シナモンアップルパイ", "ブルーベリーチーズケーキ", "バナナスモア"], message: "神奈川県、米海軍横須賀基地のアメリカ人が絶賛する濃厚・手作りのアメリカンアイスクリーム。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field17-million-dollar-ice-cream-truck.png" },
             { name: "⑱ibiscafe船岡", menus: ["米粉チュロス", "チーズハットグ", "ふりふりポテト"], message: "今年アラバキに初参戦！サクッと、モチっとした食感の米粉チュロスをぜひお楽しみください！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field18-ibiscafe-funaoka.png" },
             { name: "⑲月美家", menus: ["大阪西成風ホルモン焼"], message: "特製ダレとにんにくがガツンと効いた大阪西成風ホルモン焼！ビール片手に極上のフェス飯を食らい尽くせ！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field19-tsukimiya.png" },
@@ -447,6 +447,118 @@ const artistYomiDict = {
     "SHISHAMO": "ししゃも"
 };
 
+// --- 【追加】公式HPリンク辞書（CSVデータより） ---
+// 検索ベース名（上の読み仮名辞書のキーと同じ）とURLの紐付けです。
+// 今後別フェスに流用する際は、ここを書き換えることでリンク先を制御します
+const artistLinkDict = {
+    "町長挨拶": "公式HP無し",
+    "川崎中学校吹奏楽部": "公式HP無し",
+    "ストレイテナー": "https://www.straightener.net/",
+    "マキシマム ザ ホルモン": "http://www.55mth.com/",
+    "ELLEGARDEN": "https://ellegarden.jp/",
+    "東京スカパラダイスオーケストラ": "https://www.tokyoska.net/",
+    "[Alexandros]": "https://alexandros.jp/",
+    "ASIAN KUNG-FU GENERATION": "https://www.asiankung-fu.com/",
+    "Ayllton": "公式HP無し",
+    "森川葵咲樹": "公式HP無し",
+    "TRAëLL": "公式HP無し",
+    "PES": "公式HP無し",
+    "UNFAIR RULE (Acoustic Set)": "https://unfairrule.fanpla.jp/",
+    "さとう。": "https://sato-darari.jp/",
+    "関取花": "https://www.sekitorihana.com/",
+    "鈴木実貴子ズ": "https://mikikotomikikotomikiko.jimdofree.com/",
+    "奇妙礼太郎": "https://kimyoreitaro.com/",
+    "GLIM SPANKY (Acoustic Set)": "http://www.glimspanky.com/",
+    "藤原美幸(秋田民謡)": "公式HP無し",
+    "リアクション ザ ブッタ": "https://rtb-music.com/",
+    "TENDOUJI": "https://tendoujifc.com/",
+    "みちのくプロレス": "https://michipro.jp/",
+    "ドミコ": "https://www.domico-music.com/",
+    "LOW IQ 01 & THE RHYTHM MAKERS": "http://www.lowiq01.jp/",
+    "9mm Parabellum Bullet": "https://9mm.jp/",
+    "西馬音内盆踊り": "公式HP無し",
+    "Crystal Lake": "http://crystallake.jp/",
+    "KOTORI": "https://kotori-band.com/",
+    "打首獄門同好会": "http://www.uchikubi.com/",
+    "coldrain": "https://coldrain.jp/",
+    "Cha'R": "公式HP無し",
+    "超能力戦士ドリアン": "https://www.durian.band/",
+    "おいしくるメロンパン": "https://oisiclemelonpan.com/",
+    "NELKE": "https://nelke.aremond.com/",
+    "kurayamisaka": "公式HP無し",
+    "のん & the tears of knight": "https://nondesu.jp/",
+    "岸谷香": "http://kaorikishitani.com/",
+    "夢弦会(津軽三味線)": "公式HP無し",
+    "リーガルリリー": "https://www.office-augusta.com/regallily/",
+    "柴田聡子 (BAND SET)": "https://shibatasatoko.com/",
+    "コレサワ": "https://koresawa.jp/",
+    "Rol3ert": "https://rol3ert.com/",
+    "猪居亜美(クラシックギター)": "https://ami-inoi.com/",
+    "奈良美智 (DJ)": "https://www.yoshitomonara.com/",
+    "Date fm SOUND GENIC トークセッション": "https://771.fm/smp/",
+    "yosugala": "https://yosugala.fanpla.jp/",
+    "もっさ(ネクライトーキー)": "https://necrytalkie.jp/",
+    "ヒグチアイ (for CAMPERS)": "https://www.higuchiai.com/",
+    "いいちこ presents ENKAI": "公式HP無し",
+    "杉本ラララ": "https://otsukarez.com/",
+    "MONKEY MAJIK": "https://www.monkeymajik.com/",
+    "礼賛": "https://ooooooooooxxxxxxxxxx.wixsite.com/raisan",
+    "ハンブレッダーズ": "https://humbreaders.com/",
+    "くるり": "https://www.quruli.net/",
+    "OAU": "https://oau-tc.com/",
+    "優里": "https://www.yuuriweb.com/",
+    "STUTS": "https://stutsbeats.com/",
+    "Lexulty": "公式HP無し",
+    "怒髪天": "https://dohatsuten.jp/index2.html",
+    "MONGOL800": "https://www.mongol800.jp/etcworks4/",
+    "10-FEET": "https://10-feet.kyoto/",
+    "布袋寅泰": "https://jp.hotei.com/",
+    "あいみょん": "https://www.aimyong.net/",
+    "MICHINOKU PEACE SESSION GTR祭'26": "公式HP無し",
+    "中村旭": "公式HP無し",
+    "サカグチアミ": "https://sakaguchiami.com",
+    "『ユイカ』": "https://www.universal-music.co.jp/yuika/",
+    "石崎ひゅーい": "https://www.ishizakihuwie.com/",
+    "サバシスター (Acoustic Set)": "https://sabasister.com/",
+    "山中さわお(弾き語り)": "https://yamanakasawao.com/y/",
+    "中田裕二(弾り語り)": "https://yujinakada.com/",
+    "堂島孝平": "https://djkh.jp/",
+    "曽我部恵一(弾き語り)": "http://www.sokabekeiichi.com/",
+    "向井秀徳アコースティック＆エレクトリック": "https://mukaishutoku.com/main.html",
+    "Luiz Murá (for CAMPERS)": "公式HP無し",
+    "おとどけチーたくん高速バンド": "公式HP無し",
+    "Date fm トークセッション": "https://771.fm/smp/",
+    "トークセッション 松田晋二の夜更けの囁き": "公式HP無し",
+    "曽我部恵一 (DJ)": "http://www.sokabekeiichi.com/",
+    "EMNW": "公式HP無し",
+    "忘れらんねえよ柴田": "https://www.office-augusta.com/wasureranneyo/",
+    "Blue Mash": "https://bluemash.ryzm.jp/",
+    "BURNOUT SYNDROMES": "https://burnoutsyndromes.com/",
+    "MAYSON's PARTY": "https://maysonsparty.com/",
+    "yonige": "https://yonige.net/",
+    "PEDRO": "https://www.pedro.tokyo/",
+    "THE BACK HORN": "https://www.thebackhorn.com/",
+    "eastern youth": "http://www.hadashino-ongakusha.jp/",
+    "LOSTAGE": "https://lostage.co/",
+    "黒夢": "https://kuroyume.info/",
+    "坂本サトル ARABAKI special": "http://www.sakamotosatoru.com/",
+    "luv": "https://luv-band.com/",
+    "the shes gone": "https://theshesgone.com/",
+    "秋山黄色": "https://www.akiyamakiro.com/",
+    "Ｔ字路s": "http://tjiros.net/",
+    "Kvi Baba": "公式HP無し",
+    "TOOBOE": "https://www.sonymusic.co.jp/artist/tooboe/",
+    "浅井健一": "https://sexystones.com/top/",
+    "レトロリロン": "https://retroriron.com/",
+    "川内太鼓": "公式HP無し",
+    "GEZAN": "https://gezan.net/",
+    "ハンバート ハンバート": "https://humberthumbert.net/",
+    "KEIJU": "公式HP無し",
+    "T.M.Revolution": "https://www.tm-revolution.com/",
+    "ゴスペラーズ": "https://www.gospellers.tv/",
+    "SHISHAMO": "https://shishamo.biz/"
+};
+
 // 検索時の揺れを吸収するため、文字を平仮名や小文字に統一する関数です
 function normalizeForSearch(str) {
     if (!str) return "";
@@ -649,8 +761,9 @@ function setupEventListeners() {
         }
     });
 
-    // 5. 検索結果モーダル内の「★ボタン」のクリックイベント
+    // 5. 検索結果モーダル内の「★ボタン」および「公式HPリンク」のクリックイベント
     document.getElementById('searchModalContent').addEventListener('click', (e) => {
+        // --- 既存の「★」ボタンの処理 ---
         if (e.target.classList.contains('fav-btn')) {
             const favId = e.target.getAttribute('data-fav-id');
             if (favId) {
@@ -664,6 +777,20 @@ function setupEventListeners() {
                     btn.classList.remove('active');
                     block.classList.remove('favorited');
                 }
+            }
+        }
+
+        // --- 【追加】公式HPリンクのクリック処理 ---
+        // closest()を使って、クリックされた場所から一番近い <a> タグを探します
+        const linkEl = e.target.closest('.artist-official-link');
+        if (linkEl) {
+            // HTMLのデータ属性(data-url)からURLの意味（データ）を取り出します
+            const url = linkEl.getAttribute('data-url');
+            
+            // データが「公式HP無し」という状態であれば、リンク移動を止めてアラートを出します
+            if (url === "公式HP無し") {
+                e.preventDefault(); // <a>タグ本来の「別のページへ飛ぶ」動作をキャンセルします
+                alert('【公式HP無し】');
             }
         }
     });
@@ -727,7 +854,7 @@ function switchTab(target) {
         // タイムテーブルを描画します
         renderTimetable(); 
         
-        // ★追加：タイムテーブルを描画した直後に、現在時刻の1時間前に自動スクロールさせます
+        // タイムテーブルを描画した直後に、現在時刻の1時間前に自動スクロールさせます
         // 画面の描画が完了してから確実にスクロールさせるため、setTimeoutで少しだけ時間差（10ミリ秒）を設けます
         setTimeout(() => {
             scrollToCurrentTime(`day${currentDay}`);
@@ -1371,16 +1498,30 @@ function showSearchResults(searchText) {
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
-            // JSは「背景を薄くする意味（is-light-bg）」をクラスとして渡すだけに留め、見た目はCSSに任せます。
+            // 【追加】公式HPのURLを取得します。辞書にない場合は「公式HP無し」とします。
+            // item.searchName にはアーティストのベース名（artistYomiDictやartistLinkDictのキーと一致）が入っています。
+            const officialUrl = artistLinkDict[item.searchName] || "公式HP無し";
+
+            // JSは「背景を薄くする意味（is-light-bg）」などをクラスとして渡すだけに留め、見た目はCSSに任せます。
             const classes = ['artist-block', isFav ? 'favorited' : '', artist.isLightBg ? 'is-light-bg' : ''].filter(Boolean).join(' ');
 
+            // 【変更】<div class="artist-name">の中身を<a>タグ（リンクの骨組み）で囲みます。
+            // 実際のURL、別のタブで開く設定、意味を持たせるクラスやデータをHTMLに付与するだけです。
             const html = `
                 <div class="${classes}" style="--artist-bg: ${stage.color};">
                     <div class="artist-top">
                         <span class="artist-time">${dayLabel} ${timeText} <span class="artist-stage-name">${stage.name}</span></span>
                         <button class="fav-btn ${isFav ? 'active' : ''}" data-fav-id="${favId}">★</button>
                     </div>
-                    <div class="artist-name">${artist.name}</div>
+                    <div class="artist-name">
+                        <a href="${officialUrl !== '公式HP無し' ? officialUrl : '#'}" 
+                           class="artist-official-link ${officialUrl === '公式HP無し' ? 'no-link' : ''}" 
+                           data-url="${officialUrl}" 
+                           target="${officialUrl !== '公式HP無し' ? '_blank' : '_self'}" 
+                           rel="noopener noreferrer">
+                           ${artist.name}
+                        </a>
+                    </div>
                 </div>
             `;
             contentArea.insertAdjacentHTML('beforeend', html);
