@@ -1222,7 +1222,7 @@ function generateFoodCard(shop, areaName, isDraggable = false) {
         
     const id = areaName + "::" + shop.name;
     const isFav = foodFavoritesOrder.some(item => item.id === id);
-    const safeId = id.replace(/"/g, '&quot;');
+    const safeId = id.replace(/"/g, '"');
     
     const classes = isDraggable ? "food-card draggable-card" : "food-card";
     const dragAttr = isDraggable ? `draggable="true" data-id="${safeId}"` : `data-id="${safeId}"`;
@@ -1445,7 +1445,8 @@ function setupSearch() {
         suggestList.innerHTML = '';
 
         if (query.length === 0) {
-            suggestList.style.display = 'none';
+            // クラスを外して非表示にします
+            suggestList.classList.remove('is-active');
             return;
         }
 
@@ -1457,14 +1458,15 @@ function setupSearch() {
                 li.textContent = item.searchName; 
                 li.addEventListener('mousedown', () => {
                     searchInput.value = item.searchName; 
-                    suggestList.style.display = 'none';
+                    suggestList.classList.remove('is-active');
                     showSearchResults(item.searchName);
                 });
                 suggestList.appendChild(li);
             });
-            suggestList.style.display = 'block';
+            // クラスを付けて表示します
+            suggestList.classList.add('is-active');
         } else {
-            suggestList.style.display = 'none';
+            suggestList.classList.remove('is-active');
         }
     });
 
@@ -1472,7 +1474,7 @@ function setupSearch() {
         if (e.key === 'Enter') {
             const queryText = this.value.trim();
             if (queryText.length > 0) {
-                suggestList.style.display = 'none';
+                suggestList.classList.remove('is-active');
                 showSearchResults(queryText);
                 this.blur(); 
             }
@@ -1485,12 +1487,13 @@ function setupSearch() {
 
 // 検索結果のポップアップを閉じる関数です
 function closeSearchModal() {
-    document.getElementById('searchModal').style.display = 'none';
-    document.getElementById('searchModalOverlay').style.display = 'none';
+    // スタイルを直接書き換えず、クラスを外すことでCSSに非表示を任せます
+    document.getElementById('searchModal').classList.remove('is-active');
+    document.getElementById('searchModalOverlay').classList.remove('is-active');
     const searchInput = document.getElementById('artistSearchInput');
     const suggestList = document.getElementById('searchSuggestList');
     searchInput.value = '';
-    suggestList.style.display = 'none';
+    suggestList.classList.remove('is-active');
     suggestList.innerHTML = '';
 }
 
@@ -1537,7 +1540,6 @@ function getArtistTimeStatusHtml(artist, dayDateStr) {
 
         if (diffMins > 0) {
             const timeStr = formatDiffTime(diffMins);
-            // ★ text-red を意味論的な is-urgent に変更
             const numClass = diffMins < 10 ? "is-urgent" : "";
             return `<div class="search-time-status">演奏前：開始まであと<span class="${numClass}">${timeStr}</span></div>`;
         } else if (endDiffMins > 0) {
@@ -1549,7 +1551,6 @@ function getArtistTimeStatusHtml(artist, dayDateStr) {
     } else {
         if (diffMins > 0) {
             const timeStr = formatDiffTime(diffMins);
-            // ★ text-red を意味論的な is-urgent に変更
             const numClass = diffMins < 10 ? "is-urgent" : "";
             return `<div class="search-time-status">演奏前：開始まであと<span class="${numClass}">${timeStr}</span></div>`;
         } else {
@@ -1599,7 +1600,6 @@ function showSearchResults(searchText) {
     }
 
     results.forEach(item => {
-        // ★ indexを追加で受け取ります
         item.artistsGroup.forEach((groupItem, index) => {
             const artist = groupItem.originalArtist;
             const stage = groupItem.stage;
@@ -1614,7 +1614,6 @@ function showSearchResults(searchText) {
             const officialUrl = artistLinkDict[item.searchName] || "公式HP無し";
             
             let spotifyHtml = "";
-            // ★ そのアーティストの最後の出演枠の時だけSpotify情報を生成する
             if (index === item.artistsGroup.length - 1) {
                 const spotifyUrl = artistSpotifyDict[item.searchName] || "Spotify無し";
                 if (spotifyUrl !== "Spotify無し") {
@@ -1654,8 +1653,9 @@ function showSearchResults(searchText) {
         });
     });
 
-    document.getElementById('searchModalOverlay').style.display = 'block';
-    document.getElementById('searchModal').style.display = 'flex';
+    // スタイルを直接書き換えず、クラスを付与することでCSSに表示を任せます
+    document.getElementById('searchModalOverlay').classList.add('is-active');
+    document.getElementById('searchModal').classList.add('is-active');
 }
 
 // --- ページが読み込まれたときに最初に動く処理 ---

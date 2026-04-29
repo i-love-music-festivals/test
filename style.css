@@ -321,7 +321,8 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 /* ==========================================
    マップセクション＆時計・更新日時
    ========================================== */
-#mapSection { background-color: #333; position: relative; overflow: auto; display: none; }
+#mapSection { background-color: #333; position: relative; overflow: auto; }
+/* .content-section.active で display: flex が指定されますが、マップは block が適切なため上書きします */
 #mapSection.active { display: block; }
 
 .map-wrapper { 
@@ -368,8 +369,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 /* ==========================================
    メモセクション
    ========================================== */
-#memoSection { background-color: var(--bg-color); overflow-y: auto; padding: 15px; display: none; flex-direction: column; }
-#memoSection.active { display: flex; }
+#memoSection { background-color: var(--bg-color); overflow-y: auto; padding: 15px; }
 .memo-section-header { font-size: 16px; color: var(--color-memo); border-bottom: 2px solid var(--color-memo); padding-bottom: 5px; margin-top: 0; margin-bottom: 15px; }
 .memo-notice { font-size: 12px; color: #d35400; background-color: #fdf2e9; padding: 10px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #d35400; line-height: 1.4; flex-shrink: 0; }
 #memoTextArea { flex-grow: 1; width: 100%; box-sizing: border-box; padding: 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 8px; resize: none; font-family: inherit; min-height: 300px; }
@@ -382,6 +382,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #artistSearchInput { width: 100%; padding: 10px 20px; border: none; border-radius: 25px; font-size: 14px; outline: none; background-color: #f1f3f4; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); transition: background-color 0.2s, box-shadow 0.2s; color: #333; }
 #artistSearchInput:focus { background-color: #ffffff; box-shadow: 0 1px 6px rgba(0,0,0,0.2); }
 .suggest-list { position: absolute; top: 100%; left: 0; right: 0; margin: 5px auto 0; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); list-style: none; padding: 0; max-height: 250px; overflow-y: auto; z-index: 200; display: none; text-align: left; }
+.suggest-list.is-active { display: block; } /* JSから付与される表示用クラス */
 .suggest-list li { padding: 12px 20px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f0f0f0; color: #333; }
 .suggest-list li:last-child { border-bottom: none; }
 .suggest-list li:hover { background-color: #f8f9fa; }
@@ -389,7 +390,9 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 
 /* 検索結果ポップアップの背景と本体 */
 .search-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: none; }
+.search-modal-overlay.is-active { display: block; } /* JSから付与される表示用クラス */
 .search-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; background: #fff; border-radius: 16px; z-index: 1001; display: none; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-height: 80vh; overflow: hidden; }
+.search-modal.is-active { display: flex; } /* JSから付与される表示用クラス */
 .search-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #eee; }
 .search-modal-header h3 { margin: 0; font-size: 16px; color: #333; }
 .search-modal-close { background: none; border: none; font-size: 26px; cursor: pointer; color: #999; padding: 0; line-height: 1; }
@@ -477,7 +480,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 }
 
 /* ==========================================
-   【追加】Spotify埋め込み用のスタイル
+   Spotify埋め込み用のスタイル
    ========================================== */
 /* Spotifyプレイヤーを囲む外枠です。カードとの間隔を整えます。 */
 .spotify-embed-container {
