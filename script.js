@@ -168,7 +168,7 @@ const foodList = [
             { name: "⑬コンフェッティ", menus: ["山形芋煮", "ローストチキンレッグ", "山形牛タコライス"], message: "山形のソウルフード芋煮を熱々でお届けします。音楽とともに一緒に盛り上がりましょう！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field13-confetti.png" },
             { name: "⑭きちみ製麺", menus: ["おくずかけうーめん", "特製鶏だしうーめん", "肉味噌うーめん"], message: "その空腹、最高の一杯で満たします。400年続く白石うーめんがARABAKIを熱く支えます！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field14-kichimi-seimen.png" },
             { name: "⑮TRAILER BAR HAKU", menus: ["のどぐろフリット", "甘えびフリット", "福井ソースカツ丼"], message: "石川県より、北陸の美味しいをお届けいたします！ドリンクも北陸由来で揃えております。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field15-trailer-bar-haku.png" },
-            { name: "十六PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
+            { name: "⑯PIZZA　BRAVO", menus: ["マルゲリータ", "しらすとネギ", "ペパロニ"], message: "石窯で焼く本格ナポリピザ。500℃の高温でカリッ、フワッと焼き上げます。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field16-pizza-bravo.png" },
             { name: "⑰Million Dollar Ice Cream Truck", menus: ["シナモンアップルパイ", "ブルーベリーチーズケーキ", "バナナスモア"], message: "神奈川県、米海軍横須賀基地のアメリカ人が絶賛する濃厚・手作りのアメリカンアイスクリーム。", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field17-million-dollar-ice-cream-truck.png" },
             { name: "⑱ibiscafe船岡", menus: ["米粉チュロス", "チーズハットグ", "ふりふりポテト"], message: "今年アラバキに初参戦！サクッと、モチっとした食感の米粉チュロスをぜひお楽しみください！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field18-ibiscafe-funaoka.png" },
             { name: "⑲月美家", menus: ["大阪西成風ホルモン焼"], message: "特製ダレとにんにくがガツンと効いた大阪西成風ホルモン焼！ビール片手に極上のフェス飯を食らい尽くせ！", img: "https://i-love-music-festivals.github.io/arabaki2026/communication-field19-tsukimiya.png" },
@@ -380,7 +380,7 @@ const artistYomiDict = {
     "リーガルリリー": "りーがるりりー",
     "柴田聡子 (BAND SET)": "しばたさとこ(ばんどせっと)",
     "コレサワ": "これさわ",
-    "Rol3ert": "ろばーと",
+    "Rol3ert": "ろばーート",
     "猪居亜美(クラシックギター)": "いのいあみ(くらしっくぎたー)",
     "奈良美智 (DJ)": "ならよしとも(でぃーじぇー)",
     "Date fm SOUND GENIC トークセッション": "でいとえふえむさうんどじぇにっくとーくせっしょん",
@@ -448,8 +448,6 @@ const artistYomiDict = {
 };
 
 // --- 【追加】公式HPリンク辞書（CSVデータより） ---
-// 検索ベース名（上の読み仮名辞書のキーと同じ）とURLの紐付けです。
-// 今後別フェスに流用する際は、ここを書き換えることでリンク先を制御します
 const artistLinkDict = {
     "町長挨拶": "公式HP無し",
     "川崎中学校吹奏楽部": "公式HP無し",
@@ -557,6 +555,119 @@ const artistLinkDict = {
     "T.M.Revolution": "https://www.tm-revolution.com/",
     "ゴスペラーズ": "https://www.gospellers.tv/",
     "SHISHAMO": "https://shishamo.biz/"
+};
+
+// --- 【追加】Spotifyリンク辞書 ---
+// 検索ベース名とSpotifyの埋め込み(Embed)URLの紐付けです。
+// URLが存在しない場合は「Spotify無し」と記載します。
+// ※サンプルとして数組のみURLを入れています。流用時に書き換えてください。
+const artistSpotifyDict = {
+    "町長挨拶": "Spotify無し",
+    "川崎中学校吹奏楽部": "Spotify無し",
+    "ストレイテナー": "https://open.spotify.com/embed/artist/4q5fHrf0Q0R6imQ3etjXEG?utm_source=generator&theme=0",
+    "マキシマム ザ ホルモン": "Spotify無し",
+    "ELLEGARDEN": "https://open.spotify.com/embed/artist/3cbd5GWGOknxmFAe77MDbk?utm_source=generator&theme=0",
+    "東京スカパラダイスオーケストラ": "https://open.spotify.com/embed/artist/0UZq6vAHrwGgctvxTzzxYm?utm_source=generator&theme=0",
+    "[Alexandros]": "https://open.spotify.com/embed/artist/1luOe8HkZQ7zwuaO2wuJqI?utm_source=generator&theme=0",
+    "ASIAN KUNG-FU GENERATION": "https://open.spotify.com/embed/artist/0MK8l3nURwwQIjafvXoJJt?utm_source=generator&theme=0",
+    "Ayllton": "Spotify無し",
+    "森川葵咲樹": "Spotify無し",
+    "TRAëLL": "Spotify無し",
+    "PES": "Spotify無し",
+    "UNFAIR RULE (Acoustic Set)": "Spotify無し",
+    "さとう。": "Spotify無し",
+    "関取花": "Spotify無し",
+    "鈴木実貴子ズ": "Spotify無し",
+    "奇妙礼太郎": "Spotify無し",
+    "GLIM SPANKY (Acoustic Set)": "Spotify無し",
+    "藤原美幸(秋田民謡)": "Spotify無し",
+    "リアクション ザ ブッタ": "Spotify無し",
+    "TENDOUJI": "Spotify無し",
+    "みちのくプロレス": "Spotify無し",
+    "ドミコ": "Spotify無し",
+    "LOW IQ 01 & THE RHYTHM MAKERS": "Spotify無し",
+    "9mm Parabellum Bullet": "Spotify無し",
+    "西馬音内盆踊り": "Spotify無し",
+    "Crystal Lake": "Spotify無し",
+    "KOTORI": "Spotify無し",
+    "打首獄門同好会": "Spotify無し",
+    "coldrain": "Spotify無し",
+    "Cha'R": "Spotify無し",
+    "超能力戦士ドリアン": "Spotify無し",
+    "おいしくるメロンパン": "Spotify無し",
+    "NELKE": "Spotify無し",
+    "kurayamisaka": "Spotify無し",
+    "のん & the tears of knight": "Spotify無し",
+    "岸谷香": "Spotify無し",
+    "夢弦会(津軽三味線)": "Spotify無し",
+    "リーガルリリー": "Spotify無し",
+    "柴田聡子 (BAND SET)": "Spotify無し",
+    "コレサワ": "Spotify無し",
+    "Rol3ert": "Spotify無し",
+    "猪居亜美(クラシックギター)": "Spotify無し",
+    "奈良美智 (DJ)": "Spotify無し",
+    "Date fm SOUND GENIC トークセッション": "Spotify無し",
+    "yosugala": "Spotify無し",
+    "もっさ(ネクライトーキー)": "Spotify無し",
+    "ヒグチアイ (for CAMPERS)": "Spotify無し",
+    "いいちこ presents ENKAI": "Spotify無し",
+    "杉本ラララ": "Spotify無し",
+    "MONKEY MAJIK": "Spotify無し",
+    "礼賛": "Spotify無し",
+    "ハンブレッダーズ": "Spotify無し",
+    "くるり": "Spotify無し",
+    "OAU": "Spotify無し",
+    "優里": "Spotify無し",
+    "STUTS": "Spotify無し",
+    "Lexulty": "Spotify無し",
+    "怒髪天": "Spotify無し",
+    "MONGOL800": "Spotify無し",
+    "10-FEET": "Spotify無し",
+    "布袋寅泰": "Spotify無し",
+    "あいみょん": "Spotify無し",
+    "MICHINOKU PEACE SESSION GTR祭'26": "Spotify無し",
+    "中村旭": "Spotify無し",
+    "サカグチアミ": "Spotify無し",
+    "『ユイカ』": "Spotify無し",
+    "石崎ひゅーい": "Spotify無し",
+    "サバシスター (Acoustic Set)": "Spotify無し",
+    "山中さわお(弾き語り)": "Spotify無し",
+    "中田裕二(弾り語り)": "Spotify無し",
+    "堂島孝平": "Spotify無し",
+    "曽我部恵一(弾き語り)": "Spotify無し",
+    "向井秀徳アコースティック＆エレクトリック": "Spotify無し",
+    "Luiz Murá (for CAMPERS)": "Spotify無し",
+    "おとどけチーたくん高速バンド": "Spotify無し",
+    "Date fm トークセッション": "Spotify無し",
+    "トークセッション 松田晋二の夜更けの囁き": "Spotify無し",
+    "曽我部恵一 (DJ)": "Spotify無し",
+    "EMNW": "Spotify無し",
+    "忘れらんねえよ柴田": "Spotify無し",
+    "Blue Mash": "Spotify無し",
+    "BURNOUT SYNDROMES": "Spotify無し",
+    "MAYSON's PARTY": "Spotify無し",
+    "yonige": "Spotify無し",
+    "PEDRO": "Spotify無し",
+    "THE BACK HORN": "Spotify無し",
+    "eastern youth": "Spotify無し",
+    "LOSTAGE": "Spotify無し",
+    "黒夢": "Spotify無し",
+    "坂本サトル ARABAKI special": "Spotify無し",
+    "luv": "Spotify無し",
+    "the shes gone": "Spotify無し",
+    "秋山黄色": "Spotify無し",
+    "Ｔ字路s": "Spotify無し",
+    "Kvi Baba": "Spotify無し",
+    "TOOBOE": "Spotify無し",
+    "浅井健一": "Spotify無し",
+    "レトロリロン": "Spotify無し",
+    "川内太鼓": "Spotify無し",
+    "GEZAN": "Spotify無し",
+    "ハンバート ハンバート": "Spotify無し",
+    "KEIJU": "Spotify無し",
+    "T.M.Revolution": "Spotify無し",
+    "ゴスペラーズ": "Spotify無し",
+    "SHISHAMO": "Spotify無し"
 };
 
 // 検索時の揺れを吸収するため、文字を平仮名や小文字に統一する関数です
@@ -761,7 +872,7 @@ function setupEventListeners() {
         }
     });
 
-    // 5. 検索結果モーダル内の「★ボタン」および「公式HPリンク」のクリックイベント
+    // 5. 検索結果モーダル内の各種ボタンのクリックイベント
     document.getElementById('searchModalContent').addEventListener('click', (e) => {
         // --- 既存の「★」ボタンの処理 ---
         if (e.target.classList.contains('fav-btn')) {
@@ -780,7 +891,7 @@ function setupEventListeners() {
             }
         }
 
-        // --- 【追加】公式HPリンクのクリック処理 ---
+        // --- 公式HPリンクのクリック処理 ---
         // closest()を使って、クリックされた場所から一番近い <a> タグを探します
         const linkEl = e.target.closest('.artist-official-link');
         if (linkEl) {
@@ -1498,15 +1609,32 @@ function showSearchResults(searchText) {
             const dayLabel = APP_CONFIG.days.find(d => d.id === dayKey)?.label || dayKey;
             const timeText = artist.end ? `${formatTimeDisplay(artist.start)}-${formatTimeDisplay(artist.end)}` : `${formatTimeDisplay(artist.start)}-`;
 
-            // 【追加】公式HPのURLを取得します。辞書にない場合は「公式HP無し」とします。
-            // item.searchName にはアーティストのベース名（artistYomiDictやartistLinkDictのキーと一致）が入っています。
+            // 公式HPのURLを取得します
             const officialUrl = artistLinkDict[item.searchName] || "公式HP無し";
+            
+            // 【追加】SpotifyのURLを取得します。辞書にない場合は「Spotify無し」とします。
+            const spotifyUrl = artistSpotifyDict[item.searchName] || "Spotify無し";
 
-            // JSは「背景を薄くする意味（is-light-bg）」などをクラスとして渡すだけに留め、見た目はCSSに任せます。
             const classes = ['artist-block', isFav ? 'favorited' : '', artist.isLightBg ? 'is-light-bg' : ''].filter(Boolean).join(' ');
 
-            // 【変更】<div class="artist-name">の中身を<a>タグ（リンクの骨組み）で囲みます。
-            // 実際のURL、別のタブで開く設定、意味を持たせるクラスやデータをHTMLに付与するだけです。
+            // 【追加】Spotifyの埋め込み用HTMLを準備します
+            let spotifyHtml = "";
+            if (spotifyUrl !== "Spotify無し") {
+                // 埋め込みURLがある場合は、iframeタグ（外部サイトを表示する枠）を作ります。
+                // 見た目（サイズや角丸など）はCSSの「.spotify-embed-iframe」クラスに任せます。
+                spotifyHtml = `
+                    <div class="spotify-embed-container">
+                        <iframe class="spotify-embed-iframe" src="${spotifyUrl}" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                `;
+            } else {
+                // URLが無い場合は、テキストを表示するHTMLを作ります。
+                spotifyHtml = `
+                    <div class="spotify-empty-msg">【Spotify無し】</div>
+                `;
+            }
+
+            // 【変更】一番下に、上で作った spotifyHtml を追加して出力します。
             const html = `
                 <div class="${classes}" style="--artist-bg: ${stage.color};">
                     <div class="artist-top">
@@ -1523,6 +1651,7 @@ function showSearchResults(searchText) {
                         </a>
                     </div>
                 </div>
+                ${spotifyHtml}
             `;
             contentArea.insertAdjacentHTML('beforeend', html);
         });
