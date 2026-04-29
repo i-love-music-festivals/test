@@ -486,7 +486,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 /* Spotifyのプレイヤー本体（iframe）の見た目です。 */
 .spotify-embed-iframe {
     width: 100%;
-    height: 360px; /* Spotifyの標準埋め込みサイズ（中）に合わせています */
+    height: 356px; /* Spotifyの標準埋め込みサイズ（中）に合わせています */
     border-radius: 12px; /* Spotify標準の角丸に合わせます */
     border: none; /* デフォルトの枠線を消します */
     display: block; /* 余計な隙間ができるのを防ぎます */
