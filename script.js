@@ -562,10 +562,10 @@ const artistLinkDict = {
 // URLが存在しない場合は「Spotify無し」と記載します。
 // ※サンプルとして数組のみURLを入れています。流用時に書き換えてください。
 const artistSpotifyDict = {
-"町長挨拶": "無し",
-"川崎中学校吹奏楽部": "無し",
+"町長挨拶": "",
+"川崎中学校吹奏楽部": "",
 "ストレイテナー": "https://open.spotify.com/embed/artist/4q5fHrf0Q0R6imQ3etjXEG?utm_source=generator&theme=0",
-"マキシマム ザ ホルモン": "無し",
+"マキシマム ザ ホルモン": "",
 "ELLEGARDEN": "https://open.spotify.com/embed/artist/3cbd5GWGOknxmFAe77MDbk?utm_source=generator&theme=0",
 "東京スカパラダイスオーケストラ": "https://open.spotify.com/embed/artist/0UZq6vAHrwGgctvxTzzxYm?utm_source=generator&theme=0",
 "[Alexandros]": "https://open.spotify.com/embed/artist/1luOe8HkZQ7zwuaO2wuJqI?utm_source=generator&theme=0",
@@ -580,37 +580,37 @@ const artistSpotifyDict = {
 "鈴木実貴子ズ": "https://open.spotify.com/embed/artist/68EAsONs8fA8C8e3I4qcV0?utm_source=generator&theme=0",
 "奇妙礼太郎": "https://open.spotify.com/embed/artist/56GlPMUHPnbBDYMMbgLHN4?utm_source=generator&theme=0",
 "GLIM SPANKY": "https://open.spotify.com/embed/artist/4sWyw0OrBKwmiaPOAuTuig?utm_source=generator&theme=0",
-"藤原美幸(秋田民謡)": "無し",
+"藤原美幸(秋田民謡)": "",
 "リアクション ザ ブッタ": "https://open.spotify.com/embed/artist/7HT7QBLHLQ16iL4W2xjkeX?utm_source=generator&theme=0",
 "TENDOUJI": "https://open.spotify.com/embed/artist/7kOS7xo3ryc1MmhfP0fNnX?utm_source=generator&theme=0",
-"みちのくプロレス": "無し",
+"みちのくプロレス": "",
 "ドミコ": "https://open.spotify.com/embed/artist/0CQuAKiUYqH0OK020E3miJ?utm_source=generator&theme=0",
 "LOW IQ 01 & THE RHYTHM MAKERS": "https://open.spotify.com/embed/artist/03iXYfVe4ZvZ0Q0dfLxzKc?utm_source=generator&theme=0",
 "9mm Parabellum Bullet": "https://open.spotify.com/embed/artist/3v0nHmnUcf9GAhjQOTctQu?utm_source=generator&theme=0",
-"西馬音内盆踊り": "無し",
+"西馬音内盆踊り": "",
 "Crystal Lake": "https://open.spotify.com/embed/artist/0A7d0PJxaLO7CGI94ht6PX?utm_source=generator&theme=0",
 "KOTORI": "https://open.spotify.com/embed/artist/6NlY4hC3DxmaCG2rSZv0fL?utm_source=generator&theme=0",
 "打首獄門同好会": "https://open.spotify.com/embed/artist/3EJLTLWBKED6IQdsGgOscG?utm_source=generator&theme=0",
 "coldrain": "https://open.spotify.com/embed/artist/4pCVGaLWxDe4d8bsjsnmUM?utm_source=generator&theme=0",
-"Cha'R": "無し",
+"Cha'R": "https://open.spotify.com/embed/artist/1akH9STN7guONF784ACv0W?utm_source=generator&theme=0",
 "超能力戦士ドリアン": "https://open.spotify.com/embed/artist/3jhgvdTpY4XjgoH3REIwbt?utm_source=generator&theme=0",
 "おいしくるメロンパン": "https://open.spotify.com/embed/artist/7v7AOgHT3xwF4Z86hcCbsh?utm_source=generator&theme=0",
 "NELKE": "https://open.spotify.com/embed/artist/0hLfZOfwBDMejvKITJksrG?utm_source=generator&theme=0",
-"kurayamisaka": "無し",
+"kurayamisaka": "https://open.spotify.com/embed/artist/5kJvtFkFAXSgbz05ZZ4mVL?utm_source=generator&theme=0",
 "のん & the tears of knight": "https://open.spotify.com/embed/artist/4YRx01IyUq6BreGGtNHQQk?utm_source=generator&theme=0",
 "岸谷香": "https://open.spotify.com/embed/artist/5NAceZ4EkRueKHIUtgIde9?utm_source=generator&theme=0",
-"夢弦会(津軽三味線)": "無し",
+"夢弦会(津軽三味線)": "",
 "リーガルリリー": "https://open.spotify.com/embed/artist/75eQ7NabzgaaUYcrqSY0FK?utm_source=generator&theme=0",
-"柴田聡子": "https://open.spotify.com/embed/artist/4RaaBbyl7DzAmfkjGiyUGU?utm_source=generator&theme=0",
+"柴田聡子 (BAND SET)": "https://open.spotify.com/embed/artist/4RaaBbyl7DzAmfkjGiyUGU?utm_source=generator&theme=0",
 "コレサワ": "https://open.spotify.com/embed/artist/6sX1XKgDIiAcVZof0SgWUe?utm_source=generator&theme=0",
 "Rol3ert": "https://open.spotify.com/embed/artist/3fJfvyieATQfDE47J42H2E?utm_source=generator&theme=0",
 "猪居亜美": "https://open.spotify.com/embed/artist/0rcWfKZ3DLC4N9Zkh9Uscd?utm_source=generator&theme=0",
-"奈良美智 (DJ)": "無し",
-"Date fm (各種)": "無し",
+"奈良美智 (DJ)": "",
+"Date fm (各種)": "",
 "yosugala": "https://open.spotify.com/embed/artist/1Wo7GAbqe7gsicTckUS8u4?utm_source=generator&theme=0",
 "もっさ(ネクライトーキー)": "https://open.spotify.com/embed/artist/45ew0KWgCA7evVgCydrZws?utm_source=generator&theme=0",
 "ヒグチアイ": "https://open.spotify.com/embed/artist/4GxWcui9BlMJH9VOOK5wav?utm_source=generator&theme=0",
-"いいちこ presents ENKAI": "無し",
+"いいちこ presents ENKAI": "",
 "杉本ラララ": "https://open.spotify.com/embed/artist/3MZwzBtJ4Zkl1TZVBYLAYK?utm_source=generator&theme=0",
 "MONKEY MAJIK": "https://open.spotify.com/embed/artist/6U2dgcU46Iy9pF3RQBj5hG?utm_source=generator&theme=0",
 "礼賛": "https://open.spotify.com/embed/artist/6s47v81SP75AAu01joweqx?utm_source=generator&theme=0",
@@ -619,27 +619,28 @@ const artistSpotifyDict = {
 "OAU": "https://open.spotify.com/embed/artist/2S6PiNmAaVVGO0YePSN3FB?utm_source=generator&theme=0",
 "優里": "https://open.spotify.com/embed/artist/0ixzjrK1wkN2zWBXt3VW3W?utm_source=generator&theme=0",
 "STUTS": "https://open.spotify.com/embed/artist/0qC4CNzOUtgdmdVzRqCa1d?utm_source=generator&theme=0",
-"Lexulty": "無し",
+"Lexulty": "https://open.spotify.com/embed/artist/5BLyLo2LQJduNgr39QgH4n?utm_source=generator&theme=0",
 "怒髪天": "https://open.spotify.com/embed/artist/2UUHBIbp6MHWflVwNbPUOE?utm_source=generator&theme=0",
 "MONGOL800": "https://open.spotify.com/embed/artist/2zUQjYvy0TevSi4d3PjqQO?utm_source=generator&theme=0",
 "10-FEET": "https://open.spotify.com/embed/artist/0QZqdhoRQkn1VphAa5eX8h?utm_source=generator&theme=0",
 "布袋寅泰": "https://open.spotify.com/embed/artist/4cShXyYZpvnVZYeE3Oukns?utm_source=generator&theme=0",
 "あいみょん": "https://open.spotify.com/embed/artist/5kVZa4lFUmAQlBogl1fkd6?utm_source=generator&theme=0",
-"MICHINOKU PEACE SESSION": "無し",
-"中村旭": "無し",
+"MICHINOKU PEACE SESSION": "",
+"中村旭": "",
 "サカグチアミ": "https://open.spotify.com/embed/artist/4aJOCsyxr9bOooJDwmXUwX?utm_source=generator&theme=0",
 "『ユイカ』": "https://open.spotify.com/embed/artist/2EqaSEa0WkE59Aca9iXSYj?utm_source=generator&theme=0",
 "石崎ひゅーい": "https://open.spotify.com/embed/artist/4NZJF1Qong0IAWBRE2EjTr?utm_source=generator&theme=0",
 "サバシスター": "https://open.spotify.com/embed/artist/59SCS5djYwMbZv80XDI0pj?utm_source=generator&theme=0",
-"山中さわお": "https://open.spotify.com/embed/artist/4X0lski0KnPuIyJJQSRhtF?utm_source=generator&theme=0",
-"中田裕二": "https://open.spotify.com/embed/artist/7Kbz6xbASLAYT072Z3ZRCS?utm_source=generator&theme=0",
+"山中さわお(弾き語り)": "https://open.spotify.com/embed/artist/4X0lski0KnPuIyJJQSRhtF?utm_source=generator&theme=0",
+"中田裕二(弾り語り)": "https://open.spotify.com/embed/artist/7Kbz6xbASLAYT072Z3ZRCS?utm_source=generator&theme=0",
 "堂島孝平": "https://open.spotify.com/embed/artist/4xIGdXa6w9eWUoVnEsZNJ9?utm_source=generator&theme=0",
-"曽我部恵一": "https://open.spotify.com/embed/artist/5L2Y03AcUOXCgvRMTy2Gwq?utm_source=generator&theme=0",
-"向井秀徳": "https://open.spotify.com/embed/artist/0mMIcbj5qY7KPxltUMZnmz?utm_source=generator&theme=0",
-"Luiz Murá": "https://open.spotify.com/embed/artist/5RlK0YqgWYpYSkLLNR9O6g?utm_source=generator&theme=0",
-"おとどけチーたくん高速バンド": "無し",
+"曽我部恵一(弾き語り)": "https://open.spotify.com/embed/artist/5L2Y03AcUOXCgvRMTy2Gwq?utm_source=generator&theme=0",
+"曽我部恵一 (DJ)": "https://open.spotify.com/embed/artist/5L2Y03AcUOXCgvRMTy2Gwq?utm_source=generator&theme=0",
+"向井秀徳アコースティック＆エレクトリック": "https://open.spotify.com/embed/artist/0mMIcbj5qY7KPxltUMZnmz?utm_source=generator&theme=0",
+"Luiz Murá (for CAMPERS)": "https://open.spotify.com/embed/artist/5RlK0YqgWYpYSkLLNR9O6g?utm_source=generator&theme=0",
+"おとどけチーたくん高速バンド": "",
 "EMNW": "https://open.spotify.com/embed/artist/0TwqpQOStb1pMXxlGWFYxZ?utm_source=generator&theme=0",
-"忘れらんねえよ(柴田)": "https://open.spotify.com/embed/artist/7mhywHwc3ElwYwiMLEsduP?utm_source=generator&theme=0",
+"忘れらんねえよ柴田": "https://open.spotify.com/embed/artist/7mhywHwc3ElwYwiMLEsduP?utm_source=generator&theme=0",
 "Blue Mash": "https://open.spotify.com/embed/artist/1qG4m6PAWqUuJ2b3Ahfr07?utm_source=generator&theme=0",
 "BURNOUT SYNDROMES": "https://open.spotify.com/embed/artist/0Oazwl71qoHvXnbSxv0wOT?utm_source=generator&theme=0",
 "MAYSON's PARTY": "https://open.spotify.com/embed/artist/3RHFm0m7Ni1vl2Lr5sLw5t?utm_source=generator&theme=0",
@@ -647,7 +648,7 @@ const artistSpotifyDict = {
 "PEDRO": "https://open.spotify.com/embed/artist/3lIKnWNb3Z1Q71eZszY3p0?utm_source=generator&theme=0",
 "THE BACK HORN": "https://open.spotify.com/embed/artist/34d8V2nUwp937CmL9pQ6xV?utm_source=generator&theme=0",
 "eastern youth": "https://open.spotify.com/embed/artist/5Y2k6C2UgQVRd3zzsx1CcH?utm_source=generator&theme=0",
-"LOSTAGE": "無し",
+"LOSTAGE": "",
 "黒夢": "https://open.spotify.com/embed/artist/2286E4ur6XjwJuWjaHMJkz?utm_source=generator&theme=0",
 "坂本サトル": "https://open.spotify.com/embed/artist/75AF7cfhi0GLa1HJXgspn8?utm_source=generator&theme=0",
 "luv": "https://open.spotify.com/embed/artist/2Gy7SZvabW5UQgL0oljfeB?utm_source=generator&theme=0",
@@ -658,7 +659,7 @@ const artistSpotifyDict = {
 "TOOBOE": "https://open.spotify.com/embed/artist/0HZLpOSMHpalBlUnONhynN?utm_source=generator&theme=0",
 "浅井健一": "https://open.spotify.com/embed/artist/5Gm55pqgmqzj8QbaHQTCFd?utm_source=generator&theme=0",
 "レトロリロン": "https://open.spotify.com/embed/artist/47MRpWYlFaneZAlaXrt9bu?utm_source=generator&theme=0",
-"川内太鼓": "無し",
+"川内太鼓": "",
 "GEZAN": "https://open.spotify.com/embed/artist/0bMxJbKiRQm2oaozKgoZo6?utm_source=generator&theme=0",
 "ハンバート ハンバート": "https://open.spotify.com/embed/artist/5RI6QZwb39XNUV2vZv2aQY?utm_source=generator&theme=0",
 "KEIJU": "https://open.spotify.com/embed/artist/7K3bqkZs0SVUS9K13bnwHL?utm_source=generator&theme=0",
@@ -1536,18 +1537,20 @@ function getArtistTimeStatusHtml(artist, dayDateStr) {
 
         if (diffMins > 0) {
             const timeStr = formatDiffTime(diffMins);
-            const numClass = diffMins < 10 ? "text-red" : "";
+            // ★ text-red を意味論的な is-urgent に変更
+            const numClass = diffMins < 10 ? "is-urgent" : "";
             return `<div class="search-time-status">演奏前：開始まであと<span class="${numClass}">${timeStr}</span></div>`;
         } else if (endDiffMins > 0) {
             const timeStr = formatDiffTime(endDiffMins);
-            return `<div class="search-time-status text-red">演奏中：終了まであと${timeStr}</div>`;
+            return `<div class="search-time-status is-urgent">演奏中：終了まであと${timeStr}</div>`;
         } else {
             return `<div class="search-time-status">演奏終了</div>`;
         }
     } else {
         if (diffMins > 0) {
             const timeStr = formatDiffTime(diffMins);
-            const numClass = diffMins < 10 ? "text-red" : "";
+            // ★ text-red を意味論的な is-urgent に変更
+            const numClass = diffMins < 10 ? "is-urgent" : "";
             return `<div class="search-time-status">演奏前：開始まであと<span class="${numClass}">${timeStr}</span></div>`;
         } else {
             return ``; 
@@ -1596,7 +1599,8 @@ function showSearchResults(searchText) {
     }
 
     results.forEach(item => {
-        item.artistsGroup.forEach(groupItem => {
+        // ★ indexを追加で受け取ります
+        item.artistsGroup.forEach((groupItem, index) => {
             const artist = groupItem.originalArtist;
             const stage = groupItem.stage;
             const dayKey = groupItem.dayKey;
@@ -1609,29 +1613,25 @@ function showSearchResults(searchText) {
             // 公式HPのURLを取得します
             const officialUrl = artistLinkDict[item.searchName] || "公式HP無し";
             
-            // 【追加】SpotifyのURLを取得します。辞書にない場合は「Spotify無し」とします。
-            const spotifyUrl = artistSpotifyDict[item.searchName] || "Spotify無し";
+            let spotifyHtml = "";
+            // ★ そのアーティストの最後の出演枠の時だけSpotify情報を生成する
+            if (index === item.artistsGroup.length - 1) {
+                const spotifyUrl = artistSpotifyDict[item.searchName] || "Spotify無し";
+                if (spotifyUrl !== "Spotify無し") {
+                    spotifyHtml = `
+                        <div class="spotify-embed-container">
+                            <iframe class="spotify-embed-iframe" src="${spotifyUrl}" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
+                    `;
+                } else {
+                    spotifyHtml = `
+                        <div class="spotify-empty-msg">【Spotify無し】</div>
+                    `;
+                }
+            }
 
             const classes = ['artist-block', isFav ? 'favorited' : '', artist.isLightBg ? 'is-light-bg' : ''].filter(Boolean).join(' ');
 
-            // 【追加】Spotifyの埋め込み用HTMLを準備します
-            let spotifyHtml = "";
-            if (spotifyUrl !== "Spotify無し") {
-                // 埋め込みURLがある場合は、iframeタグ（外部サイトを表示する枠）を作ります。
-                // 見た目（サイズや角丸など）はCSSの「.spotify-embed-iframe」クラスに任せます。
-                spotifyHtml = `
-                    <div class="spotify-embed-container">
-                        <iframe class="spotify-embed-iframe" src="${spotifyUrl}" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </div>
-                `;
-            } else {
-                // URLが無い場合は、テキストを表示するHTMLを作ります。
-                spotifyHtml = `
-                    <div class="spotify-empty-msg">【Spotify無し】</div>
-                `;
-            }
-
-            // 【変更】一番下に、上で作った spotifyHtml を追加して出力します。
             const html = `
                 <div class="${classes}" style="--artist-bg: ${stage.color};">
                     <div class="artist-top">
