@@ -184,7 +184,7 @@ const foodList = [
 // --- 5. タイムテーブル・出演アーティストデータ ---
 const timetableData = {
     day1: {
-        date: "2026-04-30",
+        date: "2026-04-25",
         michinoku: [
             e("町長挨拶", "11:55", "12:05", "", { isLightBg: true, isSpecialLayout: true, displayTime: "12:00-" }),
             e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isLightBg: true }),
@@ -1006,19 +1006,31 @@ window.addEventListener('offline', checkWeatherOnlineStatus);
 
 // タイムテーブルのステージ名（ヘッダー）を描画する関数です
 function renderHeaders(myttCols) {
-    let html = '';
+    let html = ''; // ここに作っていくHTMLの文字を貯めていきます
+
     if(myttCols > 0) {
-        html += `<div class="stage-header mytt" style="--mytt-cols: ${myttCols};">
+        // 【修正点】マイタイムテーブルのヘッダー部分
+        // style="..." の中に「background-color: #fff; z-index: 20;」を追加しました。
+        // background-color: #fff; → 背景を白にして、裏の文字を透けさせません。
+        // z-index: 20; → 数字を大きくすることで、アーティスト名（通常は1など）より常に手前に表示させます。
+        html += `<div class="stage-header mytt" style="--mytt-cols: ${myttCols}; background-color: #fff; z-index: 20;">
                     <div class="stage-name mytt">マイタイテ</div>
                  </div>`;
     }
+    
+    // 全てのステージ（陸奥、荒吐など）を順番に処理します
     stagesInfo.forEach(stage => {
         // 色情報はCSSの変数として渡します
         const style = `style="--stage-color: ${stage.color};"`;
-        html += `<div class="stage-header">
+        
+        // 【修正点】各ステージのヘッダー部分
+        // こちらも同じく背景を白にし、z-indexを指定して他の要素の上に重なるようにします。
+        html += `<div class="stage-header" style="background-color: #fff; z-index: 20;">
                     <div class="stage-name" ${style}>${stage.name}</div>
                  </div>`;
     });
+    
+    // 出来上がったHTMLを、実際の画面（stageHeadersというIDの場所）に流し込みます
     document.getElementById('stageHeaders').innerHTML = html;
 }
 
