@@ -99,6 +99,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     z-index: 20; /* グリッドより手前（上）に表示するための順位 */
     background: #f9f9f9;
     border-bottom: 2px solid #333;
+    min-width: max-content; /* 中身の幅に合わせて親枠を広げ、列のずれを防ぐ */
 }
 
 /* 左上の空白部分（時間が表示される列の真上）です */
@@ -151,6 +152,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .timetable-wrapper { 
     display: flex; 
     position: relative; /* スクロールは親のscroll-containerに任せます */
+    min-width: max-content; /* 【追加】中身の幅に合わせて親枠を広げ、背景線が途切れるのを防ぐ */
 }
 
 /* 左端の「時間」が表示される列 */
