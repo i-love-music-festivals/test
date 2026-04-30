@@ -99,7 +99,8 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     z-index: 20; /* グリッドより手前（上）に表示するための順位 */
     background: #f9f9f9;
     border-bottom: 2px solid #333;
-    min-width: max-content; /* 中身の幅に合わせて親枠を広げ、列のずれを防ぐ */
+    /* 【修正】縦軸を揃えるため、内部のflexアイテムの幅計算を統一 */
+    box-sizing: border-box;
 }
 
 /* 左上の空白部分（時間が表示される列の真上）です */
@@ -111,24 +112,27 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     position: sticky; /* 左端にも上に張り付く設定 */
     left: 0;
     z-index: 21; /* ヘッダーリストよりもさらに手前に表示 */
+    box-sizing: border-box; /* 【修正】パディングやボーダーを含めた幅計算にする */
 }
 
 .stage-header-list { display: flex; }
 
+/* ステージヘッダーの1列 */
 .stage-header {
     width: var(--col-width);
     flex-shrink: 0;
     text-align: center;
     padding: 10px 5px;
     border-right: 1px solid var(--grid-border);
-    box-sizing: border-box;
+    box-sizing: border-box; /* パディングとボーダーを含めて幅を計算 */
 }
 
 /* マイタイムテーブルのカラムは、JSから渡された変数を使って幅を変動させます */
 .stage-header.mytt { 
     width: calc(var(--col-width) * var(--mytt-cols, 1)); 
     min-width: var(--col-width); 
-    background: #ddd; 
+    background: #ddd;
+    box-sizing: border-box; /* 他のヘッダーと幅の計算方法を合わせる */
 }
 
 /* ステージ名のバッジ */
@@ -152,7 +156,24 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .timetable-wrapper { 
     display: flex; 
     position: relative; /* スクロールは親のscroll-containerに任せます */
-    min-width: max-content; /* 【追加】中身の幅に合わせて親枠を広げ、背景線が途切れるのを防ぐ */
+    /* 【修正】右端の固定線を配置するための基準位置にする */
+}
+
+/* 右端の固定線（横スクロールしても常に右端に表示される） */
+/* 【コメント】::after は「～の後ろに仮想的な要素を作る」CSSの機能です。 */
+/* ここでは .timetable-wrapper の後ろに、右端の線を描くための要素を作っています。 */
+.timetable-wrapper::after {
+    content: ''; /* 仮想要素を作るために必要 */
+    position: sticky; /* 画面の右端に張り付くようにする */
+    right: 0; /* 右端から0pxの位置に固定 */
+    /* 線自身の幅は0にして、右ボーダーだけを線として見せる */
+    width: 0;
+    height: 100%; /* 親要素の高さいっぱいに線を引く */
+    background-color: transparent; /* 背景は透明 */
+    border-right: 1px solid var(--grid-border); /* ここで実際の線を引く */
+    z-index: 11; /* アーティストブロックより上、時間列(10)より少し上に表示 */
+    flex-shrink: 0; /* 線自身が縮まないようにする */
+    pointer-events: none; /* 線がタップ操作の邪魔をしないようにする */
 }
 
 /* 左端の「時間」が表示される列 */
@@ -164,6 +185,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     position: sticky; /* 左端に張り付く設定 */
     left: 0;
     z-index: 10; /* アーティストブロックより上に表示 */
+    box-sizing: border-box; /* 【修正】ヘッダーと幅を合わせる */
 }
 
 /* 時間の1枠（1時間分）の高さ */
@@ -183,7 +205,13 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 #gridContainer { display: flex; position: relative; }
 
 /* 1つのステージの縦列 */
-.grid-col { width: var(--col-width); flex-shrink: 0; border-right: 1px dashed var(--grid-border); position: relative; }
+.grid-col { 
+    width: var(--col-width); 
+    flex-shrink: 0; 
+    border-right: 1px dashed var(--grid-border); 
+    position: relative; 
+    box-sizing: border-box; /* 【修正】ヘッダーと幅を合わせる */
+}
 .grid-col.mytt { background-color: rgba(238, 238, 238, 0.9); }
 
 /* 背景の横線（1時間ごとの目盛り）を描画します */
