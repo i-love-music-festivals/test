@@ -184,7 +184,7 @@ const foodList = [
 // --- 5. タイムテーブル・出演アーティストデータ ---
 const timetableData = {
     day1: {
-        date: "2026-04-28",
+        date: "2026-04-30",
         michinoku: [
             e("町長挨拶", "11:55", "12:05", "", { isLightBg: true, isSpecialLayout: true, displayTime: "12:00-" }),
             e("川崎中学校吹奏楽部", "10:55", "11:15", "", { isLightBg: true }),
