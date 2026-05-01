@@ -99,8 +99,16 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     z-index: 20; /* グリッドより手前（上）に表示するための順位 */
     background: #f9f9f9;
     border-bottom: 2px solid #333;
-    /* 【修正】縦軸を揃えるため、内部のflexアイテムの幅計算を統一 */
+    /* 縦軸を揃えるため、内部のflexアイテムの幅計算を統一 */
     box-sizing: border-box;
+
+    /* ▼▼今回の修正ポイント：枠の幅を中身に合わせる▼▼ */
+    /* 親枠（このラッパー）の幅を、中のステージ列の合計幅に合わせて自動で広げます。
+       これを書かないと画面の幅（100%）で枠が切れてしまい、太い黒線も途切れてしまいます。 */
+    width: max-content;
+    /* ただし、ステージ数が少なくて画面の幅より狭い場合は、
+       不格好にならないよう最低限画面いっぱい（100%）まで広げるようにします。 */
+    min-width: 100%;
 }
 
 /* 左上の空白部分（時間が表示される列の真上）です */
@@ -112,7 +120,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     position: sticky; /* 左端にも上に張り付く設定 */
     left: 0;
     z-index: 21; /* ヘッダーリストよりもさらに手前に表示 */
-    box-sizing: border-box; /* 【修正】パディングやボーダーを含めた幅計算にする */
+    box-sizing: border-box; /* パディングやボーダーを含めた幅計算にする */
 }
 
 .stage-header-list { display: flex; }
@@ -156,7 +164,13 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
 .timetable-wrapper { 
     display: flex; 
     position: relative; /* スクロールは親のscroll-containerに任せます */
-    /* 【修正】右端の固定線を配置するための基準位置にする */
+    
+    /* ▼▼今回の修正ポイント：枠の幅を中身に合わせる▼▼ */
+    /* ヘッダーと同じく、タイムテーブル本体の枠も中身に合わせて広げます。
+       右端の固定線（::after）は「この枠の右端」にくっつく性質があるため、
+       枠自体が広がっていないと、スクロールした時に線が一緒に左へ流れて消えてしまいます。 */
+    width: max-content;
+    min-width: 100%;
 }
 
 /* 右端の固定線（横スクロールしても常に右端に表示される） */
@@ -185,7 +199,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     position: sticky; /* 左端に張り付く設定 */
     left: 0;
     z-index: 10; /* アーティストブロックより上に表示 */
-    box-sizing: border-box; /* 【修正】ヘッダーと幅を合わせる */
+    box-sizing: border-box; /* ヘッダーと幅を合わせる */
 }
 
 /* 時間の1枠（1時間分）の高さ */
@@ -210,7 +224,7 @@ h1 { font-size: 16px; margin: 0 0 10px 0; }
     flex-shrink: 0; 
     border-right: 1px dashed var(--grid-border); 
     position: relative; 
-    box-sizing: border-box; /* 【修正】ヘッダーと幅を合わせる */
+    box-sizing: border-box; /* ヘッダーと幅を合わせる */
 }
 .grid-col.mytt { background-color: rgba(238, 238, 238, 0.9); }
 
