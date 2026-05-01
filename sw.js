@@ -8,7 +8,7 @@
  * ==========================================
  */
 const CACHE_PREFIX = 'arabaki_2026_'; 
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const CACHE_NAME = CACHE_PREFIX + 'cache-' + CACHE_VERSION;
 
 // インストール時に、古いService Workerを待たずにすぐ新しいものをアクティブにする
