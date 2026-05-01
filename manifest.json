@@ -10,7 +10,7 @@
       "src": "https://i-love-music-festivals.github.io/arabaki2026/icon.png",
       "sizes": "192x192 512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }
